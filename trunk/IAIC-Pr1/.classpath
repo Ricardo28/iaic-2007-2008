@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="E:/Miguel/Trabajos/Universidad/2007-2008/workspace/IAIC-Pr1/aima.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
