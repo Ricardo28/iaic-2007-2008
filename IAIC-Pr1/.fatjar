@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Wed Jan 30 20:03:04 CET 2008
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=IAIC-Pr1.jar
+manifest.mergeall=true
+manifest.mainclass=gui.Principal
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=
+includes=
