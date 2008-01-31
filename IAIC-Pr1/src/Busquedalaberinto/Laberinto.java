@@ -15,22 +15,22 @@ public class Laberinto implements State,Heuristic {
 	
     private int habInicio;
     
-    private Vector habSalida;
+    private Vector<Integer> habSalida;
     
     private int habActual;
     
-    private Vector habitaciones;
+    private Vector<Habitacion> habitaciones;
     
     private Controlador cont;
     
     private static int nodosExpandidos = 0;    
     
     /** Creates a new instance of Laberinto */
-    public Laberinto(int start,Vector goal,int act, Vector h,Controlador cont){
+    public Laberinto(int start,Vector<Integer> goal,int act, Vector<Habitacion> h,Controlador cont){
     	habInicio = start;
     	habSalida = goal;
     	habActual = act;
-    	habitaciones = new Vector(h.size());
+    	habitaciones = new Vector<Habitacion>(h.size());
     	for (int i=0;i<h.size();i++){
     	    Habitacion aux = (Habitacion)h.elementAt(i);
     	   	Habitacion hab = new Habitacion(aux.numero,aux.adyacentes,aux.esEntrada,aux.esSalida,aux.esExterior,aux.juego,aux.resuelto);
@@ -64,9 +64,9 @@ public class Laberinto implements State,Heuristic {
     /**
      * genera los sucesores del estado actual
      */
-    public Enumeration successors(){
+    public Enumeration<Successor> successors(){
 
-	 	Vector successorVec = new Vector();
+	 	Vector<Successor> successorVec = new Vector<Successor>();
 	 	String operador = "";
 	 	nodosExpandidos++;
 	 	Habitacion hab = (Habitacion)habitaciones.elementAt(habActual-1);
@@ -613,7 +613,7 @@ public class Laberinto implements State,Heuristic {
 	}
 
    public boolean listPath(SearchNode node) {
-       ArrayList camino = new ArrayList();
+       ArrayList<String> camino = new ArrayList<String>();
 	   if (node == null) {
 		   cont.mostrar("No hay solución");
 		   return false;

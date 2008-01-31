@@ -19,11 +19,26 @@ import java.util.Vector;
  */
 public class Controlador {
 	
-	private static Vista vista;
+	private Vista vista;
 	
-	private Vector habitaciones;
+	private Vector<Habitacion> habitaciones;
 	
 	private Laberinto inicial;
+	
+	/**
+	 * constructor por defecto
+	 *
+	 */
+	public Controlador(){		
+	}
+	
+	/**
+	 * asocia una vista al controlador
+	 * @param vista Vista asociada al controlador
+	 */
+	public void asociarVista(Vista vista){
+		this.vista = vista;
+	}
 	
 	/**
 	 * inicia el juego del laberinto con el numero de busqueda indicado por el parametro n
@@ -32,13 +47,13 @@ public class Controlador {
 	 */
 	public void jugar(int n){
         
-		Vector sal = new Vector();
+		Vector<Integer> sal = new Vector<Integer>();
         int ini = 0;
-		for (int i=0;i<habitaciones.size();i++){
-			Habitacion hab = (Habitacion)habitaciones.elementAt(i);
-			if(hab.esSalida())
+		for (int i=0; i<habitaciones.size(); i++){
+			Habitacion hab = habitaciones.elementAt(i);
+			if (hab.esSalida())
 				sal.add(i+1);
-			if(hab.esEntrada())
+			if (hab.esEntrada())
 				ini = i+1;
 		}
 		
@@ -120,10 +135,10 @@ public class Controlador {
 	 
 	/**
 	 * asocia un vector que representa el tablero del laberinto al controlador
-	 * @param hab vector con las habiatciones del laberinto
+	 * @param hab vector con las habitaciones del laberinto
 	 */
-	public void cargar(Vector hab){
-		habitaciones=hab;
+	public void cargar(Vector<Habitacion> hab){
+		habitaciones = hab;
 	}
 	
 	/**
@@ -135,27 +150,13 @@ public class Controlador {
 	}
 	
 	/**
-	 * asocia una vista al controlador
-	 * @param vista Vista asociada al controlador
-	 */
-	public void asociarVista(Vista vista){
-		this.vista=vista;
-	}
-	
-	/**
-	 * constructor por defecto
-	 *
-	 */
-	public Controlador(){		
-	}
-	
-	/**
-	 * notifica a la Vista asociada que muestre un meno de solicitud de algoritmo de busqueda
-	 * @param bol si se trata del juego del as jarras o no 
+	 * notifica a la Vista asociada que muestre un menu de solicitud de algoritmo de busqueda
+	 * @param bol si se trata del juego de las jarras o no 
 	 * @return devuielve el numero de estrategia elegida
 	 */
 	public int solicitud(boolean bol){
 		return vista.solicitud(bol);
 	}
+	
 	
 }

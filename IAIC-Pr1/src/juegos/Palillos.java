@@ -74,9 +74,9 @@ public class Palillos implements State, Heuristic{
 	 * genera los sucesores del nodo actual
 	 * @return devuelve los sucesores de ese nodo en un Enumeration
 	 */
-	public Enumeration successors() { 
+	public Enumeration<Successor> successors() { 
 
-	    Vector successorVec = new Vector();
+	    Vector<Successor> successorVec = new Vector<Successor>();
 	    int i=0;
 	    int nivel2=nivel+1;
 	    String operador="";

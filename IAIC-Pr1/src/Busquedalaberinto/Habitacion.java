@@ -8,8 +8,8 @@ package Busquedalaberinto;
 public class Habitacion {
 	
     protected boolean resuelto;
-    
-    protected int numero;
+	
+	protected int numero;
 	
     protected int[] adyacentes;
     
@@ -90,14 +90,6 @@ public class Habitacion {
      */
     public int[] dameAdyacentes(){
     	return (this.adyacentes);
-    }
-    
-    /**
-     * actualiza el valor de resulto     * 
-     * @param b se actualiza el valor de resuleto con b
-     */
-    public void setResuelto(boolean b){
-    	resuelto = b;
     }
     
 }

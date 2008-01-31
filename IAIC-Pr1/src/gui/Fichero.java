@@ -1,6 +1,7 @@
 package gui;
 
 import Busquedalaberinto.*;
+
 import java.io.*;
 import java.util.Vector;
 
@@ -14,8 +15,8 @@ public class Fichero {
     public Fichero() {
     }
     
-    public Vector cargarTablero(String ruta)throws IOException{
-        Vector vector=new Vector();
+    public Vector<Habitacion> cargarTablero(String ruta)throws IOException{
+        Vector<Habitacion> vector = new Vector<Habitacion>();
         FileReader leer;
         BufferedReader filtro;
         String linea;

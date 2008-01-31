@@ -1,6 +1,7 @@
 package juegos;
 
 import aima.search.*;
+
 import java.util.*;
 
 /**
@@ -87,11 +88,11 @@ public class MisionerosYCanibales implements State, Heuristic {
 	 * @return devuelve los sucesores del estado actual en Enumeration
 	 * 
 	 */
-	public Enumeration successors() { 
+	public Enumeration<Successor> successors() { 
 
 		int iMisioneros, iCanibales, iBarco;
 
-		Vector successorVec = new Vector();
+		Vector<Successor> successorVec = new Vector<Successor>();
 		nodosExpandidos++;
     
 		for (iBarco= -1; iBarco<=1; iBarco+=2) {
