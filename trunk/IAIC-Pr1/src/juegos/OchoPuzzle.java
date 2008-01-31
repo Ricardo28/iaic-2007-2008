@@ -62,9 +62,9 @@ public class OchoPuzzle implements State,Heuristic{
 	  * genera los sucesores de ese estado en el que nos encontramos segun los distintos operadores
 	  * @return devuelve los sucesores generados
 	  */
-	 public Enumeration successors(){
+	 public Enumeration<Successor> successors(){
 	 	
-	 	Vector successorVec = new Vector<OchoPuzzle>();
+	 	Vector<Successor> successorVec = new Vector<Successor>();
 	 	
 	 	String operador = "";
 	 	nodosExpandidos++;

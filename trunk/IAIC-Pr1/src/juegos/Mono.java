@@ -89,9 +89,9 @@ public class Mono implements State,Heuristic{
 	 * genera los sucesores de ese estado
 	 * @return Enumeration con los sucesores generados
 	 */
-	public Enumeration successors(){
+	public Enumeration<Successor> successors(){
 
-	 	 Vector successorVec = new Vector();
+	 	 Vector<Successor> successorVec = new Vector<Successor>();
 
 	 	 int operadores;
 	 	 int iPosH=0;

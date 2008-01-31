@@ -1,6 +1,7 @@
 package juegos;
 
 import aima.search.*;
+
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -39,9 +40,9 @@ public class Jarras implements State,Heuristic{
 	 * genera los sucesores del estado actual
 	 * @return los sucesores del estado actual
 	 */
-	public Enumeration successors(){
+	public Enumeration<Successor> successors(){
 
-	 	Vector successorVec = new Vector();
+	 	Vector<Successor> successorVec = new Vector<Successor>();
 	 	int operadores;
 	 	int iJ3 = 0;
 	 	int iJ4 = 0;

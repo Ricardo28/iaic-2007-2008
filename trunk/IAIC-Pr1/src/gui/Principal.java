@@ -1,6 +1,6 @@
 package gui;
 
-import programa.*;
+import programa.Controlador;;
 
 public class Principal {
 	

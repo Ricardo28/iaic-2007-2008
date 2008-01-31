@@ -5,21 +5,22 @@ import javax.swing.*;
 
 public class Solicitud extends JPanel{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2650836046654314404L;
 	
-	JRadioButton profundidad;
-	JRadioButton anchura;
-	JRadioButton aEstrella;
-	JRadioButton uniforme;
-	JRadioButton profIterativa;
-	JRadioButton escalada;
+	protected JRadioButton profundidad;
+	
+	protected JRadioButton anchura;
+	
+	protected JRadioButton aEstrella;
+	
+	protected JRadioButton uniforme;
+	
+	protected JRadioButton profIterativa;
+	
+	protected JRadioButton escalada;
 	
 	/**
 	 * crea un instancia del panel que ofrece una estrategia a elegir al jugador
-	 *
 	 */
 	public Solicitud() {
 		ButtonGroup grupo=new ButtonGroup();

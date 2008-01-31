@@ -61,9 +61,9 @@ public class CabraLoboCol implements State,Heuristic{
 	 * genera el numero de posibles sucesores de ese estado actual
 	 * @return los sucesores del estado actual
 	 */
-	 public Enumeration successors(){
+	 public Enumeration<Successor> successors(){
 	 	
-	 	 Vector successorVec = new Vector();
+	 	 Vector<Successor> successorVec = new Vector<Successor>();
 	 	 
 	 	 int operadores;
 	 	 int iLobo=1;
