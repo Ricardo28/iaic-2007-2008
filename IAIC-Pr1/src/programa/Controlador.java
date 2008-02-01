@@ -19,7 +19,7 @@ import java.util.Vector;
  */
 public class Controlador {
 	
-	private Vista vista;
+	private static Vista vista;
 	
 	private Vector<Habitacion> habitaciones;
 	
@@ -36,8 +36,8 @@ public class Controlador {
 	 * asocia una vista al controlador
 	 * @param vista Vista asociada al controlador
 	 */
-	public void asociarVista(Vista vista){
-		this.vista = vista;
+	public void asociarVista(Vista vist){
+		vista = vist;
 	}
 	
 	/**

@@ -21,7 +21,7 @@ public class Vista extends JFrame{
 	
 	private JMenuItem jugar;
 	
-	private Controlador controlador;
+	private static Controlador controlador;
 	
 	private JTextArea area;
 	
@@ -76,8 +76,8 @@ public class Vista extends JFrame{
 	 * asocia un controlador a la vista actual para que haya una comunicacion entre ellos
 	 * @param controlador que se asocia a la vista
 	 */
-	public void asociarControlador(Controlador controlador){
-		this.controlador=controlador;
+	public void asociarControlador(Controlador cont){
+		controlador = cont;
 	}
 	
 	/**
@@ -208,8 +208,8 @@ public class Vista extends JFrame{
 			boolean seis = solicitud.escalada.isSelected();
 			//aplicacion ejecutar con busqueda 1
 			if (uno&&!dos&&!tres&&!cuatro&&!cinco&&!seis){
-				mostrar("EMPIEZA EL LABERINTO");
-				mostrar("busqueda en profundidad");
+				mostrar("EMPIEZA EL LABERINTO\n");
+				mostrar("busqueda en profundidad\n");
 				controlador.jugar(1);
 				
 			//aplicacion ejecutar con busqueda 2

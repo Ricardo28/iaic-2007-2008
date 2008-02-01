@@ -19,7 +19,7 @@ public class Principal {
 		Vista vista = new Vista();
 		Controlador controlador = new Controlador();
 		vista.asociarControlador(controlador);
-		controlador.asociarVista(vista);			
+		controlador.asociarVista(vista);
 	}
 
 }
