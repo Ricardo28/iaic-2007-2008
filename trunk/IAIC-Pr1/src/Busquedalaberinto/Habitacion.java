@@ -7,9 +7,7 @@ package Busquedalaberinto;
  */
 public class Habitacion {
 	
-    protected boolean resuelto;
-	
-	protected int numero;
+    protected int numero;
 	
     protected int[] adyacentes;
     
@@ -21,7 +19,9 @@ public class Habitacion {
     
     protected int juego;
     
-    protected int heuristica;    
+    protected boolean resuelto;
+	
+	protected int heuristica;    
    
     /**
      * devuelve el numero de la habitacion actual
