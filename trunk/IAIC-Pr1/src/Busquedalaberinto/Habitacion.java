@@ -21,16 +21,6 @@ public class Habitacion {
     
     protected boolean resuelto;
 	
-	protected int heuristica;    
-   
-    /**
-     * devuelve el numero de la habitacion actual
-     * @return el numero de la habitacion actual
-     */
-    public int getNumero(){
-    	return numero;
-    }
-    
     /**
      * crea una nueva instancia de habitacion
      * @param numero 
@@ -53,11 +43,11 @@ public class Habitacion {
     }
     
     /**
-     * devuelve la heuristica de esa habiatcion
-     * @return devuelve la heuristica de esa habiatcion
+     * devuelve el numero de la habitacion actual
+     * @return el numero de la habitacion actual
      */
-    public int getHeuristica(){
-        return (this.heuristica);
+    public int getNumero(){
+    	return numero;
     }
     
     /**
