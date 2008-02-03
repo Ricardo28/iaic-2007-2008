@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import Busquedalaberinto.CargarLaberinto;
 import Busquedalaberinto.Habitacion;
 
 public class Vista extends JFrame{
@@ -95,7 +96,7 @@ public class Vista extends JFrame{
 	        	File archivo = selector.getSelectedFile();
 	        	String ruta = archivo.getAbsolutePath();	        	
 	        	Vector<Habitacion> habitaciones = new Vector<Habitacion>();
-	        	Fichero f = new Fichero();
+	        	CargarLaberinto f = new CargarLaberinto();
 	        	try  {
 	        		habitaciones = f.cargarTablero(ruta);
 	        		jugar.setEnabled(true);

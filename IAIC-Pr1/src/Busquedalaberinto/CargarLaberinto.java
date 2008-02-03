@@ -1,6 +1,5 @@
-package gui;
+package Busquedalaberinto;
 
-import Busquedalaberinto.*;
 import java.io.*;
 import java.util.Vector;
 
@@ -8,12 +7,12 @@ import java.util.Vector;
  * 
  * @author usuario
  */
-public class Fichero {
+public class CargarLaberinto {
     
     /**
      *  Creates a new instance of fichero
      */
-    public Fichero() {
+    public CargarLaberinto() {
     }
     
     /**

@@ -23,10 +23,10 @@ public class Laberinto implements State,Heuristic {
     
     private Controlador cont;
     
-    private static int nodosExpandidos = 0;    
+    private static int nodosExpandidos = 0;
     
     /** Creates a new instance of Laberinto */
-    public Laberinto(int start,Vector<Integer> goal,int act, Vector<Habitacion> h,Controlador cont){
+    public Laberinto(int start, Vector<Integer> goal, int act, Vector<Habitacion> h, Controlador cont){
     	habInicio = start;
     	habSalida = goal;
     	habActual = act;
@@ -54,7 +54,8 @@ public class Laberinto implements State,Heuristic {
     public boolean isGoal(){
     	boolean sal = false;
     	int k=0;
-    	while(k<habSalida.size()){
+    	//TODO esto es lo que habia: while(k<habSalida.size()){
+        while(k<habSalida.size() && !sal){
     		sal = this.habActual == (Integer)habSalida.elementAt(k);
     		k++;
     	}
