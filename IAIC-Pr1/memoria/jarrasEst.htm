@@ -1,0 +1,112 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Pagina nueva 1</title>
+<meta name="Microsoft Theme" content="arcs 011">
+</head>
+
+<body background="_themes/arcs/arctile.jpg" bgcolor="#FFFFFF" text="#000000" link="#3399FF" vlink="#666666" alink="#FF9900"><!--mstheme--><font face="Verdana, Arial, Helvetica">
+
+<p align="left"><u><font size="2" color="#0000FF"><b><a href="prob.htm">
+<font color="#0000FF">ATRÁS</font></a></b></font></u></p>
+<p align="center"><b><font color="#0000FF" size="4">EL PROBLEMA DE LAS JARRAS</font></b><br>
+&nbsp;</p>
+<p align="left"><br>
+<font face="Verdana"><b>Estado Inicial:</b> (0,0)<br>
+<br>
+En este problema tenemos que señalar que influye mucho el orden en el que se <br>
+aplican los operadores, ya que si se elige un orden u otro se puede <br>
+simplificar mucho el espacio de búsqueda para algunas estrategias como <br>
+primero en anchura. También tenemos que&nbsp; remarcar que en este problema hay
+<br>
+estrategias como coste uniforme o escalada que generan un espacio de <br>
+búsqueda muy grande y no terminan, probablemente también debido al orden de <br>
+aplicación de los operadores.</font></p>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <p align="left"><b><font face="Verdana">Primero en profundidad:</font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p align="left"><font face="Verdana">Es la estrategia más eficiente. La 
+    solución se encuentra a profundidad 6.<br>
+    Nodos Expandidos: 545.</font></p>
+  </blockquote>
+</blockquote>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <p align="left"><b><font face="Verdana">Primero en anchura:</font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p align="left"><font face="Verdana">También se encuentra la solución a 
+    profundidad 6, pero el numero de nodos <br>
+    expandidos es mucho mayor. En este tipo de estrategia influye mucho el orden
+    <br>
+    de los operadores, con el orden que hemos aplicado (primero los operadores
+    <br>
+    de llenado, luego los de vaciado y por ultimo los de trasvase) se obtienen
+    <br>
+    la mitad de nodos expandidos que con otros ordenes, con los que el numero de
+    <br>
+    nodos expandidos se elevaba aproximadamente a 31.000.<br>
+    Nodos Expandidos: 14675.</font></p>
+  </blockquote>
+</blockquote>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <p align="left"><b><font face="Verdana">A*:</font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p align="left"><font face="Verdana">La solución se encuentra a profundidad 
+    6. Más eficiente que&nbsp;&nbsp; primero en <br>
+    anchura, ya que se trata de una búsqueda informada.<br>
+    Nodos expandidos: 3139.</font></p>
+  </blockquote>
+</blockquote>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <p align="left"><b><font face="Verdana">Coste uniforme:</font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p align="left"><font face="Verdana">Esta estrategia no consigue llegar a 
+    una solución porque el numero de nodos <br>
+    que expande es muy grande y la computadora no tiene capacidad suficiente <br>
+    para resolver el problema.</font></p>
+  </blockquote>
+</blockquote>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <p align="left"><b><font face="Verdana">Profundidad iterativa:</font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p align="left"><font face="Verdana">Esta estrategia también consigue una 
+    solución más o menos eficiente a <br>
+    profundidad 6.<br>
+    Nodos expandidos: 1960.</font></p>
+  </blockquote>
+</blockquote>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <p align="left"><b><font face="Verdana">Escalada:</font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p align="left"><font face="Verdana">Esta estrategia, pese a ser una 
+    estrategia de búsqueda informada no consigue <br>
+    llegar a la solución porque queda estancada por la heurística en un pico y
+    <br>
+    no puede continuar</font>.<br>
+&nbsp;</p>
+  </blockquote>
+</blockquote>
+
+<!--mstheme--></font></body>
+
+</html>

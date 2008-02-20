@@ -1,0 +1,46 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="es">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Pagina nueva 1</title>
+<meta name="Microsoft Theme" content="arcs 011">
+</head>
+
+<body background="_themes/arcs/arctile.jpg" bgcolor="#FFFFFF" text="#000000" link="#3399FF" vlink="#666666" alink="#FF9900"><!--mstheme--><font face="Verdana, Arial, Helvetica">
+
+<p align="left"><a href="analisis_de_los_problemas.htm"><span lang="es">
+<font size="2" color="#0000FF"><b>ATRÁS</b></font></span></a></p>
+
+<p align="center"><font color="#0000FF" face="Verdana"><b>EL JUEGO DE LOS 
+PALILLOS</b></font><br>
+&nbsp;</p>
+<p><br>
+<b>
+<u><font face="Verdana">Representación:</font></u></b></p>
+<blockquote>
+  <p><font face="Verdana">Para representar el espacio de estados 
+  hemos utilizado un entero que representa el numero de palillos que quedan. 
+  Como es un espacio min<span lang="es">i</span>max, tiene también un nivel que indica si es el 
+  supuesto jugador ficticio el que gana o la computadora.</font></p>
+</blockquote>
+<p><b><font face="Verdana"><u>Operadores:</u></font></b></p>
+<blockquote>
+  <p><font face="Verdana">Tenemos 3 operadores inicialmente 
+  (quitar 3, 2 o 1 palillo). Para generar los sucesores, se empieza quitando 
+  uno, luego dos y luego 3 palillos para favorecer la búsqueda. Esto se debe a 
+  que si se comienza quitando un palillo, se asegura que la búsqueda va a llegar 
+  a una solución.</font></p>
+</blockquote>
+<p><b><font face="Verdana"><u>Heurística:</u></font></b></p>
+<blockquote>
+  <p><font face="Verdana">La heurística que hemos escogido ha 
+  sido 6 menos el numero de palillos que quedan para favorecer que se vaya por 
+  el camino en el que el jugador ficticio quita un sólo palillo. </font></p>
+</blockquote>
+
+<!--mstheme--></font></body>
+
+</html>
