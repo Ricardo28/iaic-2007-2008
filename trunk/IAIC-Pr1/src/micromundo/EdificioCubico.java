@@ -99,6 +99,70 @@ public class EdificioCubico  implements State,Heuristic {
 	 public String toString(){
 		 String msg = "\n Habitacion actual: ("+ actX + "," + actY + "," + actZ + ")\n";
 		 return msg;
-	 } 
+	 }
+
+	public int getIniX() {
+		return iniX;
+	}
+
+	public void setIniX(int iniX) {
+		this.iniX = iniX;
+	}
+
+	public int getIniY() {
+		return iniY;
+	}
+
+	public void setIniY(int iniY) {
+		this.iniY = iniY;
+	}
+
+	public int getIniZ() {
+		return iniZ;
+	}
+
+	public void setIniZ(int iniZ) {
+		this.iniZ = iniZ;
+	}
+
+	public int getActX() {
+		return actX;
+	}
+
+	public void setActX(int actX) {
+		this.actX = actX;
+	}
+
+	public int getActY() {
+		return actY;
+	}
+
+	public void setActY(int actY) {
+		this.actY = actY;
+	}
+
+	public int getActZ() {
+		return actZ;
+	}
+
+	public void setActZ(int actZ) {
+		this.actZ = actZ;
+	}
+
+	public HabitacionCubica[][][] getEdificio() {
+		return edificio;
+	}
+
+	public void setEdificio(HabitacionCubica[][][] edificio) {
+		this.edificio = edificio;
+	}
+
+	public Controlador getCont() {
+		return cont;
+	}
+
+	public void setCont(Controlador cont) {
+		this.cont = cont;
+	} 
 
 }

@@ -14,14 +14,24 @@ public class Habi {//esta clase identifica al tipo de casillas que vamos a utili
         num_hab=n;
         pasar=m;
     }
+
+	public int getNum_hab() {
+		return num_hab;
+	}
+
+	public void setNum_hab(int num_hab) {
+		this.num_hab = num_hab;
+	}
+
+	public boolean getPasar() {
+		return pasar;
+	}
+
+	public void setPasar(boolean pasar) {
+		this.pasar = pasar;
+	}
     
-    //getters y setters
-    public int get_num_hab(){
-        return num_hab;
-    }
-    public boolean get_pasar(){
-        return pasar;
-    }
+    
     
 }
 
