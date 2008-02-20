@@ -9,7 +9,10 @@ public class HabitacionCubica {
 	
 	private int x, y, z;
 	
-	private int n;
+	/**
+	 * Dimensiones del edificio cubico 
+	 */
+	private int n; 
 	
 	private int juego;
 	
