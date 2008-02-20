@@ -19,7 +19,7 @@ public class Visual extends javax.swing.JFrame {
     int z;
     
     public Visual() {
-        n=6;
+        n=20;
         z=0;
         dibuja();
         rellena();
