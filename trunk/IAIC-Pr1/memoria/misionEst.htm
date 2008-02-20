@@ -1,0 +1,98 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="es">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Pagina nueva 1</title>
+<meta name="Microsoft Theme" content="arcs 011">
+</head>
+
+<body background="_themes/arcs/arctile.jpg" bgcolor="#FFFFFF" text="#000000" link="#3399FF" vlink="#666666" alink="#FF9900"><!--mstheme--><font face="Verdana, Arial, Helvetica">
+
+<p align="left"><u><font size="2" color="#0000FF"><b><a href="prob.htm">
+<font color="#0000FF">ATRÁS</font></a></b></font></u></p>
+
+<p align="center"><font color="#0000FF" face="Verdana" size="4"><b>LOS MISIONEROS Y LOS 
+CANÍBALES</b></font><br>
+&nbsp;</p>
+<p><br>
+<font face="Verdana"><b>ESTADO INICIAL:</b> (3:0,3:0,1:0) <br>
+Numero de misioneros a la izquierda y a la derecha (3 y 0 respectivamente).<br>
+Numero de caníbales a la izquierda y a la derecha (3 y 0 respectivamente).<br>
+Posición del barco (a la izquierda).<br>
+<br>
+<b>HEURÍSTICA:</b> Suma de misioneros y caníbales en la orilla izquierda menos el valor 
+de la orilla donde se encuentra el barco.</font></p>
+<p><font face="Verdana">&nbsp;&nbsp;&nbsp; En el proyecto actual sólo realizamos 
+búsquedas hasta el 7º nivel, debido a que un nivel superior consumiría 
+demasiados recursos.<br>
+&nbsp;</font></p>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b><font face="Verdana">Primero en profundidad<span lang="es">:</span></font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p><font face="Verdana">Solución a profundidad 15. Es la 
+    peor de todas las estrategias para este problema.<br>
+    Nodos Expandidos: 275.</font></p>
+  </blockquote>
+</blockquote>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b><font face="Verdana">Primero en anchura: </font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p><font face="Verdana">Solución a profundidad 11, pero poco 
+    eficiente, ya que el numero de nodos expandidos es muy grande al no ser una 
+    búsqueda informada.<br>
+    Nodos Expandidos: 10963.</font></p>
+  </blockquote>
+</blockquote>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b><font face="Verdana">A*:</font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p><font face="Verdana">Solución a profundidad 11, más 
+    eficiente que el anterior al ser una búsqueda informada.<br>
+    Nodos Expandidos: 889.</font></p>
+  </blockquote>
+</blockquote>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><font face="Verdana"><b>Coste Uniforme:</b> </font><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p><font face="Verdana">Misma solución que primero en 
+    anchura. Esto se debe a que siempre coge el de mejor heurística.<br>
+    Nodos Expandidos: 10963.</font></p>
+  </blockquote>
+</blockquote>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b><font face="Verdana">Profundidad Iterativa:</font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p><font face="Verdana">Conseguimos una solución mejor que 
+    con primero en anchura ( aunque la profundidad es la misma), pero peor que 
+    A*, ya que no es una búsqueda informada.<br>
+    Nodos Expandidos: 8730.</font></p>
+  </blockquote>
+</blockquote>
+<!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+  <!--msthemelist--><tr><td valign="baseline" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b><font face="Verdana">Escalada:</font></b><!--mstheme--></font><!--msthemelist--></td></tr>
+<!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+<blockquote>
+  <blockquote>
+    <p><font face="Verdana">Es la mejor solución, también a 
+    profundidad 11, pero se reduce mucho el número de nodos expandidos. Se debe 
+    a que es una búsqueda informada.<br>
+    Nodos Expandidos: 14.</font></p>
+  </blockquote>
+</blockquote>
+
+<!--mstheme--></font></body>
+
+</html>

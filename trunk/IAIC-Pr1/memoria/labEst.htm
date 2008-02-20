@@ -1,0 +1,179 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Language" content="es">
+<meta name="GENERATOR" content="Microsoft FrontPage 5.0">
+<meta name="ProgId" content="FrontPage.Editor.Document">
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Pagina nueva 1</title>
+<meta name="Microsoft Theme" content="arcs 011">
+</head>
+
+<body background="_themes/arcs/arctile.jpg" bgcolor="#FFFFFF" text="#000000" link="#3399FF" vlink="#666666" alink="#FF9900"><!--mstheme--><font face="Verdana, Arial, Helvetica">
+
+<p align="left"><u><font size="2" color="#0000FF"><b><a href="prob.htm">
+<font color="#0000FF">ATRÁS</font></a></b></font></u></p>
+<p align="center"><font color="#0000FF" size="4"><b>PROBLEMA GENERAL DEL 
+LABERINTO</b></font><br>
+&nbsp;</p>
+<p><br>
+<b>PRIMERA PRUEBA</b></p>
+<blockquote>
+  <p><br>
+  El contenido del archivo para la primera prueba es el siguiente (sigue el 
+  modelo que dio la profesora en la Web ):<br>
+  <br>
+  1 : 0 ; 1 ; 1 ; 3,4 ; 4 --Salida<br>
+  2 : 0 ; 0 ; 1 ; 4,6 ; 4 <br>
+  3 : 1 ; 0 ; 1 ; 1,4,5 ; 4 --Entrada<br>
+  4 : 0 ; 0 ; 0 ; 1,2,3 ; 4<br>
+  5 : 0 ; 0 ; 1 ; 3,7 ; 4<br>
+  6 : 0 ; 1 ; 1 ; 7 ; 4 --Salida<br>
+  7 : 0 ; 0 ; 1 ; 5,6 ; 4</p>
+  <p><br>
+  <br>
+  <b>HEURÍSTICA UTILIZADA:</b> Diferencia mínima entre el numero de habitación 
+  actual y una de salida mas las diferencia entre el numero de las adyacentes y 
+  una de salida</p>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>Primero en profundidad:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Para este caso es una estrategia eficiente, consigue la solución a 
+      profundidad 3. El numero de nodos expandidos es tan solo 3, por lo que es 
+      un buen resultado.</p>
+    </blockquote>
+  </blockquote>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>Primero en anchura:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Esta solución es menos eficiente que primero en anchura, aunque también 
+      se consigue solución a profundidad 3.<br>
+      Nodos Expandidos:20</p>
+    </blockquote>
+  </blockquote>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>A*:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Esta solución también es eficiente, consigue la solución a profundidad 
+      3 y expande tan sólo 4 nodos.</p>
+    </blockquote>
+  </blockquote>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>Coste uniforme:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Obtiene el mismo resultado que primero en anchura, ya que todos los 
+      operadores tienen el mismo coste. <br>
+      Nodos expandidos: 20.</p>
+    </blockquote>
+  </blockquote>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>Profundidad iterativa:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Esta solución es intermedia, también está a profundidad 3. <br>
+      Nodos expandidos: 8.</p>
+    </blockquote>
+  </blockquote>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>Escalada:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Consigue un resultado similar a primero en anchura y coste uniforme.
+      <br>
+      Nodos expandidos: 20.</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+<p><br>
+<br>
+<br>
+<b>SEGUNDA PRUEBA</b><br>
+&nbsp;</p>
+<blockquote>
+  <p><br>
+  Hemos hecho una segunda prueba con este archivo que contiene 10 habitaciones:<br>
+  <br>
+  1 : 0 ; 1 ; 1 ; 3,4 ; 4 --Salida<br>
+  2 : 0 ; 0 ; 1 ; 4,6 ; 4 <br>
+  3 : 0 ; 0 ; 1 ; 1,4,5 ; 4 <br>
+  4 : 0 ; 0 ; 0 ; 1,2,3,9 ; 4<br>
+  5 : 0 ; 0 ; 1 ; 3,7 ; 4<br>
+  6 : 0 ; 1 ; 1 ; 7 ; 4 --Salida<br>
+  7 : 0 ; 0 ; 1 ; 5,6,8 ; 4<br>
+  8 : 0 ; 0 ; 0 ; 7,10 ; 4 <br>
+  9 : 0 ; 0 ; 1 ; 4,11 ; 4<br>
+  10 : 1 ; 0 ; 1 ; 8 ; 4 --Entrada</p>
+  <p>&nbsp;</p>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>Primero en profundidad:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Para este caso es una estrategia eficiente, consigue la solución a 
+      profundidad 7. El numero de nodos expandidos es tan solo 8, por lo que es 
+      un buen resultado.</p>
+    </blockquote>
+  </blockquote>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>Primero en anchura:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Esta solución es mas eficiente que primero en anchura, se consigue 
+      solución a profundidad 3.<br>
+      Nodos Expandidos:5</p>
+    </blockquote>
+  </blockquote>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>A*:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Esta solución es la optima, consigue la solución a profundidad 3 y 
+      expande tan sólo 3 nodos. Lleva directamente a la solución.</p>
+    </blockquote>
+  </blockquote>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>Coste uniforme:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Obtiene el mismo resultado que primero en anchura, ya que todos los 
+      operadores tienen el mismo coste. <br>
+      Nodos expandidos: 5.</p>
+    </blockquote>
+  </blockquote>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>Profundidad iterativa:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Esta solución es intermedia, también está a profundidad 3. <br>
+      Nodos expandidos: 7.</p>
+    </blockquote>
+  </blockquote>
+  <!--mstheme--></font><!--msthemelist--><table border="0" cellpadding="0" cellspacing="0" width="100%">
+    <!--msthemelist--><tr><td valign="top" width="42"><img src="_themes/arcs/arcbul1a.gif" width="15" height="15" hspace="13" alt="bullet"></td><td valign="top" width="100%"><!--mstheme--><font face="Verdana, Arial, Helvetica"><b>Escalada:</b><!--mstheme--></font><!--msthemelist--></td></tr>
+  <!--msthemelist--></table><!--mstheme--><font face="Verdana, Arial, Helvetica">
+  <blockquote>
+    <blockquote>
+      <p>Consigue un resultado similar a primero en anchura y coste uniforme.
+      <br>
+      Nodos expandidos: 5.</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
+
+<!--mstheme--></font></body>
+
+</html>

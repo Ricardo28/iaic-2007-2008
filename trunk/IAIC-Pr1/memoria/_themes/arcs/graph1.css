@@ -1,0 +1,82 @@
+.mstheme
+{
+	nav-banner-image: url(arcbanna.gif);
+	separator-image: url(arcsepa.gif);
+	list-image-1: url(arcbul1a.gif);
+	list-image-2: url(arcbul2a.gif);
+	list-image-3: url(arcbul3a.gif);
+	navbutton-horiz-pushed: url(arcnavhp.gif);
+	navbutton-horiz-normal: url(arcnavha.gif);
+	navbutton-horiz-hovered: url(arcnavhh.gif);
+	navbutton-vert-pushed: url(arcnavvp.gif);
+	navbutton-vert-normal: url(arcnavva.gif);
+	navbutton-vert-hovered: url(arcnavvh.gif);
+	navbutton-home-normal: url(archomea.gif);
+	navbutton-home-hovered: url(archomeh.gif);
+	navbutton-home-pushed: url(archomea.gif);
+	navbutton-up-normal: url(arcupa.gif);
+	navbutton-up-hovered: url(arcuph.gif);
+	navbutton-up-pushed: url(arcupa.gif);
+	navbutton-prev-normal: url(arcpreva.gif);
+	navbutton-prev-hovered: url(arcprevh.gif);
+	navbutton-prev-pushed: url(arcpreva.gif);
+	navbutton-next-normal: url(arcnexta.gif);
+	navbutton-next-hovered: url(arcnexth.gif);
+	navbutton-next-pushed: url(arcnexta.gif);
+}
+.mstheme-bannertxt
+{
+	font-family: "Times New Roman", "Times New Roman", Times;
+	font-size: 6;
+	color: rgb(255,255,255);
+}
+.mstheme-horiz-navtxt
+{
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 2;
+	font-weight: bold;
+	color: rgb(51,51,51);
+}
+.mstheme-vert-navtxt
+{
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 2;
+	font-weight: bold;
+	color: rgb(51,51,51);
+}
+.mstheme-navtxthome
+{
+	font-family: "Trebuchet MS", Arial, Helvetica;
+	font-size: 1;
+	color: rgb(102,102,0);
+}
+.mstheme-navtxtup
+{
+	font-family: "Trebuchet MS", Arial, Helvetica;
+	font-size: 1;
+	color: rgb(102,102,0);
+}
+.mstheme-navtxtprev
+{
+	font-family: "Trebuchet MS", Arial, Helvetica;
+	font-size: 1;
+	color: rgb(102,102,0);
+}
+.mstheme-navtxtnext
+{
+	font-family: "Tebuchet MS", Arial, Helvetica;
+	font-size: 1;
+	color: rgb(102,102,0);
+}
+UL
+{
+	list-style-image:url(arcbul1a.gif);
+}
+UL UL
+{
+	list-style-image:url(arcbul2a.gif);
+}
+UL UL UL
+{
+	list-style-image:url(arcbul3a.gif);
+}
