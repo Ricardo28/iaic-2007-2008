@@ -19,7 +19,7 @@ public class Visual extends javax.swing.JFrame {
     int z;
     
     public Visual() {
-        n=10;
+        n=6;
         z=0;
         dibuja();
         rellena();
@@ -27,13 +27,13 @@ public class Visual extends javax.swing.JFrame {
     public void rellena(){//esta funcion colorea y rellena las habitaciones con sus respectivos numeros
         
     	//actualizamos las casillas segun la profundiadad
-    	for (int i = 0; i < n; i++) {
+    	/*for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
             	h[i][j].setNum_hab(e.getEdificio()[i][j][z].getN());//cogemos el numero de la habitacion
             	//se supone que el color lo deben modificar los algoritmos, debemos hacer algo para que cada vez que pase 
             	//por una casilla cambie el boolean
             }
-    	}
+    	}*/
     	
     	for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
