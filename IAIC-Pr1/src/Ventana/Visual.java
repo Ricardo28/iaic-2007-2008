@@ -2,7 +2,7 @@ package Ventana;
 
 import java.util.ArrayList;
 import javax.swing.JTextField;
-
+import micromundo.EdificioCubico;
 /**
  *
  * @author  Martinete
@@ -15,21 +15,33 @@ public class Visual extends javax.swing.JFrame {
     int n;//numero de habitaciones
     Habi h[][];
     JTextField Edificio[][];//aqui se verá reflejado el edificio
-    //EdificioCubico e; incluir dentro del paquete cuando este hecha
+    EdificioCubico e; 
+    int z;
     
     public Visual() {
-        n=10;//tamaño del edificio
+        n=10;
+        z=0;
         dibuja();
         rellena();
     }
     public void rellena(){//esta funcion colorea y rellena las habitaciones con sus respectivos numeros
-        for (int i = 0; i < n; i++) {
+        
+    	//actualizamos las casillas segun la profundiadad
+    	for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if(h[i][j].get_pasar()){
+            	h[i][j].setNum_hab(e.getEdificio()[i][j][z].getN());//cogemos el numero de la habitacion
+            	//se supone que el color lo deben modificar los algoritmos, debemos hacer algo para que cada vez que pase 
+            	//por una casilla cambie el boolean
+            }
+    	}
+    	
+    	for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if(h[i][j].getPasar()){
                     Edificio[i][j].setBackground(new java.awt.Color(204, 255, 204));//pintamos la casilla
-                    Edificio[i][j].setText(""+h[i][j].get_num_hab());
+                    Edificio[i][j].setText(""+h[i][j].getNum_hab());
                 }else{
-                    Edificio[i][j].setText(""+h[i][j].get_num_hab());
+                    Edificio[i][j].setText(""+h[i][j].getNum_hab());
                     Edificio[i][j].setForeground(new java.awt.Color(0,0,0));
                     
                 }
@@ -103,7 +115,7 @@ public class Visual extends javax.swing.JFrame {
         jLabel3.setBounds(Edificio[n-1][n-1].getX()+50, 90, 120, 14);
         jDesktopPane1.add(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
-        jTextField17.setText("0");
+        jTextField17.setText(""+z);
         jTextField17.setBounds(Edificio[n-1][n-1].getX()+50, 110, 20, 20);
         jDesktopPane1.add(jTextField17, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -303,10 +315,22 @@ public class Visual extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {                                      
 // TODO add your handling code here:
+        z=z-1;
+        if(z<0){
+            z=0;
+        }
+        jTextField17.setText(""+z);
+        rellena();//actualizamos las casillas
     }                                     
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {                                      
 // TODO add your handling code here:
+        z=z+1;
+        if(z>n){
+            z=n;
+        }
+        jTextField17.setText(""+z);
+        rellena();//actualizamos las casillas
     }                                     
     
     /**
