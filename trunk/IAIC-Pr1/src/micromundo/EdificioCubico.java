@@ -121,53 +121,67 @@ public class EdificioCubico  implements State,Heuristic {
      */
     public float h() {
  	    //Heuristica: Distancia minima entre la habitacion actual y una de salida 
- 	    //mas las distancias entre las adyacentes y una de salida
- 	    Habitacion hab = (Habitacion)habitaciones.elementAt(habActual-1);
- 	    int[] lista = hab.dameAdyacentes();
- 	    int heuristica = 0;
- 	    int min = habitaciones.size();
- 	    for(int i = 0; i<habSalida.size();i++){
-             int termino = 0;
- 	    	int sal = (Integer)habSalida.elementAt(i);
- 	    	if(habActual-sal >=0)
- 	    		heuristica = habActual-sal;
- 	    	else
- 	    		heuristica = sal-habActual;
- 	    	if(heuristica >0){
- 	    		for(int j=0; j<lista.length;j++){
- 	    			if(sal-lista[j] >=0)
- 	    	    		termino+= sal-lista[j];
- 	    	    	else
- 	    	    		termino+= lista[j]-sal;
- 	    		}
- 	    	}
- 		heuristica = heuristica+termino;
- 		if(heuristica<min)
- 			min = heuristica;
- 	    }
- 	    return (min);
- 	 }
+ 	    //            mas las distancias entre las adyacentes y una de salida
+ 	    float heuristica = distanciaMinSalida(edificio[actX][actY][actZ]);
+ 	    if (edificio[actX][actY][actZ].puedeIncX())
+			heuristica += distanciaMinSalida(edificio[actX+1][actY][actZ]);
+ 	    if (edificio[actX][actY][actZ].puedeDecX())
+ 	    	heuristica += distanciaMinSalida(edificio[actX-1][actY][actZ]);
+ 	    if (edificio[actX][actY][actZ].puedeIncY())
+ 	    	heuristica += distanciaMinSalida(edificio[actX][actY+1][actZ]);
+ 	    if (edificio[actX][actY][actZ].puedeDecY())
+ 	    	heuristica += distanciaMinSalida(edificio[actX][actY-1][actZ]);
+ 	    if (edificio[actX][actY][actZ].puedeIncZ())
+ 	    	heuristica += distanciaMinSalida(edificio[actX][actY][actZ+1]);
+ 	    if (edificio[actX][actY][actZ].puedeDecX())
+ 	    	heuristica += distanciaMinSalida(edificio[actX][actY][actZ-1]);
+ 	    return heuristica;
+ 	}
+    
+    /**
+     * Calcula la distancia minima entre la habitacion ini y la salida mas cercana
+     * @param ini
+     * @return distancia minima a una salida
+     */
+    private int distanciaMinSalida(HabitacionCubica ini){
+    	int x = Math.min(ini.getX(), dimension-1-ini.getX());
+    	int y = Math.min(ini.getY(), dimension-1-ini.getY());
+    	int z = Math.min(ini.getZ(), dimension-1-ini.getZ());
+        return x + y + z;
+    }
 	
 	/**
      * genera un mensaje que indica el estado actual 
      */
-    public String toString(){
-	    String msg = "\n Habitacion actual: "+ habActual + "\n";
-	    Habitacion hab = (Habitacion)habitaciones.elementAt(habActual-1);
-	    if (hab.dameAdyacentes().length>0){
-        	if (!hab.resuelto)
-                msg+="Si se resuelve el problema se abriran:\n";
-            else
-                msg+="El problema ya se resolvio. Tiene acceso a:\n";
-		    for (int i=0;i<hab.dameAdyacentes().length;i++){
-			   int [] lista = hab.dameAdyacentes();
-			   msg += "   Habitacion "+ lista[i] + "\n";
-		    }
-	    } else {
-	    	msg+="No hay ninguna habitacion accesible desde aqui.\n";
-	   }
-	   return msg;
-    }
+	public String toString(){
+	    String msg = "\n Habitacion actual: "+actX+","+actY+","+actZ+"\n";
+	    HabitacionCubica hAct = edificio[actX][actY][actZ];
+	    if (hAct.puedeIncX()){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[0] + 
+	    		   "subes a la habitacion"+(actX+1)+","+actY+","+actZ+"\n";
+	    }
+	    if (hAct.puedeDecX()){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[1] + 
+	    		   "bajas a la habitacion"+(actX-1)+","+actY+","+actZ+"\n";
+	    }
+	    if (hAct.puedeIncY()){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[2] +
+	    	       "giras a la habitacion"+actX+","+(actY+1)+","+actZ+"\n";
+	    }
+	    if (hAct.puedeDecY()){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[3] +
+	    		   "giras a la habitacion"+(actX+1)+","+(actY-1)+","+actZ+"\n";
+	    }
+	    if (hAct.puedeIncZ()){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[4] +
+	    		   "avanzas a la habitacion"+(actX+1)+","+actY+","+(actZ+1)+"\n";
+	    }
+	    if (hAct.puedeDecZ()){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[5] +
+	 	   		   "retrocedes a la habitacion"+(actX+1)+","+actY+","+(actZ-1)+"\n";;
+	    }
+	    return msg;
+	}
 
 	public int getIniX() {
 		return iniX;
