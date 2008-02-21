@@ -26,7 +26,7 @@ public class CargarEdificio {
 	        linea = buf.readLine();
 	        int n = leerDimension(linea);
 	        linea = buf.readLine();
-	        int[] inicial = leerInicio(linea);
+	        int[] inicial = leerInicio(linea, n);
 	        edi.setDimension(n);
 	        edi.setIniX(inicial[0]);
 	        edi.setIniY(inicial[1]);
@@ -45,6 +45,7 @@ public class CargarEdificio {
 	        buf.close();
 	    }
         catch (IOException e){
+        	System.out.println("Error al cargar el archivo " + ruta);
         }
     }
     
@@ -79,10 +80,13 @@ public class CargarEdificio {
     	return dim;
     }
     
-    private int[] leerInicio(String linea){
+    private int[] leerInicio(String linea, int n){
     	String aux = eliminaEspaciosTabs(linea);
     	aux = aux.substring(7);
-    	return trataLista(aux);
+    	int[] inicio = trataLista(aux);
+    	for (int i=0; i<n; i++)
+    		inicio[i] = inicio[i]-1;
+    	return inicio;
     }
 	
 	/**
@@ -117,11 +121,4 @@ public class CargarEdificio {
 		return puertas;
 	}  
 	
-	public static void main (String[] args){
-		EdificioCubico e = new EdificioCubico();
-		CargarEdificio cargar = new CargarEdificio();
-		cargar.cargarEdificio(e, "prueba.txt");
-		e.imprime();
-	}
-    
 }

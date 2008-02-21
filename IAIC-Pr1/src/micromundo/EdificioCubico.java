@@ -46,7 +46,8 @@ public class EdificioCubico  implements State,Heuristic {
     
     private static int nodosExpandidos = 0; 
     
-    public EdificioCubico(){
+    public EdificioCubico(Controlador cont){
+    	this.cont = cont;
     }
     
     public EdificioCubico(int n, int iniX, int iniY, int iniZ, int actX, int actY, int actZ, 
@@ -83,33 +84,40 @@ public class EdificioCubico  implements State,Heuristic {
 	
 	public Enumeration<Successor> successors() {
 		Vector<Successor> successorVec = new Vector<Successor>();
-		if (edificio[actX][actY][actZ].puedeIncX()){
+		int estrategia = cont.solicitud(false);
+		if (edificio[actX][actY][actZ].puedeIncX() &&
+                resolverProblema(edificio[actX][actY][actZ].getJuegos()[0], estrategia)){
 			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX+1, actY, actZ, edificio, cont);
 			String operador = "Incrementa X -> ("+(actX+1)+","+actY+","+actZ+")";
 			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
 		}
-		if (edificio[actX][actY][actZ].puedeDecX()){
+		if (edificio[actX][actY][actZ].puedeDecX() &&
+                resolverProblema(edificio[actX][actY][actZ].getJuegos()[1], estrategia)){
 			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX-1, actY, actZ, edificio, cont);
 			String operador = "Decrementa X -> ("+(actX-1)+","+actY+","+actZ+")";
 			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
 		}
-		if (edificio[actX][actY][actZ].puedeIncY()){
+		if (edificio[actX][actY][actZ].puedeIncY() &&
+                resolverProblema(edificio[actX][actY][actZ].getJuegos()[2], estrategia)){
 			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX, actY+1, actZ, edificio, cont);
 			String operador = "Incrementa Y -> ("+actX+","+(actY+1)+","+actZ+")";
 			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
 		}
-		if (edificio[actX][actY][actZ].puedeDecY()){
+		if (edificio[actX][actY][actZ].puedeDecY() &&
+                resolverProblema(edificio[actX][actY][actZ].getJuegos()[3], estrategia)){
 			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX, actY-1, actZ, edificio, cont);
 			String operador = "Decrementa Y -> ("+actX+","+(actY-1)+","+actZ+")";
 			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
 		}
-		if (edificio[actX][actY][actZ].puedeIncZ()){
-			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX+1, actY, actZ, edificio, cont);
+		if (edificio[actX][actY][actZ].puedeIncZ() &&
+                  resolverProblema(edificio[actX][actY][actZ].getJuegos()[4], estrategia)){
+			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX, actY, actZ+1, edificio, cont);
 			String operador = "Incrementa Z -> ("+actX+","+actY+","+(actZ+1)+")";
 			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
 		}
-		if (edificio[actX][actY][actZ].puedeDecX()){
-			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX-1, actY, actZ, edificio, cont);
+		if (edificio[actX][actY][actZ].puedeDecX() &&
+                  resolverProblema(edificio[actX][actY][actZ].getJuegos()[5], estrategia)){
+			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX, actY, actZ-1, edificio, cont);
 			String operador = "Decrementa Z -> ("+actX+","+actY+","+(actZ-1)+")";
 			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
 		}
@@ -158,27 +166,27 @@ public class EdificioCubico  implements State,Heuristic {
 	    HabitacionCubica hAct = edificio[actX][actY][actZ];
 	    if (hAct.puedeIncX()){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[0] + 
-	    		   "subes a la habitacion"+(actX+1)+","+actY+","+actZ+"\n";
+	    		   " subes a la habitacion "+(actX+1)+","+actY+","+actZ+"\n";
 	    }
 	    if (hAct.puedeDecX()){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[1] + 
-	    		   "bajas a la habitacion"+(actX-1)+","+actY+","+actZ+"\n";
+	    		   " bajas a la habitacion "+(actX-1)+","+actY+","+actZ+"\n";
 	    }
 	    if (hAct.puedeIncY()){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[2] +
-	    	       "giras a la habitacion"+actX+","+(actY+1)+","+actZ+"\n";
+	    	       " giras a la habitacion "+actX+","+(actY+1)+","+actZ+"\n";
 	    }
 	    if (hAct.puedeDecY()){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[3] +
-	    		   "giras a la habitacion"+(actX+1)+","+(actY-1)+","+actZ+"\n";
+	    		   " giras a la habitacion "+actX+","+(actY-1)+","+actZ+"\n";
 	    }
 	    if (hAct.puedeIncZ()){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[4] +
-	    		   "avanzas a la habitacion"+(actX+1)+","+actY+","+(actZ+1)+"\n";
+	    		   " avanzas a la habitacion "+actX+","+actY+","+(actZ+1)+"\n";
 	    }
 	    if (hAct.puedeDecZ()){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[5] +
-	 	   		   "retrocedes a la habitacion"+(actX+1)+","+actY+","+(actZ-1)+"\n";;
+	 	   		   " retrocedes a la habitacion "+actX+","+actY+","+(actZ-1)+"\n";;
 	    }
 	    return msg;
 	}
@@ -666,7 +674,7 @@ public class EdificioCubico  implements State,Heuristic {
  	
  		 case 4:
  			 cont.mostrar("Coste Uniforme:\n");
- 			 resuelto = listPath( ( new UniformCostSearch(inicial) ).search());
+ 			 resuelto = listPath((new UniformCostSearch(inicial)).search());
  			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
  	
  			 inicial.ponNodosExpandidos(0);
@@ -674,8 +682,7 @@ public class EdificioCubico  implements State,Heuristic {
  	
  		 case 5:
  			 cont.mostrar("Profundidad iterativa:\n");
- 			 resuelto=listPath( (
- 					 new IteratedDeepeningSearch(inicial) ).search());
+ 			 resuelto=listPath((new IteratedDeepeningSearch(inicial)).search());
  			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
  	
  			 inicial.ponNodosExpandidos(0);
@@ -683,8 +690,7 @@ public class EdificioCubico  implements State,Heuristic {
  	
  		 case 3:
  			 cont.mostrar("Busqueda A*:\n");
- 			 resuelto=listPath( (
- 					 new AStarSearch(inicial) ).search());
+ 			 resuelto=listPath((new AStarSearch(inicial)).search());
  			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
  	
  			 inicial.ponNodosExpandidos(0);
@@ -692,8 +698,7 @@ public class EdificioCubico  implements State,Heuristic {
  	
  		 case 6:
  			 cont.mostrar("Escalada:\n");
- 			 resuelto = listPath( (
- 					 new GreedySearch(inicial) ).search());
+ 			 resuelto = listPath((new GreedySearch(inicial)).search());
  			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
  			 inicial.ponNodosExpandidos(0);
  			 cont.mostrar("\n");break;
