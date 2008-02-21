@@ -1,8 +1,11 @@
 package Ventana;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import micromundo.EdificioCubico;
+
 /**
  *
  * @author  Martinete
@@ -15,18 +18,18 @@ public class Visual extends javax.swing.JFrame {
     int n;//numero de habitaciones
     Habi h[][];
     JTextField Edificio[][];//aqui se verá reflejado el edificio
-    EdificioCubico e; 
+    //EdificioCubico e; 
     int z;
     
     public Visual() {
-        n=20;
-        z=0;
+        n=3;
+        z=1;
         dibuja();
         rellena();
     }
     public void rellena(){//esta funcion colorea y rellena las habitaciones con sus respectivos numeros
         
-    	//actualizamos las casillas segun la profundiadad
+        //actualizamos las casillas segun la profundiadad
     	/*for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
             	h[i][j].setNum_hab(e.getEdificio()[i][j][z].getN());//cogemos el numero de la habitacion
@@ -34,8 +37,8 @@ public class Visual extends javax.swing.JFrame {
             	//por una casilla cambie el boolean
             }
     	}*/
-    	
-    	for (int i = 0; i < n; i++) {
+        
+        for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if(h[i][j].getPasar()){
                     Edificio[i][j].setBackground(new java.awt.Color(204, 255, 204));//pintamos la casilla
@@ -52,6 +55,32 @@ public class Visual extends javax.swing.JFrame {
             }
         }
     }
+    public boolean comprueba(){//esta funcion mira si se ha seleccionado solo una opcion
+        boolean cierto=false;
+        int cont=0;
+        boolean[] vector=new boolean[6];
+        for(int i=0;i<6;i++){//inicializamos vector
+            vector[i]=false;
+        } 
+        vector[0]=jCheckBox1.isSelected();//cogemos los valores de los ckeck
+        vector[1]=jCheckBox2.isSelected();
+        vector[2]=jCheckBox3.isSelected();
+        vector[3]=jCheckBox4.isSelected();
+        vector[4]=jCheckBox5.isSelected();
+        vector[5]=jCheckBox6.isSelected();
+      
+        for(int i=0;i<6;i++){
+            if(vector[i]==true){
+                cont++;
+            }
+        }
+        if(cont==1){
+            cierto=true;
+        }else{
+            cierto=false;
+        }
+        return cierto;
+    }
     public void dibuja(){//Esta funcion pinta el edificio, es decir, el numero de casillas que tenga la matriz 
         jDesktopPane1 = new javax.swing.JDesktopPane();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -66,8 +95,17 @@ public class Visual extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField18 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jCheckBox1=new javax.swing.JCheckBox();
+        jCheckBox2=new javax.swing.JCheckBox();
+        jCheckBox3=new javax.swing.JCheckBox();
+        jCheckBox4=new javax.swing.JCheckBox();
+        jCheckBox5=new javax.swing.JCheckBox();
+        jCheckBox6=new javax.swing.JCheckBox();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        
         int x=20;//eje x
-        int y=50;//eje y
+        int y=80;//eje y
         h=new Habi[n][n];//damos tamaño a las matrices
         Edificio=new JTextField[n][n];
         for (int i = 0; i < n; i++) {//matriz de habitaciones
@@ -98,7 +136,7 @@ public class Visual extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setBounds(Edificio[n-1][n-1].getX()+50, 50, 80, 23);
+        jButton1.setBounds(Edificio[n-1][n-1].getX()+50,Edificio[0][n-1].getY(), 80, 23);
         jDesktopPane1.add(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jButton2.setText("Zoom -");
@@ -108,39 +146,96 @@ public class Visual extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBounds(Edificio[n-1][n-1].getX()+50, 150, 80, 23);
+        jButton2.setBounds(Edificio[n-1][n-1].getX()+50, Edificio[n-1][n-1].getY()+4, 80, 23);
         jDesktopPane1.add(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        
-        jLabel3.setText("Profundidad del cubo");
-        jLabel3.setBounds(Edificio[n-1][n-1].getX()+50, 90, 120, 14);
-        jDesktopPane1.add(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        
-        jTextField17.setText(""+z);
-        jTextField17.setBounds(Edificio[n-1][n-1].getX()+50, 110, 20, 20);
-        jDesktopPane1.add(jTextField17, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
+         
         //Titulo principal
         jLabel1.setText("Estado de las Habitaciones");
         jLabel1.setBounds(20, 20, 170, 14);
         jDesktopPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
+        jLabel3.setText("Profundidad del cubo");
+        jLabel3.setBounds(jLabel1.getX(), jLabel1.getY()+30, 120, 14);
+        jDesktopPane1.add(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        
+        jTextField17.setText(""+z);
+        jTextField17.setBounds(jLabel3.getX()+125,jLabel3.getY()-2, 20, 20);
+        jDesktopPane1.add(jTextField17, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+       
+        
         //Resto de componentes
         jLabel4.setText("Algoritmo Actual");
-        jLabel4.setBounds(jButton1.getX()+160, 50, 100, 14);
+        jLabel4.setBounds(jButton1.getX()+200, 50, 100, 14);
         jDesktopPane1.add(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
-        jTextField18.setBounds(jButton1.getX()+160, 70, 160, 20);
+        jTextField18.setBounds(jButton1.getX()+200, 70, 160, 20);
         jDesktopPane1.add(jTextField18, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
+        
+        jCheckBox1.setText("Profundidad");
+        jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox1.setBounds(jTextField18.getX(),jTextField18.getY()+35, 90, 15);
+        jDesktopPane1.add(jCheckBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox2.setText("Anchura");
+        jCheckBox2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox2.setBounds(jTextField18.getX(), jCheckBox1.getY()+20, 80, 15);
+        jDesktopPane1.add(jCheckBox2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox3.setText("aEstrella");
+        jCheckBox3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox3.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox3.setBounds(jTextField18.getX(),jCheckBox2.getY()+20, 80, 15);
+        jDesktopPane1.add(jCheckBox3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox4.setText("Uniforme");
+        jCheckBox4.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox4.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox4.setBounds(jTextField18.getX(), jCheckBox3.getY()+20, 80, 15);
+        jDesktopPane1.add(jCheckBox4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox5.setText("Profundidad iterativa");
+        jCheckBox5.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox5.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox5.setBounds(jTextField18.getX(), jCheckBox4.getY()+20, 150, 15);
+        jDesktopPane1.add(jCheckBox5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox6.setText("Escalada");
+        jCheckBox6.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox6.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox6.setBounds(jTextField18.getX(), jCheckBox5.getY()+20, 80, 15);
+        jDesktopPane1.add(jCheckBox6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        
+        jButton3.setText("Abrir");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+        jButton3.setBounds(Edificio[n-1][n-1].getX(),jButton2.getY()+60, 90, 23);
+        jDesktopPane1.add(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jButton4.setText("Ejecutar");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
+        jButton4.setBounds(jButton3.getX()+100, jButton2.getY()+60, 90, 23);
+        jDesktopPane1.add(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        
         jLabel2.setText("Consola");
-        jLabel2.setBounds(jButton1.getX()+160, 140, 140, 14);
+        jLabel2.setBounds(20,jButton3.getY()+40, 140, 20);
         jDesktopPane1.add(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jScrollPane1.setBounds(jButton1.getX()+160, 160, 350, 300);
+        jScrollPane1.setBounds(20,jLabel2.getY()+20, 570, 280);
         jDesktopPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,6 +287,14 @@ public class Visual extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField18 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         jDesktopPane1.setBackground(new java.awt.Color(204, 204, 255));
@@ -274,7 +377,7 @@ public class Visual extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jScrollPane1.setBounds(340, 160, 350, 300);
+        jScrollPane1.setBounds(20, 250, 570, 260);
         jDesktopPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLabel1.setText("Estado de las Habitaciones");
@@ -282,29 +385,85 @@ public class Visual extends javax.swing.JFrame {
         jDesktopPane1.add(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLabel2.setText("Consola");
-        jLabel2.setBounds(340, 140, 140, 14);
+        jLabel2.setBounds(20, 230, 140, 20);
         jDesktopPane1.add(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jTextField17.setText("0");
-        jTextField17.setBounds(160, 110, 20, 20);
+        jTextField17.setBounds(270, 80, 20, 20);
         jDesktopPane1.add(jTextField17, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLabel3.setText("Profundidad del cubo");
         jLabel3.setBounds(160, 90, 120, 14);
         jDesktopPane1.add(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
-        jTextField18.setBounds(340, 70, 160, 20);
+        jTextField18.setBounds(340, 40, 160, 20);
         jDesktopPane1.add(jTextField18, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         jLabel4.setText("Algoritmo Actual");
-        jLabel4.setBounds(340, 50, 80, 14);
+        jLabel4.setBounds(340, 20, 80, 14);
         jDesktopPane1.add(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox1.setText("Profundidad");
+        jCheckBox1.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox1.setBounds(340, 80, 80, 15);
+        jDesktopPane1.add(jCheckBox1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox2.setText("Anchura");
+        jCheckBox2.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox2.setBounds(340, 100, 80, 15);
+        jDesktopPane1.add(jCheckBox2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox3.setText("aEstrella");
+        jCheckBox3.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox3.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox3.setBounds(340, 120, 80, 15);
+        jDesktopPane1.add(jCheckBox3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox4.setText("Uniforme");
+        jCheckBox4.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox4.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox4.setBounds(340, 140, 80, 15);
+        jDesktopPane1.add(jCheckBox4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox5.setText("Profundidad iterativa");
+        jCheckBox5.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox5.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox5.setBounds(340, 160, 130, 15);
+        jDesktopPane1.add(jCheckBox5, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jCheckBox6.setText("Escalada");
+        jCheckBox6.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        jCheckBox6.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jCheckBox6.setBounds(340, 180, 80, 15);
+        jDesktopPane1.add(jCheckBox6, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jButton3.setText("Abrir");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
+
+        jButton3.setBounds(110, 210, 70, 23);
+        jDesktopPane1.add(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        jButton4.setText("Ejecutar");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
+
+        jButton4.setBounds(230, 210, 73, 23);
+        jDesktopPane1.add(jButton4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
+            .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -313,14 +472,24 @@ public class Visual extends javax.swing.JFrame {
         pack();
     }// </editor-fold>                        
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {                                      
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {                                      
 // TODO add your handling code here:
-        z=z-1;
-        if(z<0){
-            z=0;
+        if(!comprueba()){
+            JOptionPane.showMessageDialog(this,"Seleccione solo una opción","Error",JOptionPane.ERROR_MESSAGE);
+            jCheckBox1.setSelected(false);//deseleccionamos todas las opciones para que vuelva elegir
+            jCheckBox2.setSelected(false);
+            jCheckBox3.setSelected(false);
+            jCheckBox4.setSelected(false);
+            jCheckBox5.setSelected(false);  
+            jCheckBox6.setSelected(false); 
+            
+        }else{
+            System.out.println("OK");
         }
-        jTextField17.setText(""+z);
-        rellena();//actualizamos las casillas
+    }                                     
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {                                      
+// TODO add your handling code here:
     }                                     
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {                                      
@@ -328,6 +497,16 @@ public class Visual extends javax.swing.JFrame {
         z=z+1;
         if(z>n){
             z=n;
+        }
+        jTextField17.setText(""+z);
+        rellena();//actualizamos las casillas
+    }                                     
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {                                      
+// TODO add your handling code here:
+        z=z-1;
+        if(z==0){
+            z=1;
         }
         jTextField17.setText(""+z);
         rellena();//actualizamos las casillas
@@ -347,6 +526,14 @@ public class Visual extends javax.swing.JFrame {
     // Variables declaration - do not modify                     
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBox6;
     private javax.swing.JDesktopPane jDesktopPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
