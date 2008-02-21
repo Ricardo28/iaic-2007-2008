@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import micromundo.*;
+
 import Busquedalaberinto.CargarLaberinto;
 import Busquedalaberinto.Habitacion;
 
@@ -36,11 +38,11 @@ public class Vista extends JFrame{
 	 */
 	public Vista() {
 		this.setSize(1025,735);
-                 setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 		OyenteJuego oyenteJuego=new OyenteJuego();
 		OyenteAbrir oyenteAbrir=new OyenteAbrir();
 		JPanel panel= new JPanel();
-		area=new JTextArea();
+		area = new JTextArea();
 		area.setEditable(false);
 		JScrollPane scroll=new JScrollPane(area);
 		panel.add(scroll);
@@ -95,12 +97,12 @@ public class Vista extends JFrame{
 	        if (opcion == JFileChooser.APPROVE_OPTION){
 	        	File archivo = selector.getSelectedFile();
 	        	String ruta = archivo.getAbsolutePath();	        	
-	        	Vector<Habitacion> habitaciones = new Vector<Habitacion>();
-	        	CargarLaberinto f = new CargarLaberinto();
+	        	CargarEdificio c = new CargarEdificio();
 	        	try  {
-	        		habitaciones = f.cargarTablero(ruta);
+	        		EdificioCubico edi = new EdificioCubico(controlador);
+	        		c.cargarEdificio(edi, ruta);
 	        		jugar.setEnabled(true);
-	        		controlador.cargar(habitaciones);
+	        		controlador.cargar(edi);
 	        	} catch(Exception ex){
 	        		mostrar("Imposible abrir el archivo");
 	        	}
@@ -241,8 +243,7 @@ public class Vista extends JFrame{
 			} else if(!uno&&!dos&&!tres&&!cuatro&&!cinco&&seis){
 				mostrar("EMPIEZA EL LABERINTO\n");
 				mostrar("busqueda en escalada\n");
-				// TODO no seria un 6?
-				controlador.jugar(2);
+				controlador.jugar(6);
 			} else{
 				JOptionPane.showMessageDialog(this, "Seleccione una opcion", "Info", JOptionPane.INFORMATION_MESSAGE);
 				recursion();

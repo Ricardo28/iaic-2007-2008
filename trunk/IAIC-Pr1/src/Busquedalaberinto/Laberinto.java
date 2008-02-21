@@ -107,7 +107,7 @@ public class Laberinto implements State,Heuristic {
        	}
        	if(resuelto){
        		String msg = "";
-       		cont.mostrar("Se han abierto las puertas a las habitaciones:  ");
+       		cont.mostrar("Se han abierto las puertas a las habitaciones: ");
        		for (int i=0;i<hab.dameAdyacentes().length;i++){
        			int [] lista = hab.dameAdyacentes();
        			if (i<hab.dameAdyacentes().length-1)
