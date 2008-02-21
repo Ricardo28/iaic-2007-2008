@@ -12,18 +12,18 @@ public class HabitacionCubica {
 	/**
 	 * Dimensiones del edificio cubico 
 	 */
-	private int n; 
+	private int n;
 	
-	private int juego;
+	private int[] juegos;
 	
 	private boolean resuelto;
 	
-	public HabitacionCubica(int x, int y, int z, int n, int juego){
+	public HabitacionCubica(int x, int y, int z, int n, int[] juegos){
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.n = n;
-		this.juego = juego;
+		this.juegos = juegos;
 		resuelto = false;
 	}
 
@@ -76,15 +76,15 @@ public class HabitacionCubica {
 	/**
 	 * @return the juego
 	 */
-	public int getJuego() {
-		return juego;
+	public int[] getJuegos() {
+		return juegos;
 	}
 
 	/**
 	 * @param juego the juego to set
 	 */
-	public void setJuego(int juego) {
-		this.juego = juego;
+	public void setJuego(int[] juegos) {
+		this.juegos = juegos;
 	}
 
 	/**
