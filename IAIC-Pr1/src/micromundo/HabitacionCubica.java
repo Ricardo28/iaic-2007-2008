@@ -26,6 +26,13 @@ public class HabitacionCubica {
 		this.juegos = juegos;
 		resuelto = false;
 	}
+	
+	public HabitacionCubica clone(){
+		int[] j = new int[6];
+		for (int i=0; i<6; i++)
+			j[i] = juegos[i];
+		return new HabitacionCubica(x, y, z, n, j);
+	}
 
 	/**
 	 * @return the x

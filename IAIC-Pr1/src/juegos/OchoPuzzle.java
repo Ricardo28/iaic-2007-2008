@@ -1,13 +1,11 @@
 package juegos;
 
-import aima.search.*;
+import aima.search.State;
+import aima.search.Heuristic;
+import aima.search.Successor;
+
 import java.util.*;
 
-/**
- * 
- * @author Usuario
- *
- */
 public class OchoPuzzle implements State,Heuristic{
 	
 	private static int nodosExpandidos = 0;
@@ -35,27 +33,13 @@ public class OchoPuzzle implements State,Heuristic{
 	}
 	
 	/**
-	 * indica si un estado es valido
-	 * @return true si es valido false en caso contrario
-	 */
-	protected boolean isValid(){
-		return true;
-	}
-	
-	/**
 	 * indica si el estado es el estado final
 	 * @return true en caso de ser el final de la busqueda false en caso contraio
 	 */
 	public boolean isGoal(){
-		return 	tablero[0][0] == 1 &&
-			 	tablero[0][1] == 2 && 
-			 	tablero[0][2] == 3 &&
-			 	tablero[1][0] == 8 &&
-			 	tablero[1][1] == 0 &&  
-			 	tablero[1][2] == 4 &&  
-			 	tablero[2][0] == 7 &&
-			 	tablero[2][1] == 6 &&   
-			 	tablero[2][2] == 5;
+		return 	tablero[0][0] == 1 && tablero[0][1] == 2 && tablero[0][2] == 3 &&
+				tablero[1][0] == 8 && tablero[1][1] == 0 && tablero[1][2] == 4 &&  
+			 	tablero[2][0] == 7 && tablero[2][1] == 6 && tablero[2][2] == 5;
 	}
 	
 	 /**
@@ -111,69 +95,34 @@ public class OchoPuzzle implements State,Heuristic{
 	 			opAplicado = true;
 	 		}
 	 		
-	  	 	if(opAplicado && nuevoEstado.isValid()){ // && !contains(successorVec,(OchoPuzzle)nuevoEstado)){
-	  	 		/*System.out.println("Padre:" + this.toString());
-	 	 		System.out.println(nuevoEstado.toString());
-	 	 		System.out.println(nuevoEstado.h());*/
-	  	 		successorVec.addElement(
-			  		new Successor(
-                          (OchoPuzzle)nuevoEstado, operador, 1 )
-			 );
+	  	 	if (opAplicado){
+	  	 		successorVec.addElement(new Successor((OchoPuzzle)nuevoEstado, operador, 1));
 			} 
-	 	}// end del for
-	 	
+	 	}
 	 	return successorVec.elements();
-	 }// end del metodo.
-	 
-	 boolean contains(Vector<OchoPuzzle> v, OchoPuzzle o){
-		 boolean contiene = false;
-		 int tam = v.size();
-		 for (int i = 0; i<tam; i++){
-			 if(this.iguales(v.elementAt(i))){
-				 contiene = true;
-				 break;
-			 }
-		}
-		return contiene;
 	 }
 	 
 	 /**
-	  * dice si dos ocho puzzles son iguales en el estado en el que estan
-	  * @param o ochopuzzle correspondiente
-	  * @return true en caso de ser iguales false en caso contrario
-	  */
-	 boolean iguales(OchoPuzzle o){
-		 boolean igual = false;
-		 for (int i=0;i<3;i++){
-			 for(int j=0;j<3;j++){
-				 igual = tablero[i][j]==o.tablero[i][j];
-				 if(igual)break;
-			 }
-		 }
-		 return igual;
-	 }
-	 
-	 /**
-	  * genera la heuristica para este problema
+	  * Genera la heuristica para este problema, cuenta fichas descolocadas
 	  * @return devuelve la heuristica correpondiente float
 	  */
 	 public float h() {
 	 	float hVal = 0;
-	 	if(tablero[0][0]!=1)
+	 	if (tablero[0][0] != 1)
 	 		hVal++;
-	 	if(tablero[0][1]!=2)
+	 	if (tablero[0][1] != 2)
 	 		hVal++;
-	 	if(tablero[0][2]!=3)
+	 	if (tablero[0][2] != 3)
 	 		hVal++;
-	 	if(tablero[1][0]!=8)
+	 	if (tablero[1][0] != 8)
 	 		hVal++;
-	 	if(tablero[1][2]!=4)
+	 	if (tablero[1][2] != 4)
 	 		hVal++;
-	 	if(tablero[2][0]!=7)
+	 	if (tablero[2][0] != 7)
 	 		hVal++;
-	 	if(tablero[2][1]!=6)
+	 	if (tablero[2][1] != 6)
 	 		hVal++;
-	 	if(tablero[2][2]!=5)
+	 	if (tablero[2][2] != 5)
 	 		hVal++;
 	 		
 	 	return hVal;

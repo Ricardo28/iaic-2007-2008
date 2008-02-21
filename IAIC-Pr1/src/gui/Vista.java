@@ -2,7 +2,6 @@ package gui;
 
 import programa.*;
 import java.io.File;
-import java.util.Vector;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -11,9 +10,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import micromundo.*;
-
-import Busquedalaberinto.CargarLaberinto;
-import Busquedalaberinto.Habitacion;
 
 public class Vista extends JFrame{
 	
@@ -211,38 +207,38 @@ public class Vista extends JFrame{
 			boolean seis = solicitud.escalada.isSelected();
 			//aplicacion ejecutar con busqueda 1
 			if (uno&&!dos&&!tres&&!cuatro&&!cinco&&!seis){
-				mostrar("EMPIEZA EL LABERINTO\n");
-				mostrar("busqueda en profundidad\n");
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda en profundidad\n");
 				controlador.jugar(1);
 				
 			//aplicacion ejecutar con busqueda 2
 			} else if(!uno&&dos&&!tres&&!cuatro&&!cinco&&!seis){
-				mostrar("EMPIEZA EL LABERINTO\n");
-				mostrar("busqueda en anchura\n");
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda en anchura\n");
 				controlador.jugar(2);
 			
 			//aplicacion ejecutar con busqueda 3
 			} else if(!uno&&!dos&&tres&&!cuatro&&!cinco&&!seis){
-				mostrar("EMPIEZA EL LABERINTO\n");
-				mostrar("busqueda en A*\n");
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda en A*\n");
 				controlador.jugar(3);
 			
 			//aplicacion ejecutar con busqueda 4
 			} else if(!uno&&!dos&&!tres&&cuatro&&!cinco&&!seis){
-				mostrar("EMPIEZA EL LABERINTO\n");
-				mostrar("busqueda uniforme\n");
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda uniforme\n");
 				controlador.jugar(4);
 				
 			//aplicacion ejecutar con busqueda 5
 			} else if(!uno&&!dos&&!tres&&!cuatro&&cinco&&!seis){
-				mostrar("EMPIEZA EL LABERINTO\n");
-				mostrar("busqueda en profundidad iterativa\n");
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda en profundidad iterativa\n");
 				controlador.jugar(5);
 				
 			//aplicacion ejecutar con busqueda 6
 			} else if(!uno&&!dos&&!tres&&!cuatro&&!cinco&&seis){
-				mostrar("EMPIEZA EL LABERINTO\n");
-				mostrar("busqueda en escalada\n");
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda en escalada\n");
 				controlador.jugar(6);
 			} else{
 				JOptionPane.showMessageDialog(this, "Seleccione una opcion", "Info", JOptionPane.INFORMATION_MESSAGE);

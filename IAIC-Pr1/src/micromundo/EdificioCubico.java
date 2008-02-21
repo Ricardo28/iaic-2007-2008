@@ -4,18 +4,9 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
-
-import juegos.CabraLoboCol;
-import juegos.Jarras;
-import juegos.MisionerosYCanibales;
-import juegos.Mono;
-import juegos.OchoPuzzle;
-import juegos.Palillos;
+import juegos.*;
 
 import programa.Controlador;
-import Busquedalaberinto.Habitacion;
-import Busquedalaberinto.Laberinto;
 import aima.search.AStarSearch;
 import aima.search.BreadthFirstSearch;
 import aima.search.DepthBoundedSearch;
@@ -115,7 +106,7 @@ public class EdificioCubico  implements State,Heuristic {
 			String operador = "Incrementa Z -> ("+actX+","+actY+","+(actZ+1)+")";
 			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
 		}
-		if (edificio[actX][actY][actZ].puedeDecX() &&
+		if (edificio[actX][actY][actZ].puedeDecZ() &&
                   resolverProblema(edificio[actX][actY][actZ].getJuegos()[5], estrategia)){
 			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX, actY, actZ-1, edificio, cont);
 			String operador = "Decrementa Z -> ("+actX+","+actY+","+(actZ-1)+")";
@@ -141,7 +132,7 @@ public class EdificioCubico  implements State,Heuristic {
  	    	heuristica += distanciaMinSalida(edificio[actX][actY-1][actZ]);
  	    if (edificio[actX][actY][actZ].puedeIncZ())
  	    	heuristica += distanciaMinSalida(edificio[actX][actY][actZ+1]);
- 	    if (edificio[actX][actY][actZ].puedeDecX())
+ 	    if (edificio[actX][actY][actZ].puedeDecZ())
  	    	heuristica += distanciaMinSalida(edificio[actX][actY][actZ-1]);
  	    return heuristica;
  	}
@@ -244,7 +235,13 @@ public class EdificioCubico  implements State,Heuristic {
 	}
 
 	public void setEdificio(HabitacionCubica[][][] edificio) {
-		this.edificio = edificio;
+		int n = edificio.length;
+		HabitacionCubica[][][] edi = new HabitacionCubica[n][n][n];
+		for (int i=0; i<n; i++)
+			for (int j=0; j<n; j++)
+				for (int k=0; k<n; k++)
+					edi[i][j][k] = edificio[i][j][k].clone();
+		this.edificio = edi;
 	}
 
 	public Controlador getCont() {
@@ -277,7 +274,7 @@ public class EdificioCubico  implements State,Heuristic {
 		for (int i=0; i<dimension; i++)
 			for (int j=0; j<dimension; j++)
 				for (int k=0; k<dimension; k++){
-					System.out.println((i+1)+","+(j+1)+","+(k+1)+"\t:\t"+
+					System.out.println(i+","+j+","+k+"\t:\t"+
 							edificio[i][j][k].getJuegos()[0]+",\t"+
 							edificio[i][j][k].getJuegos()[1]+",\t"+
 							edificio[i][j][k].getJuegos()[2]+",\t"+
@@ -318,7 +315,7 @@ public class EdificioCubico  implements State,Heuristic {
      * @param e estrategia utilizada para solucionar el problema de las jarras
      * @return true si se resuleve false en caso contrario
      */
-    public boolean resolverJarras(int e){
+    private boolean resolverJarras(int e){
  	   Jarras inicial = new Jarras(0,0);
 
  	   boolean resuelto = true;
@@ -382,7 +379,7 @@ public class EdificioCubico  implements State,Heuristic {
      * @param e indica la estrategia usada para resilverlo
      * @return true en casa de tener solucion false en caso contrario
      */
-    public boolean resolverOchoPuzzle(int e){
+    private boolean resolverOchoPuzzle(int e){
  	   
  	   	int [][] tabla = new int [3][3];
  		 tabla[0][0] = 1;
@@ -457,7 +454,7 @@ public class EdificioCubico  implements State,Heuristic {
      * @param e indica la estrategia usada para resilverlo
      * @return true en casa de tener solucion false en caso contrario
      */
-    public boolean resolverMisionerosyCanibales(int e){
+    private boolean resolverMisionerosyCanibales(int e){
  	   
  	   MisionerosYCanibales inicial = new MisionerosYCanibales(3,3,1);
  	   boolean resuelto = true;
@@ -521,7 +518,7 @@ public class EdificioCubico  implements State,Heuristic {
      * @param e indica la estrategia usada para resilverlo
      * @return true en casa de tener solucion false en caso contrario
      */  
-    public boolean resolverCabraLoboCol(int e){
+    private boolean resolverCabraLoboCol(int e){
  	   
  		CabraLoboCol inicial = new CabraLoboCol(1,1,1,1);
 
@@ -586,7 +583,7 @@ public class EdificioCubico  implements State,Heuristic {
  	 * @param e indica la estrategia usada para resilverlo
  	 * @return true en casa de tener solucion false en caso contrario
  	 */
- 	public boolean resolverMono(int e){
+    private boolean resolverMono(int e){
  		   
  		Mono inicial = new Mono(0,false,1,false);
  		boolean resuelto = true;
@@ -650,7 +647,7 @@ public class EdificioCubico  implements State,Heuristic {
  	 * @param e indica la estrategia usada para resilverlo
  	 * @return true en casa de tener solucion false en caso contrario
  	 */
- 	public boolean resolverPalillos(int e){
+    private boolean resolverPalillos(int e){
  		   
  		Palillos inicial = new Palillos(6,5);
  		boolean resuelto = true;
@@ -706,7 +703,7 @@ public class EdificioCubico  implements State,Heuristic {
  	  return resuelto;
  	}
  	
- 	public boolean listPath(SearchNode node) {
+    private boolean listPath(SearchNode node) {
         ArrayList<String> camino = new ArrayList<String>();
  	    if (node == null) {
  		    cont.mostrar("No hay solución");

@@ -120,6 +120,14 @@ public class CargarEdificio {
 			i++;
 		}
 		return puertas;
-	}  
+	}
+	
+	public static void main(String[] args){
+		EdificioCubico edi = new EdificioCubico(null);
+		CargarEdificio ce = new CargarEdificio();
+		ce.cargarEdificio(edi, "prueba.txt");
+		edi.imprime();
+		System.out.println(edi.h());
+	}
 	
 }
