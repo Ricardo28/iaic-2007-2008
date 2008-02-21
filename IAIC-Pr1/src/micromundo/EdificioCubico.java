@@ -703,28 +703,28 @@ public class EdificioCubico  implements State,Heuristic {
  	
  	public boolean listPath(SearchNode node) {
         ArrayList<String> camino = new ArrayList<String>();
- 	   if (node == null) {
- 		   cont.mostrar("No hay solución");
- 		   return false;
- 	   }
- 	   String linea = "";
- 	   while (node.getParent()!=null) {
- 		   linea =  "Estado: " + node.getState() +
-            				   " Profundidad: " + node.getDepth() +
-            				   " Coste: " + node.getPathCost() +
-            				   " Operador: " + node.getAppliedOp();
- 		   camino.add("\n"+linea);
- 		   node = node.getParent();
- 	   }
+ 	    if (node == null) {
+ 		    cont.mostrar("No hay solución");
+ 		    return false;
+ 	    }
+ 	    String linea = "";
+ 	    while (node.getParent()!=null) {
+ 		    linea =  "Estado: " + node.getState() +
+            				  " Profundidad: " + node.getDepth() +
+            				  " Coste: " + node.getPathCost() +
+            				  " Operador: " + node.getAppliedOp();
+ 		    camino.add("\n"+linea);
+ 		    node = node.getParent();
+ 	    }
  	  
- 	   linea = ( "\nESTADO INICIAL: " + node.getState());  
- 	   camino.add(linea);
- 	   for(int j=camino.size()-1; j>=0;j--){
- 		   cont.mostrar((String)camino.get(j));
- 	   }
- 	   cont.mostrar("\n");
- 	   cont.mostrar("\n");
- 	   return true;
+ 	    linea = ( "\nESTADO INICIAL: " + node.getState());  
+ 	    camino.add(linea);
+ 	    for (int j=camino.size()-1; j>=0;j--){
+ 		    cont.mostrar((String)camino.get(j));
+ 	    }
+ 	    cont.mostrar("\n");
+ 	    cont.mostrar("\n");
+ 	    return true;
     }
    
 }
