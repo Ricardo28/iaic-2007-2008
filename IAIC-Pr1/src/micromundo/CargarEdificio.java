@@ -39,7 +39,7 @@ public class CargarEdificio {
 	        for (int i=0; i<n*n*n; i++){
 	            linea = buf.readLine();
 	        	hab = procesar(linea, n);
-	            habs[hab.getX()-1][hab.getY()-1][hab.getZ()-1] = hab;
+	            habs[hab.getX()][hab.getY()][hab.getZ()] = hab;
 	        }
 	        edi.setEdificio(habs);
 	        buf.close();
@@ -61,7 +61,8 @@ public class CargarEdificio {
 		// Posicion
     	int dosPuntos = linea.indexOf(':');
     	int[] hab = trataLista(linea.substring(0, dosPuntos));
-    	
+    	for (int i=0; i<n; i++)
+    		hab[i] = hab[i] - 1;
     	// Juegos de cada puerta
     	int[] juegos = trataLista(linea.substring(dosPuntos+1));
 		
