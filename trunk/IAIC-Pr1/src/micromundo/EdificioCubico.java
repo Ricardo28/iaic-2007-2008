@@ -1,12 +1,31 @@
 package micromundo;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
+
+import juegos.CabraLoboCol;
+import juegos.Jarras;
+import juegos.MisionerosYCanibales;
+import juegos.Mono;
+import juegos.OchoPuzzle;
+import juegos.Palillos;
+
 import programa.Controlador;
+import Busquedalaberinto.Habitacion;
+import Busquedalaberinto.Laberinto;
+import aima.search.AStarSearch;
+import aima.search.BreadthFirstSearch;
+import aima.search.DepthBoundedSearch;
+import aima.search.GreedySearch;
 import aima.search.Heuristic;
+import aima.search.IteratedDeepeningSearch;
+import aima.search.SearchNode;
 import aima.search.State;
 import aima.search.Successor;
+import aima.search.UniformCostSearch;
 
 /**
  * 
@@ -55,10 +74,13 @@ public class EdificioCubico  implements State,Heuristic {
 		nodosExpandidos = n;
 	}
 	   
+	/**
+	 * Consulta si una habitacion es salida, si es una esquina del edificio cubico
+	 */
 	public boolean isGoal() {
 		return edificio[actX][actY][actZ].esSalida();
 	}
-
+	
 	public Enumeration<Successor> successors() {
 		Vector<Successor> successorVec = new Vector<Successor>();
 		if (edificio[actX][actY][actZ].puedeIncX()){
@@ -94,18 +116,58 @@ public class EdificioCubico  implements State,Heuristic {
 		return successorVec.elements();
 	}
 
-	public float h() {
-		// TODO hacer la heuristica
-		return 0;
-	}
+	/**
+     * genera la heuristica del estado actual
+     */
+    public float h() {
+ 	    //Heuristica: Distancia minima entre la habitacion actual y una de salida 
+ 	    //mas las distancias entre las adyacentes y una de salida
+ 	    Habitacion hab = (Habitacion)habitaciones.elementAt(habActual-1);
+ 	    int[] lista = hab.dameAdyacentes();
+ 	    int heuristica = 0;
+ 	    int min = habitaciones.size();
+ 	    for(int i = 0; i<habSalida.size();i++){
+             int termino = 0;
+ 	    	int sal = (Integer)habSalida.elementAt(i);
+ 	    	if(habActual-sal >=0)
+ 	    		heuristica = habActual-sal;
+ 	    	else
+ 	    		heuristica = sal-habActual;
+ 	    	if(heuristica >0){
+ 	    		for(int j=0; j<lista.length;j++){
+ 	    			if(sal-lista[j] >=0)
+ 	    	    		termino+= sal-lista[j];
+ 	    	    	else
+ 	    	    		termino+= lista[j]-sal;
+ 	    		}
+ 	    	}
+ 		heuristica = heuristica+termino;
+ 		if(heuristica<min)
+ 			min = heuristica;
+ 	    }
+ 	    return (min);
+ 	 }
 	
 	/**
-	  * genera un mensaje que indica el estado actual 
-	  */
-	 public String toString(){
-		 String msg = "\n Habitacion actual: ("+ actX + "," + actY + "," + actZ + ")\n";
-		 return msg;
-	 }
+     * genera un mensaje que indica el estado actual 
+     */
+    public String toString(){
+	    String msg = "\n Habitacion actual: "+ habActual + "\n";
+	    Habitacion hab = (Habitacion)habitaciones.elementAt(habActual-1);
+	    if (hab.dameAdyacentes().length>0){
+        	if (!hab.resuelto)
+                msg+="Si se resuelve el problema se abriran:\n";
+            else
+                msg+="El problema ya se resolvio. Tiene acceso a:\n";
+		    for (int i=0;i<hab.dameAdyacentes().length;i++){
+			   int [] lista = hab.dameAdyacentes();
+			   msg += "   Habitacion "+ lista[i] + "\n";
+		    }
+	    } else {
+	    	msg+="No hay ninguna habitacion accesible desde aqui.\n";
+	   }
+	   return msg;
+    }
 
 	public int getIniX() {
 		return iniX;
@@ -189,17 +251,466 @@ public class EdificioCubico  implements State,Heuristic {
 		System.out.println("Dimension: " + dimension);
 		System.out.println("Inicio:\t" + iniX + "," + iniY + "," + iniZ);
 		System.out.println("Actual:\t" + actX + "," + actY + "," + actZ);
+		System.out.println("Hab\tJuegos (arriba,\tabajo,\tizq,\tder,\tdel,\tdet)");
 		for (int i=0; i<dimension; i++)
 			for (int j=0; j<dimension; j++)
 				for (int k=0; k<dimension; k++){
 					System.out.println((i+1)+","+(j+1)+","+(k+1)+"\t:\t"+
-							edificio[i][j][k].getJuegos()[0]+","+
-							edificio[i][j][k].getJuegos()[1]+","+
-							edificio[i][j][k].getJuegos()[2]+","+
-							edificio[i][j][k].getJuegos()[3]+","+
-							edificio[i][j][k].getJuegos()[4]+","+
+							edificio[i][j][k].getJuegos()[0]+",\t"+
+							edificio[i][j][k].getJuegos()[1]+",\t"+
+							edificio[i][j][k].getJuegos()[2]+",\t"+
+							edificio[i][j][k].getJuegos()[3]+",\t"+
+							edificio[i][j][k].getJuegos()[4]+",\t"+
 							edificio[i][j][k].getJuegos()[5]);
 				}
 	}
+	
+	/**
+     * indica si un estado es valido o no
+     * @return true si es valido false en caso contrario
+     */
+    protected boolean isValid(){
+        return true;
+    }
+    
+    /**
+     * indica que tipo de juego hay que resolver 
+     * @param numJuego indica el juego a resolver
+     * @param estrategia indica la estrategia ocn la que hay que resolverlo
+     * @return true si se ha resuleto false en caso contrario
+     */
+    public boolean resolverProblema(int numJuego,int estrategia){
+ 	   switch(numJuego){
+ 	   case 1: {return resolverOchoPuzzle(estrategia);}
+ 	   case 2: {return resolverMisionerosyCanibales(estrategia);}
+ 	   case 3: {return resolverCabraLoboCol(estrategia);}
+ 	   case 4: {return resolverMono(estrategia);}
+ 	   case 5: {return resolverPalillos(estrategia);}
+ 	   case 6: {return resolverJarras(estrategia);}
+ 	   default: return false;
+ 	   }
+    }
+    
+    /**
+     * resuleve el problema de las jarras
+     * @param e estrategia utilizada para solucionar el problema de las jarras
+     * @return true si se resuleve false en caso contrario
+     */
+    public boolean resolverJarras(int e){
+ 	   Jarras inicial = new Jarras(0,0);
 
+ 	   boolean resuelto = true;
+ 		switch(e){
+ 		 case 1:
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("Primero en profundidad(profunidad máxima: 7):\n");
+ 			 resuelto=listPath( ( new DepthBoundedSearch(inicial,7) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 2:
+ 			 cont.mostrar("Primero en anchura:\n");
+ 			 resuelto=listPath( ( new BreadthFirstSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 4:
+ 			 cont.mostrar("Coste Uniforme:\n");
+ 			 resuelto = listPath( ( new UniformCostSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 5:
+ 			 cont.mostrar("Profundidad iterativa:\n");
+ 			 resuelto=listPath( (
+ 					 new IteratedDeepeningSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 3:
+ 			 cont.mostrar("Busqueda A*:\n");
+ 			 resuelto=listPath( (
+ 					 new AStarSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 6:
+ 			 cont.mostrar("Escalada:\n");
+ 			 resuelto = listPath( (
+ 					 new GreedySearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 		 }
+       return resuelto;
+    }
+    
+    /**
+     * resuleve el problema de ochoPuzzle
+     * @param e indica la estrategia usada para resilverlo
+     * @return true en casa de tener solucion false en caso contrario
+     */
+    public boolean resolverOchoPuzzle(int e){
+ 	   
+ 	   	int [][] tabla = new int [3][3];
+ 		 tabla[0][0] = 1;
+ 		 tabla[0][1] = 3;
+ 		 tabla[0][2] = 4;
+ 		 tabla[1][0] = 8;
+ 		 tabla[1][1] = 0;
+ 		 tabla[1][2] = 2;
+ 		 tabla[2][0] = 7;
+ 		 tabla[2][1] = 6;
+ 		 tabla[2][2] = 5;
+ 		 
+ 		 OchoPuzzle inicial = new OchoPuzzle(tabla,1,1);
+ 		 boolean resuelto = true;
+ 			switch(e){
+ 			 case 1:
+ 				 inicial.ponNodosExpandidos(0);
+ 				 cont.mostrar("Primero en profundidad(profunidad máxima: 7):\n");
+ 				 resuelto=listPath( ( new DepthBoundedSearch(inicial,7) ).search());
+ 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 				 inicial.ponNodosExpandidos(0);
+ 				 cont.mostrar("\n");break;
+
+ 			 case 2:
+ 				 cont.mostrar("Primero en anchura:\n");
+ 				 resuelto=listPath( ( new BreadthFirstSearch(inicial) ).search());
+ 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 				 inicial.ponNodosExpandidos(0);
+ 				 cont.mostrar("\n");break;
+
+ 			 case 4:
+ 				 cont.mostrar("Coste Uniforme:\n");
+ 				 resuelto = listPath( ( new UniformCostSearch(inicial) ).search());
+ 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 				 inicial.ponNodosExpandidos(0);
+ 				 cont.mostrar("\n");break;
+
+ 			 case 5:
+ 				 cont.mostrar("Profundidad iterativa:\n");
+ 				 resuelto=listPath( (
+ 						 new IteratedDeepeningSearch(inicial) ).search());
+ 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 				 inicial.ponNodosExpandidos(0);
+ 				 cont.mostrar("\n");break;
+
+ 			 case 3:
+ 				 cont.mostrar("Busqueda A*:\n");
+ 				 resuelto=listPath( (
+ 						 new AStarSearch(inicial) ).search());
+ 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 				 inicial.ponNodosExpandidos(0);
+ 				 cont.mostrar("\n");break;
+
+ 			 case 6:
+ 				 cont.mostrar("Escalada:\n");
+ 				 resuelto = listPath( (
+ 						 new GreedySearch(inicial) ).search());
+ 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 				 inicial.ponNodosExpandidos(0);
+ 				 cont.mostrar("\n");break;
+ 			 }
+ 	      return resuelto;
+    }
+    
+    /**
+     * resuleve el problema de olos misioneros y los canibales
+     * @param e indica la estrategia usada para resilverlo
+     * @return true en casa de tener solucion false en caso contrario
+     */
+    public boolean resolverMisionerosyCanibales(int e){
+ 	   
+ 	   MisionerosYCanibales inicial = new MisionerosYCanibales(3,3,1);
+ 	   boolean resuelto = true;
+ 		switch(e){
+ 		 case 1:
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("Primero en profundidad(profunidad máxima: 7):\n");
+ 			 resuelto=listPath( ( new DepthBoundedSearch(inicial,7) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 2:
+ 			 cont.mostrar("Primero en anchura:\n");
+ 			 resuelto=listPath( ( new BreadthFirstSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 4:
+ 			 cont.mostrar("Coste Uniforme:\n");
+ 			 resuelto = listPath( ( new UniformCostSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 5:
+ 			 cont.mostrar("Profundidad iterativa:\n");
+ 			 resuelto=listPath( (
+ 					 new IteratedDeepeningSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 3:
+ 			 cont.mostrar("Busqueda A*:\n");
+ 			 resuelto=listPath( (
+ 					 new AStarSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 6:
+ 			 cont.mostrar("Escalada:\n");
+ 			 resuelto = listPath( (
+ 					 new GreedySearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 		 }
+      return resuelto;
+    }
+    
+    /**
+     * resuleve el problema de de la cabra el lobo y la col
+     * @param e indica la estrategia usada para resilverlo
+     * @return true en casa de tener solucion false en caso contrario
+     */  
+    public boolean resolverCabraLoboCol(int e){
+ 	   
+ 		CabraLoboCol inicial = new CabraLoboCol(1,1,1,1);
+
+ 		boolean resuelto = true;
+ 		switch(e){
+ 		 case 1:
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("Primero en profundidad(profunidad máxima: 7):\n");
+ 			 resuelto=listPath( ( new DepthBoundedSearch(inicial,7) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 2:
+ 			 cont.mostrar("Primero en anchura:\n");
+ 			 resuelto=listPath( ( new BreadthFirstSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 4:
+ 			 cont.mostrar("Coste Uniforme:\n");
+ 			 resuelto = listPath( ( new UniformCostSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 5:
+ 			 cont.mostrar("Profundidad iterativa:\n");
+ 			 resuelto=listPath( (
+ 					 new IteratedDeepeningSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 3:
+ 			 cont.mostrar("Busqueda A*:\n");
+ 			 resuelto=listPath( (
+ 					 new AStarSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+
+ 		 case 6:
+ 			 cont.mostrar("Escalada:\n");
+ 			 resuelto = listPath( (
+ 					 new GreedySearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 		 }
+       return resuelto;
+    }
+
+ 	/**
+ 	 * resuleve el problema del mono
+ 	 * @param e indica la estrategia usada para resilverlo
+ 	 * @return true en casa de tener solucion false en caso contrario
+ 	 */
+ 	public boolean resolverMono(int e){
+ 		   
+ 		Mono inicial = new Mono(0,false,1,false);
+ 		boolean resuelto = true;
+ 		switch(e){
+ 		 case 1:
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("Primero en profundidad(profunidad máxima: 7):\n");
+ 			 resuelto=listPath( ( new DepthBoundedSearch(inicial,7) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 	
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 	
+ 		 case 2:
+ 			 cont.mostrar("Primero en anchura:\n");
+ 			 resuelto=listPath( ( new BreadthFirstSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 	
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 	
+ 		 case 4:
+ 			 cont.mostrar("Coste Uniforme:\n");
+ 			 resuelto = listPath( ( new UniformCostSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 	
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 	
+ 		 case 5:
+ 			 cont.mostrar("Profundidad iterativa:\n");
+ 			 resuelto=listPath( (
+ 					 new IteratedDeepeningSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 	
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 	
+ 		 case 3:
+ 			 cont.mostrar("Busqueda A*:\n");
+ 			 resuelto=listPath( (
+ 					 new AStarSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 	
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 	
+ 		 case 6:
+ 			 cont.mostrar("Escalada:\n");
+ 			 resuelto = listPath( (
+ 					 new GreedySearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 		 }
+ 	  return resuelto;
+ 	}
+ 	
+ 	/**
+ 	 * resuleve el problema de los palillos
+ 	 * @param e indica la estrategia usada para resilverlo
+ 	 * @return true en casa de tener solucion false en caso contrario
+ 	 */
+ 	public boolean resolverPalillos(int e){
+ 		   
+ 		Palillos inicial = new Palillos(6,5);
+ 		boolean resuelto = true;
+ 		switch(e){
+ 		 case 1:
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("Primero en profundidad(profunidad máxima: 7):\n");
+ 			 resuelto=listPath( ( new DepthBoundedSearch(inicial,7) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 	
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 	
+ 		 case 2:
+ 			 cont.mostrar("Primero en anchura:\n");
+ 			 resuelto=listPath( ( new BreadthFirstSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 	
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 	
+ 		 case 4:
+ 			 cont.mostrar("Coste Uniforme:\n");
+ 			 resuelto = listPath( ( new UniformCostSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 	
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 	
+ 		 case 5:
+ 			 cont.mostrar("Profundidad iterativa:\n");
+ 			 resuelto=listPath( (
+ 					 new IteratedDeepeningSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 	
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 	
+ 		 case 3:
+ 			 cont.mostrar("Busqueda A*:\n");
+ 			 resuelto=listPath( (
+ 					 new AStarSearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 	
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 	
+ 		 case 6:
+ 			 cont.mostrar("Escalada:\n");
+ 			 resuelto = listPath( (
+ 					 new GreedySearch(inicial) ).search());
+ 			 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+ 			 inicial.ponNodosExpandidos(0);
+ 			 cont.mostrar("\n");break;
+ 		 }
+ 	  return resuelto;
+ 	}
+ 	
+ 	public boolean listPath(SearchNode node) {
+        ArrayList<String> camino = new ArrayList<String>();
+ 	   if (node == null) {
+ 		   cont.mostrar("No hay solución");
+ 		   return false;
+ 	   }
+ 	   String linea = "";
+ 	   while (node.getParent()!=null) {
+ 		   linea =  "Estado: " + node.getState() +
+            				   " Profundidad: " + node.getDepth() +
+            				   " Coste: " + node.getPathCost() +
+            				   " Operador: " + node.getAppliedOp();
+ 		   camino.add("\n"+linea);
+ 		   node = node.getParent();
+ 	   }
+ 	  
+ 	   linea = ( "\nESTADO INICIAL: " + node.getState());  
+ 	   camino.add(linea);
+ 	   for(int j=camino.size()-1; j>=0;j--){
+ 		   cont.mostrar((String)camino.get(j));
+ 	   }
+ 	   cont.mostrar("\n");
+ 	   cont.mostrar("\n");
+ 	   return true;
+    }
+   
 }
