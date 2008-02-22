@@ -76,7 +76,7 @@ public class EdificioCubico  implements State,Heuristic {
 	public Enumeration<Successor> successors() {
 		Vector<Successor> successorVec = new Vector<Successor>();
 		nodosExpandidos++;
-		int estrategia = cont.solicitud(false);
+		int estrategia = cont.solicitud();
 		if (edificio[actX][actY][actZ].puedeIncX() &&
                 resolverProblema(edificio[actX][actY][actZ].getJuegos()[0], estrategia)){
 			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX+1, actY, actZ, edificio, cont);
