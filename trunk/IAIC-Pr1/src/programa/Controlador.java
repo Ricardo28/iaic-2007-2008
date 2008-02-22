@@ -36,7 +36,7 @@ public class Controlador {
 	
 	/**
 	 * Asocia una vista al controlador
-	 * @param vista Vista asociada al controlador
+	 * @param vist Vista asociada al controlador
 	 */
 	public void asociarVista(Visual vist){
 		vista = vist;
@@ -128,7 +128,7 @@ public class Controlador {
 	 
 	/**
 	 * Asocia un vector que representa el tablero del laberinto al controlador
-	 * @param hab vector con las habitaciones del laberinto
+	 * @param edificio vector con las habitaciones del laberinto
 	 */
 	public void cargar(EdificioCubico edificio){
 		this.edificio = edificio;
@@ -144,7 +144,6 @@ public class Controlador {
 	
 	/**
 	 * Notifica a la Vista asociada que muestre un menu de solicitud de algoritmo de busqueda
-	 * @param bol si se trata del juego de las jarras o no 
 	 * @return devuelve el numero de estrategia elegida
 	 */
 	public int solicitud(){

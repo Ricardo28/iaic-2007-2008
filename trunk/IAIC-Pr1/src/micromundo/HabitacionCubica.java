@@ -88,7 +88,7 @@ public class HabitacionCubica {
 	}
 
 	/**
-	 * @param juego the juego to set
+	 * @param juegos the juego to set
 	 */
 	public void setJuego(int[] juegos) {
 		this.juegos = juegos;

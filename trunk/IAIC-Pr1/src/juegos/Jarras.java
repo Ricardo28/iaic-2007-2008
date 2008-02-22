@@ -15,8 +15,8 @@ public class Jarras extends Juego{
 	
 	/**
 	 * Crea una instancia de un estado de las jarras
-	 * @param g3 indica la cantidad que contiene la jarra de 3
-	 * @param g4 indica la cantidad que contiene la jarra de 4
+	 * @param j3 indica la cantidad que contiene la jarra de 3
+	 * @param j4 indica la cantidad que contiene la jarra de 4
 	 * @param c Controlador. Poner null para imprimir por pantalla
 	 */
 	public Jarras(int j3, int j4, Controlador c){

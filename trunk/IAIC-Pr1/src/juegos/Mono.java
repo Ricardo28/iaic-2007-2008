@@ -67,7 +67,7 @@ public class Mono extends Juego{
 	 
 	 /**
 	  * Indica la posicion de la ventana
-	  * @param p
+	  * @param s
 	  */
 	public void ponSubido(boolean s){
 		this.sobreCaja = s;

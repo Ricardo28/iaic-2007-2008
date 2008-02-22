@@ -14,7 +14,6 @@ public class CargarEdificio {
     /**
      * Carga la informacion del fichero de entrada
      * @param ruta del fichero
-     * @return HabitacionCubica[][][] con el edificio
      */
     public void cargarEdificio(EdificioCubico edi, String ruta){
     	FileReader archivo;
