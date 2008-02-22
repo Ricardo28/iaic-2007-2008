@@ -1,19 +1,9 @@
 package juegos;
 
-import aima.search.AStarSearch;
-import aima.search.BreadthFirstSearch;
-import aima.search.DepthBoundedSearch;
-import aima.search.GreedySearch;
-import aima.search.Heuristic;
-import aima.search.IteratedDeepeningSearch;
-import aima.search.SearchNode;
-import aima.search.State;
-import aima.search.Successor;
-import aima.search.UniformCostSearch;
-
-import java.util.ArrayList;
 import java.util.Vector;
 import java.util.Enumeration;
+
+import aima.search.Successor;
 
 /** <b>Problema del Mono:</b><br>
  * Hay un mono en la puerta de una habitación. En el centro de la habitación hay un
@@ -23,20 +13,30 @@ import java.util.Enumeration;
  * El mono puede realizar las siguientes acciones: andar por el suelo, subirse a la caja,
  * empujar la caja (si el mono está en la misma posición que la caja) y coger el plátano
  * (si está subido encima de la caja y la caja está justo debajo del plátano).<br>
- * \t0: el mono/caja se encuentran en la puerta.<br>
- * \t1: el mono/caja se encuentran en la centro.<br>
- * \t2: el mono/caja se encuentran en el ventana.
+ * \t0: el mono/caja se encuentran en la puerta<br>
+ * \t1: el mono/caja se encuentran en la centro<br>
+ * \t2: el mono/caja se encuentran en el ventana
  */
-public class Mono implements State,Heuristic{
+public class Mono extends Juego{
 
-	private static int nodosExpandidos = 0;
-	
+	/**
+	 * Posicion del mono
+	 */
 	private int pos;
 	
+	/**
+	 * Posicion de la caja
+	 */
 	private int caja;
 	
+	/**
+	 * Si esta sobre la caja
+	 */
 	private boolean sobreCaja;
 	
+	/**
+	 * Si ha cogido el platano
+	 */
 	private boolean platano;
 	
 	/**
@@ -176,102 +176,6 @@ public class Mono implements State,Heuristic{
 		return "(Pos:" + pos + ", Subido:" + (sobreCaja?1:0) + ", C:" + caja + ", Pl:" + (platano?1:0) + ")";
 	}
 	
-	/**
-	 * Devuelve el numero de nodos expandidos
-	 * @return  devuelve el numero de nodos expandidos
-	 */
-	public int dameNodosExpandidos(){
-		 return nodosExpandidos;
-	}
-	
-	/**
-	 * Actualiza el numero de nodos expandidos
-	 * @param n actualiza el numero de nodos expandidos a n
-	 */
-	public void ponNodosExpandidos(int n){
-		nodosExpandidos = n;
-	}
-	
-	/**
- 	 * resuleve el problema del mono
- 	 * @param e indica la estrategia usada para resilverlo
- 	 * @return true en casa de tener solucion false en caso contrario
- 	 */
-    private boolean resolver(int e){
- 		   
- 		boolean resuelto = true;
- 		switch(e){
-	 		case 1:
-	 			System.out.println("Primero en profundidad (profunidad máxima 7):\n");
-	 			resuelto=listPath((new DepthBoundedSearch(this,7)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
-	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
-	 	
-	 		case 2:
-	 			System.out.println("Primero en anchura:\n");
-	 			resuelto=listPath((new BreadthFirstSearch(this)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
-	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
-	 	
-	 		case 4:
-	 			System.out.println("Coste Uniforme:\n");
-	 			resuelto = listPath((new UniformCostSearch(this)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
-	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
-	 	
-	 		case 5:
-	 			System.out.println("Profundidad iterativa:\n");
-	 			resuelto=listPath((new IteratedDeepeningSearch(this)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
-	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
-	 	
-	 		case 3:
-	 			System.out.println("Busqueda A*:\n");
-	 			resuelto=listPath((new AStarSearch(this)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
-	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
-	 	
-	 		case 6:
-	 			System.out.println("Escalada:\n");
-	 			resuelto = listPath((new GreedySearch(this)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
-	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
-	 		}
- 		
- 		return resuelto;
- 	}
-    
-    private boolean listPath(SearchNode node) {
-        ArrayList<String> camino = new ArrayList<String>();
- 	    if (node == null) {
- 		    System.out.println("No hay solución");
- 		    return false;
- 	    }
- 	    String linea = "";
- 	    while (node.getParent()!=null) {
- 		    linea =  "Estado: " + node.getState() +
-            				  " Profundidad: " + node.getDepth() +
-            				  " Coste: " + node.getPathCost() +
-            				  " Operador: " + node.getAppliedOp();
- 		    camino.add("\n"+linea);
- 		    node = node.getParent();
- 	    }
- 	  
- 	    linea = ( "\nESTADO INICIAL: " + node.getState());  
- 	    camino.add(linea);
- 	    for (int j=camino.size()-1; j>=0;j--){
- 	    	System.out.print((String)camino.get(j));
- 	    }
- 	    System.out.println("\n");
- 	    return true;
-    }
-	 
 	/**
 	 * Prueba el problema del mono con todas las estrategias
 	 * @param args

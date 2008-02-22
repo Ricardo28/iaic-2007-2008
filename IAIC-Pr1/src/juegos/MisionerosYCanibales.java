@@ -1,21 +1,17 @@
 package juegos;
 
-import aima.search.State;
-import aima.search.Heuristic;
 import aima.search.Successor;
 
 import java.util.Enumeration;
 import java.util.Vector;
 
-public class MisionerosYCanibales implements State, Heuristic {
+public class MisionerosYCanibales extends Juego {
 
 	private int misionerosIzq;
    
 	private int canibalesIzq;
    
 	private int barcaIzq;
-   
-	private static int nodosExpandidos;
    
 	/**
      * Crea una instancia del estado actual del problema de los misioneros y los canivales
@@ -104,19 +100,14 @@ public class MisionerosYCanibales implements State, Heuristic {
 	}
    	
    	/**
-   	 * devuelve el numero de nodos expandidos
-   	 * 
-   	 */
-   	public int dameNodosExpandidos(){
-		return nodosExpandidos;
-   	}
-   	
-   	/**
-   	 * actualiza el numero de nodos expandidos
-   	 * @param n es el numero de nodos expandidos al que se tiene que actualizar
-   	 */
-   	public void ponNodosExpandidos(int n){
-		nodosExpandidos = n;
-   	}
+	 * Prueba el problema con todas las estrategias
+	 * @param args
+	 */
+    public static void main(String[] args){
+		MisionerosYCanibales m = new MisionerosYCanibales(3,3,1);
+		System.out.println(m);
+		for (int i=1; i<=6; i++)
+			m.resolver(i);
+	}
    	
 }
