@@ -75,6 +75,7 @@ public class EdificioCubico  implements State,Heuristic {
 	
 	public Enumeration<Successor> successors() {
 		Vector<Successor> successorVec = new Vector<Successor>();
+		nodosExpandidos++;
 		int estrategia = cont.solicitud(false);
 		if (edificio[actX][actY][actZ].puedeIncX() &&
                 resolverProblema(edificio[actX][actY][actZ].getJuegos()[0], estrategia)){
@@ -302,7 +303,7 @@ public class EdificioCubico  implements State,Heuristic {
  	   switch(numJuego){
  	   case 1: {return resolverOchoPuzzle(estrategia);}
  	   case 2: {return resolverMisionerosyCanibales(estrategia);}
- 	   case 3: {return resolverCabraLoboCol(estrategia);}
+ 	   case 3: {return resolverLoboCabraCol(estrategia);}
  	   case 4: {return resolverMono(estrategia);}
  	   case 5: {return resolverPalillos(estrategia);}
  	   case 6: {return resolverJarras(estrategia);}
@@ -518,9 +519,9 @@ public class EdificioCubico  implements State,Heuristic {
      * @param e indica la estrategia usada para resilverlo
      * @return true en casa de tener solucion false en caso contrario
      */  
-    private boolean resolverCabraLoboCol(int e){
+    private boolean resolverLoboCabraCol(int e){
  	   
- 		CabraLoboCol inicial = new CabraLoboCol(1,1,1,1);
+ 		LoboCabraCol inicial = new LoboCabraCol(1,1,1,1);
 
  		boolean resuelto = true;
  		switch(e){
