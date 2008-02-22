@@ -73,52 +73,56 @@ public abstract class Juego implements State, Heuristic{
 	 * @return true en caso de tener solucion, false en caso contrario
  	 */
     public boolean resolver(int e){
-		   
+		String mensaje="";   
  		boolean resuelto = true;
  		switch(e){
 	 		case 1:
-	 			System.out.println("Primero en profundidad (profunidad máxima 7):\n");
+	 			mensaje+="Primero en profundidad (profunidad máxima 7):\n";
 	 			resuelto = listPath((new DepthBoundedSearch(this,7)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
 				System.out.println("\n");break;
 	 	
 	 		case 2:
-	 			System.out.println("Primero en anchura:\n");
+	 			mensaje+="Primero en anchura:\n";
 	 			resuelto = listPath((new BreadthFirstSearch(this)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
 				System.out.println("\n");break;
 	 	
 	 		case 4:
-	 			System.out.println("Coste Uniforme:\n");
+	 			mensaje+="Coste Uniforme:\n";
 	 			resuelto = listPath((new UniformCostSearch(this)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
 				System.out.println("\n");break;
 	 	
 	 		case 5:
-	 			System.out.println("Profundidad iterativa:\n");
+	 			mensaje+="Profundidad iterativa:\n";
 	 			resuelto = listPath((new IteratedDeepeningSearch(this)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
 				System.out.println("\n");break;
 	 	
 	 		case 3:
-	 			System.out.println("Busqueda A*:\n");
+	 			mensaje+="Busqueda A*:\n";
 	 			resuelto = listPath((new AStarSearch(this)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
 				System.out.println("\n");break;
 	 	
 	 		case 6:
-	 			System.out.println("Escalada:\n");
+	 			mensaje+="Escalada:\n";
 	 			resuelto = listPath((new GreedySearch(this)).search());
-	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
 				System.out.println("\n");break;
 	 		}
- 		
+ 		if(cont!=null){
+ 			cont.mostrar(mensaje);
+ 		}else{
+ 			System.out.println(mensaje);
+ 		}
  		return resuelto;
  	}
 	
