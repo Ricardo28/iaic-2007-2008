@@ -1,14 +1,13 @@
 package juegos;
 
-import aima.search.*;
-import java.util.*;
+import aima.search.State;
+import aima.search.Heuristic;
+import aima.search.Successor;
 
-/**
- * 
- * @author Usuario
- *
- */
-public class CabraLoboCol implements State,Heuristic{
+import java.util.Vector;
+import java.util.Enumeration;
+
+public class LoboCabraCol implements State,Heuristic{
 	
 	private int lobo;
 	
@@ -21,14 +20,13 @@ public class CabraLoboCol implements State,Heuristic{
 	private static int nodosExpandidos = 0;
 	
 	/**
-	 * crea una instancia del juego de la cabra el lobo y la col
+	 * Crea una instancia del juego de la cabra, el lobo y la col
 	 * @param lobo indica la posicion del lobo
 	 * @param cabra indica la posicion de la cabra
 	 * @param col indica la posicion de la col
 	 * @param granjero indica la posicion del granjero
 	 */
-	public CabraLoboCol(int lobo, int cabra, 
-		   int col, int granjero){
+	public LoboCabraCol(int lobo, int cabra, int col, int granjero){
 		this.lobo = lobo;
 		this.cabra = cabra;
 		this.col = col;
@@ -36,29 +34,27 @@ public class CabraLoboCol implements State,Heuristic{
 	}
 	
 	/**
-	 * indica si un estado es valido
-	 * @return true si es valido false en caso contrario
+	 * Indica si un estado es valido
+	 * @return true si es valido
 	 */
 	protected boolean isValid(){
 		if (lobo == cabra && lobo == (1 - granjero))
 			return false;
 		if (cabra == col && cabra == (1 - granjero))
 		  	return false;
-		
 		return true;		
 	}
 	
 	/**
-	 * indica si un estado es solucion o no
-	 * @return true en caso de ser solucion false ne caso contrario
+	 * Indica si un estado es solucion
+	 * @return true en caso de ser solucion
 	 */
 	public boolean isGoal(){
-		return lobo ==0 && cabra == 0 &&
-				col == 0 && granjero == 0;
+		return lobo ==0 && cabra == 0 && col == 0 && granjero == 0;
 	}
 	
 	/**
-	 * genera el numero de posibles sucesores de ese estado actual
+	 * Genera el numero de posibles sucesores de ese estado actual
 	 * @return los sucesores del estado actual
 	 */
 	 public Enumeration<Successor> successors(){
@@ -80,21 +76,21 @@ public class CabraLoboCol implements State,Heuristic{
 	 	 		iGranjero = (1 - this.granjero);
 	 	 		operador = "cruzaLobo";
 	 	 	}
-	 	 	if(operadores == 1 && cabra == granjero){
+	 	 	else if(operadores == 1 && cabra == granjero){
 	 	 		iLobo = this.lobo;
 	 	 		iCabra = (1 - this.cabra);
 	 	 		iCol = this.col;
 	 	 		iGranjero = (1 - this.granjero);
 	 	 		operador = "cruzaCabra";
 	 	 	}
-	 	 	if(operadores == 2 && col == granjero){
+	 	 	else if(operadores == 2 && col == granjero){
 	 	 		iLobo = this.lobo;
 	 	 		iCabra = this.cabra;
 	 	 		iCol = (1 - this.col);
 	 	 		iGranjero = (1 - this.granjero);
 	 	 		operador = "cruzaCol";
 	 	 	}
-	 	 	if(operadores == 3){
+	 	 	else if(operadores == 3){
 	 	 		iLobo = this.lobo;
 	 	 		iCabra = this.cabra;
 	 	 		iCol = this.col;
@@ -102,17 +98,15 @@ public class CabraLoboCol implements State,Heuristic{
 	 	 		operador = "cruzaGranjero";
 	 	 	}
 	 	 	
-	 	 	CabraLoboCol nuevoEstado = 
-	 	 			new CabraLoboCol(iLobo,iCabra,iCol,iGranjero);
-	 	 			
-	 	 	if(nuevoEstado.isValid()){
+	 	 	LoboCabraCol nuevoEstado = 
+	 	 			new LoboCabraCol(iLobo,iCabra,iCol,iGranjero);
+	 	 		
+	 	 	if (nuevoEstado.isValid()){
 	 	 		successorVec.addElement(new Successor(nuevoEstado, operador, 1 )); 
 	 	 	}
-	 	 }//end del for
-	 	 
+	 	 }
 	 	 return successorVec.elements();
-	 	 
-	 }// end del metodo
+	 }
 	 
 	 /**
 	  * genera la heuristica dle estado actual
@@ -127,7 +121,9 @@ public class CabraLoboCol implements State,Heuristic{
 	 * @return devuelve un String que indica el estado actual
 	 */
 	public String toString() {
-		return "(" + lobo + "," + cabra + "," + col + "," + granjero + ")";
+		return "(L:" + lobo + ", Ca:" + cabra + ", Co:" + col + ", G:" + granjero +
+              ")   ~~~~   (L:" + (1-lobo) + ", Ca:" + (1-cabra) + ", Co:" + (1-col) +
+              ", G:" + (1-granjero) + ")";
 	}
 	 
 	/**
