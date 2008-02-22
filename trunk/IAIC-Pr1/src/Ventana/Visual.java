@@ -643,8 +643,8 @@ public class Visual extends javax.swing.JFrame {
 //    	jDesktopPane1.remove(jCheckBox4);
 //    	jDesktopPane1.remove(jCheckBox5);
 //    	jDesktopPane1.remove(jCheckBox6);	
-    	this.removeAll();
     	this.setVisible(false);
+    	this.removeAll();
     }
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {                                      
 // TODO add your handling code here:
