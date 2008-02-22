@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -22,7 +24,7 @@ public class Visual extends javax.swing.JFrame {
 	private int n;//numero de habitaciones
     private int z;//profundidad
     private Controlador controlador;
-    private String mensaje;//este string sirve para hacer print sobre el jTextArea1
+    private String mensaje="";//este string sirve para hacer print sobre el jTextArea1
     private boolean cargado;
     private ArrayList<int[]> salida;
     
@@ -48,14 +50,17 @@ public class Visual extends javax.swing.JFrame {
     private javax.swing.JTextArea textoConsola;
     
     public Visual() {
+    	setTitle("Practica 1 IAIC:    Diaz_Martin_Vaquero");
         n = 2;//dimension	
         z = 1;//profundidad del edificio
         cargado = false;
         dibuja();//pintamos la interfaz
+        centrarVentana();
     }
     
     public Visual(int dim){
-    	n = dim;
+    	setTitle("Practica 1 IAIC:    Diaz_Martin_Vaquero");
+        n = dim;
     	z = 1;
     }
     
@@ -110,15 +115,14 @@ public class Visual extends javax.swing.JFrame {
 	            if (salida.get(i)[2]+1==z)
 	            	edificio[salida.get(i)[0]][salida.get(i)[1]].setBackground(new java.awt.Color(204, 255, 204));
 	    	}
+	    	if (controlador.getEdificio().getIniZ()+1==z)
+	    		edificio[controlador.getEdificio().getIniX()][controlador.getEdificio().getIniY()].setBackground(new java.awt.Color(204, 255, 204));
+	    	if (salida.get(0)[2]+1==z)
+		    		edificio[salida.get(0)[0]][salida.get(0)[1]].setText("X");
 	    }
-    	
-    	if (salida != null){
-			if (salida.get(0)[2]+1==z) //si estamos en la misma profundidad pintamos 
-				edificio[salida.get(0)[0]][salida.get(0)[1]].setText("X");
-    		edificio[controlador.getEdificio().getIniX()][controlador.getEdificio().getIniY()].setBackground(new java.awt.Color(204, 255, 204));
-        }
-    	else if (salida == null && salida.get(0)[2]+1==z)
+    	else if (controlador.getEdificio().getIniZ()+1==z)
     		edificio[controlador.getEdificio().getIniX()][controlador.getEdificio().getIniY()].setText("X");
+    	
     }
     
     public boolean comprueba(){//esta funcion mira si se ha seleccionado solo una opcion
@@ -183,6 +187,7 @@ public class Visual extends javax.swing.JFrame {
                 edificio[i][j]=new javax.swing.JTextField();//hay que meterle el numero de habitacion y el booleano que indica si se ha pasado por ahí
                 edificio[i][j].setBounds(x,y,30,30);//coloco la habitacion
                 edificio[i][j].setHorizontalAlignment(JTextField.CENTER);
+                edificio[i][j].setEditable(false);
                 jDesktopPane1.add(edificio[i][j],javax.swing.JLayeredPane.DEFAULT_LAYER);
                 //actualizamos las variables de posicionamiento
                 x=x+30;
@@ -296,7 +301,7 @@ public class Visual extends javax.swing.JFrame {
         textoConsola.setRows(5);
         scrollPaneTexto.setViewportView(textoConsola);
 
-        scrollPaneTexto.setBounds(20,etiquetaConsola.getY()+20, 570, 280);
+        scrollPaneTexto.setBounds(20,etiquetaConsola.getY()+20, 970, 400);
         jDesktopPane1.add(scrollPaneTexto, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -351,7 +356,7 @@ public class Visual extends javax.swing.JFrame {
 	 * @param s mensaje que se muestra por pantalla
 	 */
 	public void mostrar(String s){		
-		mensaje+= s;
+		mensaje += s;
 		textoConsola.setText(mensaje);
 	}
 	
@@ -440,18 +445,13 @@ public class Visual extends javax.swing.JFrame {
         		controlador.asociarVista(v);
         		controlador.cargar(edi);
         		v.dibuja();
+        		v.centrarVentana();
         		dispose();
         		copia(v);
         	} catch(Exception ex){
         		mostrar("Imposible abrir el archivo");
         	}
         }
-        try {
-        	rellena(null);
-        } catch(Exception e){
-        	System.out.println("Perro!!!");
-        }
-    	
     }     
     
     public void vaciar(){//vaciamos la ventana
@@ -486,8 +486,21 @@ public class Visual extends javax.swing.JFrame {
     public int getN() {
 		return n;
 	}
+    
 	public void setN(int n) {
 		this.n = n;
+	}
+	
+	private void centrarVentana(){
+	   	// Centrar ventana en pantalla
+	    try {
+	        Dimension ventana = Toolkit.getDefaultToolkit().getScreenSize();
+	        int alto = ventana.height;
+	        int ancho = ventana.width;
+	        this.setLocation(ancho/2-this.getWidth()/2, alto/2-this.getHeight()/2);
+	    } catch (Exception e) {
+	    	this.setLocation(0,0);
+	    }
 	}
     
 }

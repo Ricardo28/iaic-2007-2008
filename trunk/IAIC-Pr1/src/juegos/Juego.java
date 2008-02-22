@@ -81,42 +81,42 @@ public abstract class Juego implements State, Heuristic{
 	 			resuelto = listPath((new DepthBoundedSearch(this,7)).search());
 	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
+	 			mensaje+="\n";break;
 	 	
 	 		case 2:
 	 			mensaje+="Primero en anchura:\n";
 	 			resuelto = listPath((new BreadthFirstSearch(this)).search());
 	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
+	 			mensaje+="\n";break;
 	 	
 	 		case 4:
 	 			mensaje+="Coste Uniforme:\n";
 	 			resuelto = listPath((new UniformCostSearch(this)).search());
 	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
+	 			mensaje+="\n";break;
 	 	
 	 		case 5:
 	 			mensaje+="Profundidad iterativa:\n";
 	 			resuelto = listPath((new IteratedDeepeningSearch(this)).search());
 	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
+	 			mensaje+="\n";break;
 	 	
 	 		case 3:
 	 			mensaje+="Busqueda A*:\n";
 	 			resuelto = listPath((new AStarSearch(this)).search());
 	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
+	 			mensaje+="\n";break;
 	 	
 	 		case 6:
 	 			mensaje+="Escalada:\n";
 	 			resuelto = listPath((new GreedySearch(this)).search());
 	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
 	 			nodosExpandidos = 0;
-				System.out.println("\n");break;
+	 			mensaje+="\n";break;
 	 		}
  		if(cont!=null){
  			cont.mostrar(mensaje);
