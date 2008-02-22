@@ -1,78 +1,47 @@
 package juegos;
 
-import aima.search.*;
+import aima.search.State;
+import aima.search.Heuristic;
+import aima.search.Successor;
 
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Vector;
 
-/**
- * 
- * @author Usuario
- *
- */
 public class MisionerosYCanibales implements State, Heuristic {
 
-   private int misionerosIzq;
+	private int misionerosIzq;
    
-   private int canibalesIzq;
+	private int canibalesIzq;
    
-   private int barcaIzq;
+	private int barcaIzq;
    
-   private int misionerosDer;
+	private static int nodosExpandidos;
    
-   private int canibalesDer;
+	/**
+     * Crea una instancia del estado actual del problema de los misioneros y los canivales
+     * @param misionerosIzq numero de misioneros en la izquierda
+     * @param canibalesIzq numero de canibales en la izquierda
+     * @param barcaIzq si esta la barca en la izquierda o derecha
+     */
+    public MisionerosYCanibales(int misionerosIzq, int canibalesIzq, int barcaIzq) {
+    	this.misionerosIzq = misionerosIzq;
+    	this.canibalesIzq = canibalesIzq;
+    	this.barcaIzq = barcaIzq;
+    } 
    
-   private int barcaDer;
-   
-   private static int nodosExpandidos;
-   
-   /**
-    * crea una instancia del estado actual del problema de los misioneros y los canivales
-    * @param misionerosIzq numero de misioneros en la izquierda
-    * @param canibalesIzq numero de canibales en la izquierda
-    * @param barcaIzq si esta la barca en la izquierda o derecha
-    * @param misionerosDer numero de misioneros en la derecha 
-    * @param canibalesDer numero de canibales en la derecha
-    * @param barcaDer indica si la barca esta en la derecha
-    */
-   public MisionerosYCanibales(int misionerosIzq, int canibalesIzq, int barcaIzq,
-                  int misionerosDer, int canibalesDer, int barcaDer) {
-
-       this.misionerosIzq = misionerosIzq;
-       this.canibalesIzq = canibalesIzq;
-       this.barcaIzq = barcaIzq;
-
-       this.misionerosDer = misionerosDer;
-       this.canibalesDer = canibalesDer;
-       this.barcaDer = barcaDer;
-   } 
-   
-   /**
-    * crea una instancia del estado actual del problema de los misioneros y los canivales
-    * @param misionerosIzq numero de misioneros en la izquierda
-    * @param canibalesIzq numero de canibales en la izquierda
-    * @param barcaIzq si esta la barca en la izquierda o derecha
-    */
-   public MisionerosYCanibales(int misionerosIzq, int canibalesIzq, int barcaIzq) {
-       this(misionerosIzq, canibalesIzq, barcaIzq, 0, 0, 0);
-   }
-
-   /**
-    * indica si un estado es valido
-    * @return true si el estado es valido false en caso contrario
-    */
-   protected boolean isValid() {
-
-         if (barcaIzq < 0 || barcaDer < 0 ||
-             misionerosIzq < 0 || misionerosDer < 0 ||
-             canibalesIzq < 0 || canibalesDer < 0) return false;
-
-         if (misionerosIzq > 0 
-                 && canibalesIzq > misionerosIzq) return false;
-
-         if (misionerosDer > 0 
-                 && canibalesDer > misionerosDer) return false;
-
-         return true;
+    /**
+	 * Indica si un estado es valido
+	 * @return true si el estado es valido false en caso contrario
+	 */
+	protected boolean isValid() {
+    	if (barcaIzq<0 || barcaIzq>1 || misionerosIzq<0 || misionerosIzq>3
+    								 || canibalesIzq<0 	|| canibalesIzq>3)
+    		return false;
+    	if (misionerosIzq > 0 && canibalesIzq > misionerosIzq)
+    		return false;
+        if ((3-misionerosIzq > 0) && (3-canibalesIzq > 3-misionerosIzq))
+        	return false;
+        return true;
    } 
    
    	/**
