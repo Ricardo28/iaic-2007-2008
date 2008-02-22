@@ -27,27 +27,26 @@ public class Visual extends javax.swing.JFrame {
      */
     int n;//numero de habitaciones
     JTextField Edificio[][];//aqui se verá reflejado el edificio
-    int z;
+    int z;//profundidad
     private static Controlador controlador;
     private String mensaje;//este string sirve para hacer print sobre el jTextArea1
     
     public Visual() {
-        n=3;//dimension	
+        n=2;//dimension	
         z=1;//profundidad del edificio
         dibuja();//pintamos la interfaz
-        this.setSize(1025,735);
-        setVisible(true);
+        
     }
     public void rellena(){//esta funcion colorea y rellena las habitaciones con sus respectivos numeros
         
-        //actualizamos las casillas segun la profundiadad
+        //borramos las casillas 
     	EdificioCubico e=controlador.getEdificio();
     	for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
             	Edificio[i][j].setText("");
             }
     	}
-    	if(e.getActZ()==z){//si estamos en la misma profundidad
+    	if(e.getActZ()==z){//si estamos en la misma profundidad pintamos 
     		Edificio[e.getActX()][e.getActY()].setText("X");
     	}
         /*for (int i = 0; i < n; i++) {
@@ -96,7 +95,7 @@ public class Visual extends javax.swing.JFrame {
     public void dibuja(){//Esta funcion pinta el edificio, es decir, el numero de casillas que tenga la matriz 
     	
     	jDesktopPane1 = new javax.swing.JDesktopPane();
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+       // setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         jDesktopPane1.setBackground(new java.awt.Color(204, 204, 255));
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -257,6 +256,8 @@ public class Visual extends javax.swing.JFrame {
             .addComponent(jDesktopPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 525, Short.MAX_VALUE)
         );
         pack();
+        this.setSize(1025,735);//ajustamos el tamaño de la ventana
+        setVisible(true);//mostarmos la ventana
         
         
     }
@@ -601,6 +602,9 @@ public class Visual extends javax.swing.JFrame {
         	try  {
         		EdificioCubico edi = new EdificioCubico(controlador);
         		c.cargarEdificio(edi, ruta);
+        		vaciar();//vaciamos la ventana
+        		n=edi.getDimension();
+        		dibuja();
         		controlador.cargar(edi);
         	} catch(Exception ex){
         		mostrar("Imposible abrir el archivo");
@@ -609,7 +613,33 @@ public class Visual extends javax.swing.JFrame {
         rellena();//esta funcion rellena de verde por donde hemos pasado
     	
     }                                     
-
+    public void vaciar(){//vaciamos la ventana
+    	/*for(int i=0;i<n;i++){
+    		for(int j=0;j<n;j++){
+    			this.remove(Edificio[i][j]);
+    		}
+    	}
+    	this.remove(jButton1);
+    	this.remove(jButton2);
+    	this.remove(jButton3);
+    	this.remove(jButton4);
+    	this.remove(jTextArea1);
+    	this.remove(jLabel1);
+    	this.remove(jLabel2);
+    	this.remove(jLabel3);
+    	this.remove(jLabel4);
+    	this.remove(jTextField17);
+    	this.remove(jTextField18);
+    	this.remove(jCheckBox1);
+    	this.remove(jCheckBox2);
+    	this.remove(jCheckBox3);
+    	this.remove(jCheckBox4);
+    	this.remove(jCheckBox5);
+    	this.remove(jCheckBox6);	*/
+    	this.removeAll();
+    	this.setVisible(false);
+    	
+    }
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {                                      
 // TODO add your handling code here:
         z=z+1;
