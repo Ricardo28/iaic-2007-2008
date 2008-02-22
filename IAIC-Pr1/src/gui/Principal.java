@@ -1,26 +1,24 @@
 package gui;
 
 import programa.Controlador;
-import Ventana.*;
 
 public class Principal {
 	
 	/**
-	 * instancia por defecto de la calse principal
-	 *
+	 * Instancia por defecto de la clase principal
 	 */
 	public Principal() {		
 	}
 	
 	/**
-	 * metodo main que inicializa el programa
+	 * Metodo main que inicia el programa
 	 * @param args
 	 */
 	public static void main(String args[]){
-		Visual visual = new Visual();
+		Visual vista = new Visual();
 		Controlador controlador = new Controlador();
-		visual.asociarControlador(controlador);
-		controlador.asociarVista(visual);
+		vista.asociarControlador(controlador);
+		controlador.asociarVista(vista);
 	}
 
 }

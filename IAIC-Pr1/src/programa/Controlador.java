@@ -94,6 +94,7 @@ public class Controlador {
 	
 	protected void listPath(SearchNode node) {
     	ArrayList<String> camino = new ArrayList<String>();
+    	ArrayList<int[]> salida = new ArrayList<int[]>();
     	if (node == null) {
 		    vista.mostrar("No hay solución\n");
 		    return;
@@ -104,6 +105,11 @@ public class Controlador {
            				   " Profundidad: " + node.getDepth() +
            				   " Coste: " + node.getPathCost() +
            				   " Operador: " + node.getAppliedOp();
+	    	int[] posicion = new int[3];
+	    	posicion[0] = ((EdificioCubico)node.getState()).getActX();
+	    	posicion[1] = ((EdificioCubico)node.getState()).getActY();
+	    	posicion[2] = ((EdificioCubico)node.getState()).getActZ();
+	    	salida.add(posicion);
 	    	linea+="\n";
 	    	camino.add(linea);
 	    	node = node.getParent();
@@ -117,6 +123,7 @@ public class Controlador {
 	    for(int j=camino.size()-1; j>=0;j--){
 	    	vista.mostrar((String)camino.get(j));
 	    }
+	    vista.rellena(salida);
     }
 	 
 	/**

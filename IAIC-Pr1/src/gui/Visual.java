@@ -1,6 +1,8 @@
 package gui;
 
 import java.io.File;
+import java.util.ArrayList;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -22,6 +24,7 @@ public class Visual extends javax.swing.JFrame {
     private Controlador controlador;
     private String mensaje;//este string sirve para hacer print sobre el jTextArea1
     private boolean cargado;
+    private ArrayList<int[]> salida;
     
     private javax.swing.JTextField edificio[][];//aqui se verá reflejado el edificio
     private javax.swing.JTextField textoProfAct;
@@ -89,34 +92,33 @@ public class Visual extends javax.swing.JFrame {
         textoConsola=v.textoConsola;
     }
     
-    public void rellena(){//esta funcion colorea y rellena las habitaciones con sus respectivos numeros
+    public void rellena(ArrayList<int[]> ruta){//esta funcion colorea y rellena las habitaciones con sus respectivos numeros
         
-        //borramos las casillas 
-    	EdificioCubico e=controlador.getEdificio();
+        //Borramos las casillas 
     	for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
             	edificio[i][j].setText("");
+            	edificio[i][j].setBackground(new java.awt.Color(255, 255, 255));
             }
     	}
-    	if(e.getActZ()+1==z){//si estamos en la misma profundidad pintamos 
-    		edificio[e.getActX()][e.getActY()].setText("X");
-    	}
-    	/*for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if(h[i][j].getPasar()){
-                    Edificio[i][j].setBackground(new java.awt.Color(204, 255, 204));//pintamos la casilla
-                    Edificio[i][j].setText(""+h[i][j].getNum_hab());
-                }else{
-                    Edificio[i][j].setText(""+h[i][j].getNum_hab());
-                    Edificio[i][j].setForeground(new java.awt.Color(0,0,0));
-                    
-                }
-                //miramos si estamos en la habitación actual
-                if(h[i][j].get_num_hab()==hab_act){//si estamos en la habitacion actual pintamos su numero de rojo
-                    Edificio[i][j].setForeground(new java.awt.Color(255, 0, 51));
-                }
-            }
-        }*/
+    	
+    	//Pintamos la casilla
+    	if (ruta != null)
+    		salida = ruta;
+    	if (salida != null){
+	    	for (int i = 0; i < salida.size(); i++) {
+	            if (salida.get(i)[2]+1==z)
+	            	edificio[salida.get(i)[0]][salida.get(i)[1]].setBackground(new java.awt.Color(204, 255, 204));
+	    	}
+	    }
+    	
+    	if (salida != null){
+			if (salida.get(0)[2]+1==z) //si estamos en la misma profundidad pintamos 
+				edificio[salida.get(0)[0]][salida.get(0)[1]].setText("X");
+    		edificio[controlador.getEdificio().getIniX()][controlador.getEdificio().getIniY()].setBackground(new java.awt.Color(204, 255, 204));
+        }
+    	else if (salida == null && salida.get(0)[2]+1==z)
+    		edificio[controlador.getEdificio().getIniX()][controlador.getEdificio().getIniY()].setText("X");
     }
     
     public boolean comprueba(){//esta funcion mira si se ha seleccionado solo una opcion
@@ -311,9 +313,9 @@ public class Visual extends javax.swing.JFrame {
         this.setSize(1025,735);//ajustamos el tamaño de la ventana
         this.setVisible(true);//mostarmos la ventana
         botonEjecutar.setEnabled(cargado);
-        botonZoomMas.setEnabled(cargado);
-        botonZoomMenos.setEnabled(cargado);
-        }
+        botonZoomMas.setEnabled(cargado && controlador.getEdificio().getActZ()<n);
+        botonZoomMenos.setEnabled(cargado && controlador.getEdificio().getActZ()>1);
+    }
     
     /**
 	 * Asocia un controlador a la vista actual para que haya una comunicacion entre ellos
@@ -361,6 +363,7 @@ public class Visual extends javax.swing.JFrame {
 	}
 	
     private void oyenteEjecutar(java.awt.event.MouseEvent evt) {                                      
+    	limpiar();
     	int estrategia=0;
         if(!comprueba()){//comprobamos si no hay error
             JOptionPane.showMessageDialog(this,"Seleccione solo una opción","Error",JOptionPane.ERROR_MESSAGE);
@@ -412,9 +415,9 @@ public class Visual extends javax.swing.JFrame {
 				mostrar("Busqueda en escalada\n");
 				textoAlgoritmo.setText("Busqueda en escalada");
 				controlador.jugar(6);
-			} 
+			}
         }
-        rellena();
+        rellena(null);
     }                                     
 
     private void oyenteAbrir(java.awt.event.MouseEvent evt) {                                      
@@ -426,22 +429,28 @@ public class Visual extends javax.swing.JFrame {
         int opcion = selector.showOpenDialog(null);
         if (opcion == JFileChooser.APPROVE_OPTION){
         	File archivo = selector.getSelectedFile();
-        	String ruta = archivo.getAbsolutePath();	        	
+        	String ruta = archivo.getAbsolutePath();
+        	CargarEdificio ce = new CargarEdificio();
         	try  {
         		EdificioCubico edi = new EdificioCubico(controlador);
-        		new CargarEdificio().cargarEdificio(edi, ruta);
+        		ce.cargarEdificio(edi, ruta);
         		Visual v = new Visual(edi.getDimension());
-        		v.dibuja();
         		v.cargado = true;
-        		v.controlador.cargar(edi);
+        		v.controlador = controlador;
+        		controlador.asociarVista(v);
+        		controlador.cargar(edi);
+        		v.dibuja();
+        		dispose();
         		copia(v);
-        		//vaciar();//vaciamos la ventana
-        		//dibuja();
         	} catch(Exception ex){
         		mostrar("Imposible abrir el archivo");
         	}
         }
-        rellena();
+        try {
+        	rellena(null);
+        } catch(Exception e){
+        	System.out.println("Perro!!!");
+        }
     	
     }     
     
@@ -459,7 +468,7 @@ public class Visual extends javax.swing.JFrame {
         	botonZoomMas.setEnabled(false);
         botonZoomMenos.setEnabled(true);
         textoProfAct.setText(""+z);
-        rellena();//actualizamos las casillas
+        rellena(null);//actualizamos las casillas
     }                                     
 
     private void oyenteZoomMenos(java.awt.event.MouseEvent evt) {                                      
@@ -471,7 +480,7 @@ public class Visual extends javax.swing.JFrame {
         	botonZoomMenos.setEnabled(false);
         botonZoomMas.setEnabled(true);
         textoProfAct.setText(""+z);
-        rellena();//actualizamos las casillas
+        rellena(null);//actualizamos las casillas
     }                                     
     
     public int getN() {
