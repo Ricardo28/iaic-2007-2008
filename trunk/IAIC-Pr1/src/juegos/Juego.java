@@ -133,8 +133,9 @@ public abstract class Juego implements State, Heuristic{
      */
     private boolean listPath(SearchNode node) {
         ArrayList<String> camino = new ArrayList<String>();
- 	    if (node == null) {
- 		    System.out.println("No hay solución");
+        String mensaje = "";   
+ 		if (node == null) {
+ 		    mensaje += "No hay solución";
  		    return false;
  	    }
  	    String linea = "";
@@ -150,9 +151,14 @@ public abstract class Juego implements State, Heuristic{
  	    linea = ( "\nESTADO INICIAL: " + node.getState());  
  	    camino.add(linea);
  	    for (int j=camino.size()-1; j>=0;j--){
- 	    	System.out.print((String)camino.get(j));
+ 	    	mensaje += (String)camino.get(j);
  	    }
- 	    //System.out.println("\n");
+ 	    if (cont != null){
+			cont.mostrar(mensaje);
+		}
+ 	    else {
+			System.out.println(mensaje);
+		}
  	    return true;
     }
 

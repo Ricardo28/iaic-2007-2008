@@ -3,6 +3,8 @@ package juegos;
 import java.util.Vector;
 import java.util.Enumeration;
 
+import programa.Controlador;
+
 import aima.search.Successor;
 
 /** <b>Problema del Mono:</b><br>
@@ -41,12 +43,18 @@ public class Mono extends Juego{
 	
 	/**
 	 * Crea un estado del juego del mono segun el avance del juego
+	 * @param pos Posicion del mono
+	 * @param subido Si esta subido a la caja
+	 * @param caja Posicion de la caja
+	 * @param platano Si tiene el platano
+	 * @param c Controlador. Poner null para imprimir por pantalla
 	 */
-	public Mono(int pos, boolean subido, int caja, boolean platano){
+	public Mono(int pos, boolean subido, int caja, boolean platano, Controlador c){
 		this.pos = pos;
 		this.sobreCaja = subido;
 		this.caja = caja;
 		this.platano = platano;
+		cont = c;
 	}	
 	
 	/**
@@ -110,43 +118,43 @@ public class Mono extends Juego{
 
 	 	if (pos != 2 && !sobreCaja){
 	 		operador = "andaHaciaVentana";
-	 		Mono nuevoEstado = new Mono(pos+1,sobreCaja,caja,platano);
+	 		Mono nuevoEstado = new Mono(pos+1,sobreCaja,caja,platano,cont);
 		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
 		}
 
 	 	if (pos != 0 && !sobreCaja){
 	 		operador = "andaHaciaPuerta";
-	 		Mono nuevoEstado = new Mono(pos-1,sobreCaja,caja,platano);
+	 		Mono nuevoEstado = new Mono(pos-1,sobreCaja,caja,platano,cont);
 		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
 		}
 
 	 	if (pos == caja && sobreCaja && pos != 2){
 	 		operador = "empujaCajaHaciaVentana";
-	 		Mono nuevoEstado = new Mono(pos+1,sobreCaja,caja+1,platano);
+	 		Mono nuevoEstado = new Mono(pos+1,sobreCaja,caja+1,platano,cont);
 		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
 		}
 
 	 	if (pos == caja && sobreCaja && pos !=0){
 	 		operador = "empujaCajaHaciaPuerta";
-	 		Mono nuevoEstado = new Mono(pos-1,sobreCaja,caja-1,platano);
+	 		Mono nuevoEstado = new Mono(pos-1,sobreCaja,caja-1,platano,cont);
 		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
 		}
 
 	 	if (pos == caja && !sobreCaja){
 	 		operador ="subeCaja";
-	 		Mono nuevoEstado = new Mono(pos,true,caja,platano);
+	 		Mono nuevoEstado = new Mono(pos,true,caja,platano,cont);
 		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
 		}
 	 	
 	 	if (pos == caja && sobreCaja){
 	 		operador ="bajaCaja";
-	 		Mono nuevoEstado = new Mono(pos,false,caja,platano);
+	 		Mono nuevoEstado = new Mono(pos,false,caja,platano,cont);
 		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
 		}
 	 	
 	 	if (sobreCaja && caja == 1 && !platano){
 	 		operador ="cogePlatano";
-	 		Mono nuevoEstado = new Mono(pos,sobreCaja,caja,true);
+	 		Mono nuevoEstado = new Mono(pos,sobreCaja,caja,true,cont);
 		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
 		}
 	 		 
@@ -181,7 +189,7 @@ public class Mono extends Juego{
 	 * @param args
 	 */
     public static void main(String[] args){
-		Mono m = new Mono(0,false,2,false);
+		Mono m = new Mono(0, false, 2, false, null);
 		System.out.println(m);
 		for (int i=1; i<=6; i++)
 			m.resolver(i);

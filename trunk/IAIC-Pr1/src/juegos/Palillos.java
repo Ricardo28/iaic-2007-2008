@@ -5,6 +5,8 @@ import aima.search.Successor;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import programa.Controlador;
+
 public class Palillos extends Juego{
 	
 	private int palillos;
@@ -15,10 +17,12 @@ public class Palillos extends Juego{
 	 * Constructora con parametros del estado de los palillos correspondiente
 	 * @param palillos numero de palillos que hay en el juego
 	 * @param turno turno en que se encuentra el juego
+	 * @param c Controlador. Poner null para imprimir por pantalla
 	 */
-	public Palillos(int palillos, int turno){
+	public Palillos(int palillos, int turno, Controlador c){
 		this.palillos = palillos;
 		this.turno = turno;
+		cont = c;
 	}
 	
 	/**
@@ -49,7 +53,7 @@ public class Palillos extends Juego{
 	    for (int i=1; i<=3; i++) {
 			 if (palillos-i >= 0) {
 				 operador = "Se quitan " + i + " palillos";
-		         Palillos nuevoEstado = new Palillos(palillos-i, turno+1);
+		         Palillos nuevoEstado = new Palillos(palillos-i, turno+1, cont);
 		         successorVec.addElement(new Successor(nuevoEstado, operador, 1));
 		      }
 	    }
@@ -69,7 +73,7 @@ public class Palillos extends Juego{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Palillos m = new Palillos(6,1);
+		Palillos m = new Palillos(6, 1, null);
 		System.out.println(m);
 		for (int i = 1; i <= 6; i++)
 			m.resolver(i);

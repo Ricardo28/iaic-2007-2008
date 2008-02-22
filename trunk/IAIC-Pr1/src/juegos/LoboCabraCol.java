@@ -5,6 +5,8 @@ import aima.search.Successor;
 import java.util.Vector;
 import java.util.Enumeration;
 
+import programa.Controlador;
+
 public class LoboCabraCol extends Juego{
 	
 	private int lobo;
@@ -21,12 +23,14 @@ public class LoboCabraCol extends Juego{
 	 * @param cabra indica la posicion de la cabra
 	 * @param col indica la posicion de la col
 	 * @param granjero indica la posicion del granjero
+	 * @param c Controlador. Poner null para imprimir por pantalla
 	 */
-	public LoboCabraCol(int lobo, int cabra, int col, int granjero){
+	public LoboCabraCol(int lobo, int cabra, int col, int granjero, Controlador c){
 		this.lobo = lobo;
 		this.cabra = cabra;
 		this.col = col;
 		this.granjero = granjero;
+		cont = c;
 	}
 	
 	/**
@@ -95,7 +99,7 @@ public class LoboCabraCol extends Juego{
 	 	 	}
 	 	 	
 	 	 	LoboCabraCol nuevoEstado = 
-	 	 			new LoboCabraCol(iLobo,iCabra,iCol,iGranjero);
+	 	 			new LoboCabraCol(iLobo,iCabra,iCol,iGranjero,cont);
 	 	 		
 	 	 	if (nuevoEstado.isValid()){
 	 	 		successorVec.addElement(new Successor(nuevoEstado, operador, 1 )); 
@@ -127,7 +131,7 @@ public class LoboCabraCol extends Juego{
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		LoboCabraCol m = new LoboCabraCol(1,1,1,1);
+		LoboCabraCol m = new LoboCabraCol(1,1,1,1,null);
 		System.out.println(m);
 		for (int i = 1; i <= 6; i++)
 			m.resolver(i);
