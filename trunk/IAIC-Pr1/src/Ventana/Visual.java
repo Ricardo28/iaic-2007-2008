@@ -1,10 +1,20 @@
 package Ventana;
 
+import gui.Solicitud;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.JCheckBox;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import micromundo.CargarEdificio;
+import micromundo.EdificioCubico;
+import programa.Controlador;
 
 /**
  *
@@ -20,12 +30,14 @@ public class Visual extends javax.swing.JFrame {
     JTextField Edificio[][];//aqui se verá reflejado el edificio
     //EdificioCubico e; 
     int z;
+    private static Controlador controlador;
+    private String mensaje;//este string sirve para hacer print sobre el jTextArea1
     
     public Visual() {
-        n=3;
-        z=1;
-        dibuja();
-        rellena();
+        n=3;//dimension	
+        z=1;//profundidad del edificio
+        dibuja();//pintamos la interfaz
+        rellena();//esta funcion rellena de verde por donde hemos pasado
     }
     public void rellena(){//esta funcion colorea y rellena las habitaciones con sus respectivos numeros
         
@@ -120,6 +132,7 @@ public class Visual extends javax.swing.JFrame {
             for(int j=0;j<n;j++){//colocamos las casillas
                 Edificio[i][j]=new javax.swing.JTextField();//hay que meterle el numero de habitacion y el booleano que indica si se ha pasado por ahí
                 Edificio[i][j].setBounds(x,y,30,30);//coloco la habitacion
+                Edificio[i][j].setHorizontalAlignment(JTextField.CENTER);
                 jDesktopPane1.add(Edificio[i][j],javax.swing.JLayeredPane.DEFAULT_LAYER);
                 //actualizamos las variables de posicionamiento
                 x=x+30;
@@ -253,6 +266,54 @@ public class Visual extends javax.swing.JFrame {
         
     }
     
+    
+    /**
+	 * asocia un controlador a la vista actual para que haya una comunicacion entre ellos
+	 * @param controlador que se asocia a la vista
+	 */
+	public void asociarControlador(Controlador cont){
+		controlador = cont;
+	}
+	
+	
+	/**
+	 * genera una solicitud de estrategia la usuarioa para resolver cada una de las habitaciones
+	 * @param b
+	 * @return el nuemro de estrategia
+	 */
+	public int solicitud(){//te devuelve el numero de algoritmo que has seleccionado
+		int juego=0;
+		if(jCheckBox1.isSelected()){
+			juego=1;
+		}else if(jCheckBox2.isSelected()){
+			juego=2;
+		}else if(jCheckBox3.isSelected()){
+			juego=3;
+		}else if(jCheckBox4.isSelected()){
+			juego=4;
+		}else if(jCheckBox5.isSelected()){
+			juego=5;
+		}else{juego=6;}
+		return juego;
+	}
+	
+	/**
+	 * muestra un mensjae por pantalla
+	 * @param s mensaje que se muestra por pantalla
+	 */
+	public void mostrar(String s){		
+		mensaje+= s;
+		jTextArea1.setText(mensaje);
+	}
+	
+	/**
+	 * limpia la consola de la interfaz
+	 *
+	 */
+	public void limpiar(){//limpiamos la consola
+		jTextArea1.cut();
+	}
+	
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -474,7 +535,8 @@ public class Visual extends javax.swing.JFrame {
 
     private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {                                      
 // TODO add your handling code here:
-        if(!comprueba()){
+    	int juego=0;
+        if(!comprueba()){//comprobamos si no hay error
             JOptionPane.showMessageDialog(this,"Seleccione solo una opción","Error",JOptionPane.ERROR_MESSAGE);
             jCheckBox1.setSelected(false);//deseleccionamos todas las opciones para que vuelva elegir
             jCheckBox2.setSelected(false);
@@ -482,14 +544,74 @@ public class Visual extends javax.swing.JFrame {
             jCheckBox4.setSelected(false);
             jCheckBox5.setSelected(false);  
             jCheckBox6.setSelected(false); 
-            
-        }else{
-            System.out.println("OK");
+        }else{//miramos que opcion se ha seleccionado
+            juego=solicitud();
+            if (juego==1){
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda en profundidad\n");
+				jTextField18.setText("Busqyeda en profundidad");
+				controlador.jugar(1);
+				
+			//aplicacion ejecutar con busqueda 2
+			} else if(juego==2){
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda en anchura\n");
+				jTextField18.setText("Busqueda en Anchura");
+				controlador.jugar(2);
+			
+			//aplicacion ejecutar con busqueda 3
+			} else if(juego==3){
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda en A*\n");
+				jTextField18.setText("Busqueda en A*");
+				controlador.jugar(3);
+			
+			//aplicacion ejecutar con busqueda 4
+			} else if(juego==4){
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda uniforme\n");
+				jTextField18.setText("Busqueda Uniforme");
+				controlador.jugar(4);
+				
+			//aplicacion ejecutar con busqueda 5
+			} else if(juego==5){
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda en profundidad iterativa\n");
+				jTextField18.setText("Busqueda en profunidad iterativa");
+				controlador.jugar(5);
+				
+			//aplicacion ejecutar con busqueda 6
+			} else {
+				mostrar("EMPIEZA EL JUEGO\n");
+				mostrar("Busqueda en escalada\n");
+				jTextField18.setText("Busqueda en escalada");
+				controlador.jugar(6);
+			} 
+            controlador.jugar(juego);
         }
     }                                     
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {                                      
 // TODO add your handling code here:
+    	limpiar();
+    	//Abrimos el navegador de archivos
+    	JFileChooser selector = new JFileChooser();
+		selector.setCurrentDirectory(new File("."));
+		selector.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        int opcion = selector.showOpenDialog(null);
+        if (opcion == JFileChooser.APPROVE_OPTION){
+        	File archivo = selector.getSelectedFile();
+        	String ruta = archivo.getAbsolutePath();	        	
+        	CargarEdificio c = new CargarEdificio();
+        	try  {
+        		EdificioCubico edi = new EdificioCubico(controlador);
+        		c.cargarEdificio(edi, ruta);
+        		controlador.cargar(edi);
+        	} catch(Exception ex){
+        		mostrar("Imposible abrir el archivo");
+        	}
+        }
+    	
     }                                     
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {                                      
