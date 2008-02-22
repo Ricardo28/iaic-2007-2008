@@ -427,7 +427,7 @@ public class Laberinto implements State,Heuristic {
     */  
    public boolean resolverCabraLoboCol(int e){
 	   
-		CabraLoboCol inicial = new CabraLoboCol(1,1,1,1);
+		LoboCabraCol inicial = new LoboCabraCol(1,1,1,1);
 
 		boolean resuelto = true;
 		switch(e){
