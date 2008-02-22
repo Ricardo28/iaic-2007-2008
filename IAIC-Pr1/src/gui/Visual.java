@@ -324,7 +324,7 @@ public class Visual extends javax.swing.JFrame {
     
     /**
 	 * Asocia un controlador a la vista actual para que haya una comunicacion entre ellos
-	 * @param controlador que se asocia a la vista
+	 * @param cont que se asocia a la vista
 	 */
 	public void asociarControlador(Controlador cont){
 		controlador = cont;
@@ -332,7 +332,6 @@ public class Visual extends javax.swing.JFrame {
 	
 	/**
 	 * Genera una solicitud de estrategia la usuarioa para resolver cada una de las habitaciones
-	 * @param b
 	 * @return el nuemro de estrategia
 	 */
 	public int solicitud(){//te devuelve el numero de algoritmo que has seleccionado
