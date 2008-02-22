@@ -4,7 +4,8 @@ import aima.search.State;
 import aima.search.Heuristic;
 import aima.search.Successor;
 
-import java.util.*;
+import java.util.Vector;
+import java.util.Enumeration;
 
 public class OchoPuzzle implements State,Heuristic{
 	
