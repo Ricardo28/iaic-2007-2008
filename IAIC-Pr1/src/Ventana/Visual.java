@@ -26,9 +26,7 @@ public class Visual extends javax.swing.JFrame {
      * Creates new form Visual
      */
     int n;//numero de habitaciones
-    Habi h[][];
     JTextField Edificio[][];//aqui se verá reflejado el edificio
-    //EdificioCubico e; 
     int z;
     private static Controlador controlador;
     private String mensaje;//este string sirve para hacer print sobre el jTextArea1
@@ -38,20 +36,21 @@ public class Visual extends javax.swing.JFrame {
         z=1;//profundidad del edificio
         dibuja();//pintamos la interfaz
         this.setSize(1025,735);
-        rellena();//esta funcion rellena de verde por donde hemos pasado
+        setVisible(true);
     }
     public void rellena(){//esta funcion colorea y rellena las habitaciones con sus respectivos numeros
         
         //actualizamos las casillas segun la profundiadad
-    	/*for (int i = 0; i < n; i++) {
+    	EdificioCubico e=controlador.getEdificio();
+    	for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-            	h[i][j].setNum_hab(e.getEdificio()[i][j][z].getN());//cogemos el numero de la habitacion
-            	//se supone que el color lo deben modificar los algoritmos, debemos hacer algo para que cada vez que pase 
-            	//por una casilla cambie el boolean
+            	Edificio[i][j].setText("");
             }
-    	}*/
-        
-        for (int i = 0; i < n; i++) {
+    	}
+    	if(e.getActZ()==z){//si estamos en la misma profundidad
+    		Edificio[e.getActX()][e.getActY()].setText("X");
+    	}
+        /*for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if(h[i][j].getPasar()){
                     Edificio[i][j].setBackground(new java.awt.Color(204, 255, 204));//pintamos la casilla
@@ -62,11 +61,11 @@ public class Visual extends javax.swing.JFrame {
                     
                 }
                 //miramos si estamos en la habitación actual
-                /*if(h[i][j].get_num_hab()==hab_act){//si estamos en la habitacion actual pintamos su numero de rojo
+                if(h[i][j].get_num_hab()==hab_act){//si estamos en la habitacion actual pintamos su numero de rojo
                     Edificio[i][j].setForeground(new java.awt.Color(255, 0, 51));
-                }*/
+                }
             }
-        }
+        }*/
     }
     public boolean comprueba(){//esta funcion mira si se ha seleccionado solo una opcion
         boolean cierto=false;
@@ -120,13 +119,7 @@ public class Visual extends javax.swing.JFrame {
         
         int x=20;//eje x
         int y=80;//eje y
-        h=new Habi[n][n];//damos tamaño a las matrices
         Edificio=new JTextField[n][n];
-        for (int i = 0; i < n; i++) {//matriz de habitaciones
-            for(int j=0;j<n;j++){
-                h[i][j]=new Habi();//hay que meterle el numero de habitacion y el booleano que indica si se ha pasado por ahí
-            }
-        }
         for (int i=0;i<n;i++) {//Creamos las habitaciones del edificio
             if(i!=0){
                 y=y+30;
@@ -551,7 +544,7 @@ public class Visual extends javax.swing.JFrame {
             if (juego==1){
 				mostrar("EMPIEZA EL JUEGO\n");
 				mostrar("Busqueda en profundidad\n");
-				jTextField18.setText("Busqyeda en profundidad");
+				jTextField18.setText("Busqueda en profundidad");
 				controlador.jugar(1);
 				
 			//aplicacion ejecutar con busqueda 2
@@ -589,8 +582,8 @@ public class Visual extends javax.swing.JFrame {
 				jTextField18.setText("Busqueda en escalada");
 				controlador.jugar(6);
 			} 
-            controlador.jugar(juego);
         }
+        rellena();//esta funcion rellena de verde por donde hemos pasado
     }                                     
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {                                      
@@ -613,6 +606,7 @@ public class Visual extends javax.swing.JFrame {
         		mostrar("Imposible abrir el archivo");
         	}
         }
+        rellena();//esta funcion rellena de verde por donde hemos pasado
     	
     }                                     
 

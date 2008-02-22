@@ -1,6 +1,7 @@
 package gui;
 
-import programa.Controlador;;
+import programa.Controlador;
+import Ventana.*;
 
 public class Principal {
 	
@@ -16,10 +17,10 @@ public class Principal {
 	 * @param args
 	 */
 	public static void main(String args[]){
-		Vista vista = new Vista();
+		Visual visual = new Visual();
 		Controlador controlador = new Controlador();
-		vista.asociarControlador(controlador);
-		controlador.asociarVista(vista);
+		visual.asociarControlador(controlador);
+		controlador.asociarVista(visual);
 	}
 
 }

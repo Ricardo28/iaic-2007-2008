@@ -10,6 +10,7 @@ import aima.search.IteratedDeepeningSearch;
 import aima.search.SearchNode;
 import aima.search.UniformCostSearch;
 import java.util.ArrayList;
+import Ventana.*;
 
 /**
  * 
@@ -18,10 +19,18 @@ import java.util.ArrayList;
  */
 public class Controlador {
 	
-	private static Vista vista;
+	private static Visual vista;
 	
 	private EdificioCubico edificio;
 	
+	public EdificioCubico getEdificio() {
+		return edificio;
+	}
+
+	public void setEdificio(EdificioCubico edificio) {
+		this.edificio = edificio;
+	}
+
 	/**
 	 * constructor por defecto
 	 *
@@ -33,7 +42,7 @@ public class Controlador {
 	 * asocia una vista al controlador
 	 * @param vista Vista asociada al controlador
 	 */
-	public void asociarVista(Vista vist){
+	public void asociarVista(Visual vist){
 		vista = vist;
 	}
 	
@@ -136,8 +145,8 @@ public class Controlador {
 	 * @param bol si se trata del juego de las jarras o no 
 	 * @return devuielve el numero de estrategia elegida
 	 */
-	public int solicitud(boolean bol){
-		return vista.solicitud(bol);
+	public int solicitud(){
+		return vista.solicitud();
 	}
 	
 	
