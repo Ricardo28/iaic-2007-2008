@@ -1,8 +1,14 @@
 package juegos;
 
+import aima.search.AStarSearch;
+import aima.search.BreadthFirstSearch;
+import aima.search.DepthBoundedSearch;
+import aima.search.GreedySearch;
+import aima.search.IteratedDeepeningSearch;
 import aima.search.State;
 import aima.search.Heuristic;
 import aima.search.Successor;
+import aima.search.UniformCostSearch;
 
 import java.util.Vector;
 import java.util.Enumeration;
@@ -163,4 +169,96 @@ public class OchoPuzzle implements State,Heuristic{
 		 nodosExpandidos = n;
 	 }
 	
+	 /**
+	     * resuleve el problema de ochoPuzzle
+	     * @param e indica la estrategia usada para resilverlo
+	     * @return true en casa de tener solucion false en caso contrario
+	     */
+	    private boolean resolverOchoPuzzle(int e){
+	 	   
+	 	   	int [][] tabla = new int [3][3];
+	 		 tabla[0][0] = 1;
+	 		 tabla[0][1] = 3;
+	 		 tabla[0][2] = 4;
+	 		 tabla[1][0] = 8;
+	 		 tabla[1][1] = 0;
+	 		 tabla[1][2] = 2;
+	 		 tabla[2][0] = 7;
+	 		 tabla[2][1] = 6;
+	 		 tabla[2][2] = 5;
+	 		 
+	 		 OchoPuzzle inicial = new OchoPuzzle(tabla,1,1);
+	 		 boolean resuelto = true;
+	 			switch(e){
+	 			 case 1:
+	 				 inicial.ponNodosExpandidos(0);
+	 				 cont.mostrar("Primero en profundidad(profunidad máxima: 7):\n");
+	 				 resuelto=listPath( ( new DepthBoundedSearch(inicial,7) ).search());
+	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+	 				 inicial.ponNodosExpandidos(0);
+	 				 cont.mostrar("\n");break;
+
+	 			 case 2:
+	 				 cont.mostrar("Primero en anchura:\n");
+	 				 resuelto=listPath( ( new BreadthFirstSearch(inicial) ).search());
+	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+	 				 inicial.ponNodosExpandidos(0);
+	 				 cont.mostrar("\n");break;
+
+	 			 case 4:
+	 				 cont.mostrar("Coste Uniforme:\n");
+	 				 resuelto = listPath( ( new UniformCostSearch(inicial) ).search());
+	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+	 				 inicial.ponNodosExpandidos(0);
+	 				 cont.mostrar("\n");break;
+
+	 			 case 5:
+	 				 cont.mostrar("Profundidad iterativa:\n");
+	 				 resuelto=listPath( (
+	 						 new IteratedDeepeningSearch(inicial) ).search());
+	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+	 				 inicial.ponNodosExpandidos(0);
+	 				 cont.mostrar("\n");break;
+
+	 			 case 3:
+	 				 cont.mostrar("Busqueda A*:\n");
+	 				 resuelto=listPath( (
+	 						 new AStarSearch(inicial) ).search());
+	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+
+	 				 inicial.ponNodosExpandidos(0);
+	 				 cont.mostrar("\n");break;
+
+	 			 case 6:
+	 				 cont.mostrar("Escalada:\n");
+	 				 resuelto = listPath( (
+	 						 new GreedySearch(inicial) ).search());
+	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
+	 				 inicial.ponNodosExpandidos(0);
+	 				 cont.mostrar("\n");break;
+	 			 }
+	 	      return resuelto;
+	    }
+	    
+	    
+	 
+	 /**
+		 * Prueba el problema del mono con todas las estrategias
+		 * @param args
+		 */
+	    public static void main(String[] args){
+	    	int [][] tabla = new int [3][3];
+	 		 tabla[0][0] = 1; tabla[0][1] = 3; tabla[0][2] = 4;
+	 		 tabla[1][0] = 8; tabla[1][1] = 0; tabla[1][2] = 2;
+	 		 tabla[2][0] = 7; tabla[2][1] = 6; tabla[2][2] = 5;
+	    	OchoPuzzle m = new OchoPuzzle(tabla, 1, 1);
+			System.out.println(m);
+			for (int i=1; i<=6; i++)
+				m.resolver(i);
+		}
+		 
 }

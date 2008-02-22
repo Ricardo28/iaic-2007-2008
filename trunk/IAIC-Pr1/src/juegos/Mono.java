@@ -1,54 +1,68 @@
 package juegos;
 
+import aima.search.AStarSearch;
+import aima.search.BreadthFirstSearch;
+import aima.search.DepthBoundedSearch;
+import aima.search.GreedySearch;
 import aima.search.Heuristic;
+import aima.search.IteratedDeepeningSearch;
+import aima.search.SearchNode;
 import aima.search.State;
 import aima.search.Successor;
+import aima.search.UniformCostSearch;
 
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.Enumeration;
 
-/** Problema del Mono:
- *  0: el mono o caja se encuentran en la puerta.
- *  1: el mono o caja se encuentran en la ventana.
- *  2: el mono o caja se encuentran en el centro.
+/** <b>Problema del Mono:</b><br>
+ * Hay un mono en la puerta de una habitación. En el centro de la habitación hay un
+ * plátano colgado del techo. El mono está hambriento y quiere conseguir el plátano
+ * pero no alcanza porque está muy alto. En la habitación también hay una ventana y
+ * debajo de ella hay una caja que le permitiría alcanzar el plátano si se subiera a ella.
+ * El mono puede realizar las siguientes acciones: andar por el suelo, subirse a la caja,
+ * empujar la caja (si el mono está en la misma posición que la caja) y coger el plátano
+ * (si está subido encima de la caja y la caja está justo debajo del plátano).<br>
+ * \t0: el mono/caja se encuentran en la puerta.<br>
+ * \t1: el mono/caja se encuentran en la centro.<br>
+ * \t2: el mono/caja se encuentran en el ventana.
  */
 public class Mono implements State,Heuristic{
 
 	private static int nodosExpandidos = 0;
 	
-	private int posH;
+	private int pos;
 	
 	private int caja;
 	
-	private boolean posV;
+	private boolean sobreCaja;
 	
 	private boolean platano;
 	
 	/**
-	 * crea un estado del juego del mono segun el avance del juego
-	 * 
+	 * Crea un estado del juego del mono segun el avance del juego
 	 */
-	public Mono(int posH, boolean posV, int caja, boolean platano){
-		this.posH = posH;
-		this.posV = posV;
+	public Mono(int pos, boolean subido, int caja, boolean platano){
+		this.pos = pos;
+		this.sobreCaja = subido;
 		this.caja = caja;
 		this.platano = platano;
 	}	
 	
 	/**
-	 * modicfica la posicion del mono encima de la caja o en el suelo
+	 * Modifica la posicion del mono encima de la caja o en el suelo
 	 * @param p indica la posicion del mono
 	 */
-	 public void ponPosH(int p){
-		this.posH = p;
+	 public void ponPos(int p){
+		this.pos = p;
 	 }	
 	 
 	 /**
-	  * indica la posicion de la ventana
+	  * Indica la posicion de la ventana
 	  * @param p
 	  */
-	public void ponPosV(boolean p){
-		this.posV = p;
+	public void ponSubido(boolean s){
+		this.sobreCaja = s;
 	}
 	
 	public void ponCaja(int p){
@@ -59,12 +73,12 @@ public class Mono implements State,Heuristic{
 		this.platano = p;
 	}
 	
-	public int damePosH(){
-		return this.posH;
+	public int damePos(){
+		return this.pos;
 	}
 	
-	public boolean damePosV(){
-		return this.posV;
+	public boolean dameSubido(){
+		return this.sobreCaja;
 	}
 	
 	public int damePosCaja(){
@@ -75,164 +89,199 @@ public class Mono implements State,Heuristic{
 		return this.platano;
 	}
 
-	//Métodos
 	/**
-	 * indica si un estado es solucion
-	 * @return true si es final el estado false en caso contrario
+	 * Indica si un estado es solucion
+	 * @return true si es final el estado
 	 */
 	public boolean isGoal(){
 		return platano == true;
 	}
 	
 	/**
-	 * genera los sucesores de ese estado
+	 * Genera los sucesores del estado actual
 	 * @return Enumeration con los sucesores generados
 	 */
 	public Enumeration<Successor> successors(){
 
-	 	 Vector<Successor> successorVec = new Vector<Successor>();
+	 	Vector<Successor> successorVec = new Vector<Successor>();
 
-	 	 int operadores;
-	 	 int iPosH=0;
-	 	 boolean iPosV=false;
-	 	 int iCaja=1;
-	 	 boolean iPlatano=false;
-	 	 String operador = "";
-	 	 nodosExpandidos++;
+	 	String operador = "";
+	 	nodosExpandidos++;
 
-	 	 for(operadores = 0; operadores <=7; operadores++){
-	 		if(operadores == 0 && posH != caja &&
-	 				posV == false && posH !=1){
-	 			iPosH=1;
-	 			iPosV=this.posV;
-	 			iCaja=this.caja;
-	 			iPlatano=this.platano;
-	 			operador ="andaAVentana";
-	 		}
+	 	if (pos != 2 && !sobreCaja){
+	 		operador = "andaHaciaVentana";
+	 		Mono nuevoEstado = new Mono(pos+1,sobreCaja,caja,platano);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
 
-	 		if(operadores == 1 && posH != caja &&
-	 				posV == false && posH !=2){
-	 			iPosH=2;
-	 			iPosV=this.posV;
-	 			iCaja=this.caja;
-	 			iPlatano=this.platano;
-	 			operador ="andaACentro";
-	 		}
+	 	if (pos != 0 && !sobreCaja){
+	 		operador = "andaHaciaPuerta";
+	 		Mono nuevoEstado = new Mono(pos-1,sobreCaja,caja,platano);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
 
-	 		if(operadores == 2 && posH != caja &&
-	 				posV == false && posH !=0){
-	 			iPosH=0;
-	 			iPosV=this.posV;
-	 			iCaja=this.caja;
-	 			iPlatano=this.platano;
-	 			operador ="andaAPuerta";
-	 		}
+	 	if (pos == caja && sobreCaja && pos != 2){
+	 		operador = "empujaCajaHaciaVentana";
+	 		Mono nuevoEstado = new Mono(pos+1,sobreCaja,caja+1,platano);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
 
-	 		if(operadores == 3 && posH == caja &&
-	 				posV == false && posH !=1){
-	 			iPosH=1;
-	 			iPosV=this.posV;
-	 			iCaja=1;
-	 			iPlatano=this.platano;
-	 			operador ="empujaCajaAVentana";
-	 		}
+	 	if (pos == caja && sobreCaja && pos !=0){
+	 		operador = "empujaCajaHaciaPuerta";
+	 		Mono nuevoEstado = new Mono(pos-1,sobreCaja,caja-1,platano);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
 
-	 		if(operadores == 4 && posH == caja &&
-	 				posV == false && posH !=2){
-	 			iPosH=2;
-	 			iPosV=this.posV;
-	 			iCaja=2;
-	 			iPlatano=this.platano;
-	 			operador ="empujaCajaACentro";
-	 		}
-
-	 		if(operadores == 5 && posH == caja &&
-	 				posV == false && posH !=0){
-	 			iPosH=0;
-	 			iPosV=this.posV;
-	 			iCaja=0;
-	 			iPlatano=this.platano;
-	 			operador ="empujaCajaAPuerta";
-	 		}
-
-	 		if(operadores == 6 && posH == caja &&
-	 				posV == false){
-	 			iPosH=this.posH;
-				iPosV=true;
-				iCaja=this.caja;
-				iPlatano=this.platano;
-				operador ="subeCaja";
-	 		}
-
-	 		if(operadores == 7 && posV == true &&
-	 				caja == 2 && platano == false){
-	 			iPosH=this.posH;
-				iPosV=this.posV;
-				iCaja=this.caja;
-				iPlatano=true;
-				operador ="cojePlatano";
-	 		}
-
-	 		Mono nuevoEstado = new Mono(iPosH,iPosV,iCaja,iPlatano);
-
-	 		successorVec.addElement(new Successor(nuevoEstado, operador, 1 ));
-	 	}
-
+	 	if (pos == caja && !sobreCaja){
+	 		operador ="subeCaja";
+	 		Mono nuevoEstado = new Mono(pos,true,caja,platano);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
+	 	
+	 	if (pos == caja && sobreCaja){
+	 		operador ="bajaCaja";
+	 		Mono nuevoEstado = new Mono(pos,false,caja,platano);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
+	 	
+	 	if (sobreCaja && caja == 1 && !platano){
+	 		operador ="cogePlatano";
+	 		Mono nuevoEstado = new Mono(pos,sobreCaja,caja,true);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
+	 		 
 	 	return successorVec.elements();
 	}
 	
 	/**
-	 * genera la heuristica del estado en el que se encuentra
+	 * Genera la heuristica del estado en el que se encuentra
 	 * @return devuelve la heuristica correspondiente al estado actual
 	 */
 	public float h() {
-		float h=0;
-
-		if(posH != 2)
-			h++;
-		if(posV == false)
-			h++;
-		if(caja != 2)
-			h++;
-		if(platano == false)
-			h++;
-
-		return h;
-
+		if (pos == 0) return 5;
+		if (pos == 2 && caja != 2) return 5;
+		if (pos == 1 && caja != 1) return 4;
+		if (pos == 2 && caja == 2 && !sobreCaja) return 3;
+		if (pos == 2 && caja == 2 && sobreCaja) return 2;
+		if (pos == 1 && sobreCaja && !platano) return 1;
+		if (pos == 1 && sobreCaja && platano) return 0;
+		return 6;
 	}
 	
 	/**
-	 * genera un mensaje del estado en el que se encuentra
+	 * Genera un mensaje del estado en el que se encuentra
 	 * @return un string con el mensaje que especifica en el estado que se encuentra
 	 */
 	public String toString() {
-		int v,p;
-
-		if(posV == true) v=1; else v=0;
-		if(posV == true) p=1; else p=0;
-
-	      return "(" + posH + "," +
-	                 + v + "," +
-	                 + caja + "," +
-	                 +  p + ")";
-
-	  }
+		return "(Pos:" + pos + ", Subido:" + (sobreCaja?1:0) + ", C:" + caja + ", Pl:" + (platano?1:0) + ")";
+	}
 	
 	/**
-	 * devuelve el numero de nodos expandidos
+	 * Devuelve el numero de nodos expandidos
 	 * @return  devuelve el numero de nodos expandidos
 	 */
 	public int dameNodosExpandidos(){
 		 return nodosExpandidos;
-	 }
+	}
 	
-	 /**
-	  * actualiza el numero de nodos expandidos
-	  * @param n actualiza el numero de nodos expandidos a n
-	  */
-	 public void ponNodosExpandidos(int n){
-		 nodosExpandidos = n;
-	 }
+	/**
+	 * Actualiza el numero de nodos expandidos
+	 * @param n actualiza el numero de nodos expandidos a n
+	 */
+	public void ponNodosExpandidos(int n){
+		nodosExpandidos = n;
+	}
+	
+	/**
+ 	 * resuleve el problema del mono
+ 	 * @param e indica la estrategia usada para resilverlo
+ 	 * @return true en casa de tener solucion false en caso contrario
+ 	 */
+    private boolean resolver(int e){
+ 		   
+ 		boolean resuelto = true;
+ 		switch(e){
+	 		case 1:
+	 			System.out.println("Primero en profundidad (profunidad máxima 7):\n");
+	 			resuelto=listPath((new DepthBoundedSearch(this,7)).search());
+	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			nodosExpandidos = 0;
+				System.out.println("\n");break;
+	 	
+	 		case 2:
+	 			System.out.println("Primero en anchura:\n");
+	 			resuelto=listPath((new BreadthFirstSearch(this)).search());
+	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			nodosExpandidos = 0;
+				System.out.println("\n");break;
+	 	
+	 		case 4:
+	 			System.out.println("Coste Uniforme:\n");
+	 			resuelto = listPath((new UniformCostSearch(this)).search());
+	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			nodosExpandidos = 0;
+				System.out.println("\n");break;
+	 	
+	 		case 5:
+	 			System.out.println("Profundidad iterativa:\n");
+	 			resuelto=listPath((new IteratedDeepeningSearch(this)).search());
+	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			nodosExpandidos = 0;
+				System.out.println("\n");break;
+	 	
+	 		case 3:
+	 			System.out.println("Busqueda A*:\n");
+	 			resuelto=listPath((new AStarSearch(this)).search());
+	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			nodosExpandidos = 0;
+				System.out.println("\n");break;
+	 	
+	 		case 6:
+	 			System.out.println("Escalada:\n");
+	 			resuelto = listPath((new GreedySearch(this)).search());
+	 			System.out.println("NodosExpandidos: "+nodosExpandidos+"\n");
+	 			nodosExpandidos = 0;
+				System.out.println("\n");break;
+	 		}
+ 		
+ 		return resuelto;
+ 	}
+    
+    private boolean listPath(SearchNode node) {
+        ArrayList<String> camino = new ArrayList<String>();
+ 	    if (node == null) {
+ 		    System.out.println("No hay solución");
+ 		    return false;
+ 	    }
+ 	    String linea = "";
+ 	    while (node.getParent()!=null) {
+ 		    linea =  "Estado: " + node.getState() +
+            				  " Profundidad: " + node.getDepth() +
+            				  " Coste: " + node.getPathCost() +
+            				  " Operador: " + node.getAppliedOp();
+ 		    camino.add("\n"+linea);
+ 		    node = node.getParent();
+ 	    }
+ 	  
+ 	    linea = ( "\nESTADO INICIAL: " + node.getState());  
+ 	    camino.add(linea);
+ 	    for (int j=camino.size()-1; j>=0;j--){
+ 	    	System.out.print((String)camino.get(j));
+ 	    }
+ 	    System.out.println("\n");
+ 	    return true;
+    }
+	 
+	/**
+	 * Prueba el problema del mono con todas las estrategias
+	 * @param args
+	 */
+    public static void main(String[] args){
+		Mono m = new Mono(0,false,2,false);
+		System.out.println(m);
+		for (int i=1; i<=6; i++)
+			m.resolver(i);
+	}
 	 
 }
 
