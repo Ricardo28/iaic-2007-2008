@@ -39,13 +39,13 @@ public class MisionerosYCanibales implements State, Heuristic {
     		return false;
     	if (misionerosIzq > 0 && canibalesIzq > misionerosIzq)
     		return false;
-        if ((3-misionerosIzq > 0) && (3-canibalesIzq > 3-misionerosIzq))
+    	if ((3-misionerosIzq > 0) && (3-canibalesIzq > 3-misionerosIzq))
         	return false;
         return true;
-   } 
+	} 
    
    	/**
-   	 * indica si un estado es solucion o no
+   	 * Indica si un estado es solucion o no
    	 * @return true si es final o false en caso contrario
    	 */
    	public boolean isGoal() {
@@ -53,7 +53,7 @@ public class MisionerosYCanibales implements State, Heuristic {
    	}
 
 	/**
-	 * genera los sucesores del esatdo actual
+	 * Genera los sucesores del esatdo actual
 	 * @return devuelve los sucesores del estado actual en Enumeration
 	 * 
 	 */
@@ -64,26 +64,19 @@ public class MisionerosYCanibales implements State, Heuristic {
 		Vector<Successor> successorVec = new Vector<Successor>();
 		nodosExpandidos++;
     
-		for (iBarco= -1; iBarco<=1; iBarco+=2) {
-			for (iMisioneros=0; iMisioneros<=2; iMisioneros++) {
-				for (iCanibales=0; iCanibales+iMisioneros<=2; iCanibales++) {
-					if ( iMisioneros+iCanibales>0 ) {
-
-    	  				MisionerosYCanibales nuevoEstado = 
-    	  						new MisionerosYCanibales(misionerosIzq+iBarco*iMisioneros,
-    	  								canibalesIzq+iBarco*iCanibales,
-    	  								barcaIzq+iBarco,
-    	  								misionerosDer-iBarco*iMisioneros,
-    	  								canibalesDer-iBarco*iCanibales,
-    	  								barcaDer-iBarco);
-                                
-    	  				if (nuevoEstado.isValid()) {
+		for (iBarco= -1; iBarco<=1; iBarco+=2){
+			for (iMisioneros=0; iMisioneros<=2; iMisioneros++){
+				for (iCanibales=0; iCanibales+iMisioneros<=2; iCanibales++){
+					if ((iMisioneros+iCanibales>0) && (barcaIzq+iBarco>=0 && barcaIzq+iBarco<=1)) {
+						MisionerosYCanibales nuevoEstado = 
+	  						new MisionerosYCanibales(misionerosIzq+iBarco*iMisioneros,
+	  								canibalesIzq+iBarco*iCanibales,
+	  								barcaIzq+iBarco);
+						if (nuevoEstado.isValid()) {
     	  					successorVec.addElement(new Successor(
-    	  								   nuevoEstado, 
-    	  								   "(" + iMisioneros + "," 
-    	  								   + iCanibales + "," 
-    	  								   + iBarco + ")", 1 )
-    	  				   ); 
+    	  								nuevoEstado, 
+    	  							    "("+iMisioneros+","+iCanibales+","+iBarco+")",
+    	  							    1)); 
     	  				}
 					}  
 				}
@@ -92,22 +85,22 @@ public class MisionerosYCanibales implements State, Heuristic {
 		return successorVec.elements();
 	}
    
-   /**
-    * genera la heuristica del estado actual
-    * @return un float con la heuristica del estado actual
-    */
-   	public float h() {
+	/**
+     * Genera la heuristica del estado actual
+     * @return un float con la heuristica del estado actual
+     */
+	public float h() {
 	   float hVal = (float) misionerosIzq + (float) canibalesIzq - (float) barcaIzq;
 	   return hVal;
     }
 
    	/**
-   	 * genera un mensaje que representa el estado actual del problema
+   	 * Genera un mensaje que representa el estado actual del problema
    	 * @return un String con el mensaje del estado actual
    	 */
    	public String toString() {
-      return "(" + misionerosIzq + ":" + misionerosDer + "," + + canibalesIzq + ":" + 
-                        canibalesDer + "," + + barcaIzq + ":" + barcaDer + ")";
+    	return "(M:" + misionerosIzq + ", C:" + canibalesIzq + ", B:" + barcaIzq + ")   ~~~~   (M:" + 
+      		   (3-misionerosIzq) + ", C:" + (3-canibalesIzq) + ", B:" + (1-barcaIzq) + ")";
 	}
    	
    	/**
@@ -125,5 +118,5 @@ public class MisionerosYCanibales implements State, Heuristic {
    	public void ponNodosExpandidos(int n){
 		nodosExpandidos = n;
    	}
-
+   	
 }

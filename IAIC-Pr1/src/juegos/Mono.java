@@ -3,15 +3,14 @@ package juegos;
 import aima.search.Heuristic;
 import aima.search.State;
 import aima.search.Successor;
-import java.util.*;
 
-/* Problema del Mono:
-*  0: el mono o caja se encuentran en la puerta.
-*  1: el mono o caja se encuentran en la ventana.
-*  2: el mono o caja se encuentran en el centro.
-*/
-/**
- * @author Usuario
+import java.util.Vector;
+import java.util.Enumeration;
+
+/** Problema del Mono:
+ *  0: el mono o caja se encuentran en la puerta.
+ *  1: el mono o caja se encuentran en la ventana.
+ *  2: el mono o caja se encuentran en el centro.
  */
 public class Mono implements State,Heuristic{
 
