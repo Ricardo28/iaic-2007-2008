@@ -51,63 +51,55 @@ public class Jarras implements State,Heuristic{
 
 	 	for (operadores = 0; operadores <=5; operadores++){
 
-	 		//vaciar garrafa de 3L
-	 		//llenar garrafa de 4L
-	 		if (operadores == 1 && j4<4 ){
-	 			iJ4 = 4;
-	 			iJ3 = this.j3;
-	 			operador ="LLenar jarra de 4 L";
-	 		}
-
-	 		//vaciar garrafa de 3L
-	 		if (operadores == 3 && j3>0 ){
-	 			iJ3 = 0;
-	 			iJ4 = this.j4;
-	 			operador ="Vaciar jarra de 3 L";
-	 		}
-
-	 		//vaciar garrafa de 4L
-	 		if (operadores == 2 && j4>0 ){
-	 			iJ4 = 0;
-	 			iJ3 = this.j3;
-	 			operador ="Vaciar jarra de 4 L";
-	 		}
-
+	 		
 	 		//llenar garrafa de 3L
 	 		if (operadores == 0 && j3<3 ){
 	 			iJ3 = 3;
-	 			iJ4 = this.j4;
+	 			iJ4 = j4;
 	 			operador ="LLenar jarra de 3 L";
 	 		}
-
-	 		//verter garrafa de 4L sobre garrafa de 3L
-	 		if (operadores == 5 && j4>0 && j3<3 ){
-	 			if (j3+j4 <= 3){
-	 				iJ3=this.j3+this.j4;
-	 				//iJ4=0;
-	 			}
-	 			else {
-	 				//iJ4 = this.j4 - (3-this.j4);
-	 				iJ3 = 3;
-	 			}
-	 			iJ4 = this.j4-(iJ3-this.j3);
-	 			operador ="Verter jarra de 4 L sobre la de 3 L";
+	 		//llenar garrafa de 4L
+	 		if (operadores == 1 && j4<4 ){
+	 			iJ4 = 4;
+	 			iJ3 = j3;
+	 			operador ="LLenar jarra de 4 L";
 	 		}
-
+	 		//vaciar garrafa de 4L
+	 		if (operadores == 2 && j4>0 ){
+	 			iJ4 = 0;
+	 			iJ3 = j3;
+	 			operador ="Vaciar jarra de 4 L";
+	 		}
+	 		//vaciar garrafa de 3L
+	 		if (operadores == 3 && j3>0 ){
+	 			iJ3 = 0;
+	 			iJ4 = j4;
+	 			operador ="Vaciar jarra de 3 L";
+	 		}
 	 		//verter garrafa de 3L sobre garrafa de 4L
 	 		if (operadores == 4 && j3>0 && j4<4 ){
 	 			if (j3+j4 <= 4){
-	 				iJ4=this.j3+this.j4;
-	 				//iJ3=0;
+	 				iJ4=j3+j4;
+	 				iJ3=0;
 	 			}
 	 			else {
-	 				//iJ3 = this.j3 - (4-this.j3);
 	 				iJ4 = 4;
+	 				iJ3 = (j3+j4)-4;
 	 			}
-	 			iJ3 = this.j3 -(iJ4-this.j4);
 	 			operador ="Verter jarra de 3 L sobre la de 4 L";
 	 		}
-
+	 		//verter garrafa de 4L sobre garrafa de 3L
+	 		if (operadores == 5 && j4>0 && j3<3 ){
+	 			if (j3+j4 <= 3){
+	 				iJ3=j3+j4;
+	 				iJ4=0;
+	 			}
+	 			else {
+	 				iJ3 = 3;
+	 				iJ4 = j4-(iJ3-j3);
+	 			}
+	 			operador ="Verter jarra de 4 L sobre la de 3 L";
+	 		}
 	 		Jarras nuevoEstado = new Jarras(iJ3,iJ4);
 	 		if (nuevoEstado.isValid())
 	 			successorVec.addElement(new Successor(nuevoEstado, operador, 1 ));
@@ -116,7 +108,7 @@ public class Jarras implements State,Heuristic{
 	}
 	
 	/**
-	 * dice si un estado es valido y no procude conflicto
+	 * dice si un estado es valido y no produce conflicto
 	 * @return true si es valido false en caso contrario
 	 */
 	protected boolean isValid() {
