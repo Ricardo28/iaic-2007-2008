@@ -37,6 +37,7 @@ public class Visual extends javax.swing.JFrame {
         n=3;//dimension	
         z=1;//profundidad del edificio
         dibuja();//pintamos la interfaz
+        this.setSize(1025,735);
         rellena();//esta funcion rellena de verde por donde hemos pasado
     }
     public void rellena(){//esta funcion colorea y rellena las habitaciones con sus respectivos numeros
@@ -94,7 +95,8 @@ public class Visual extends javax.swing.JFrame {
         return cierto;
     }
     public void dibuja(){//Esta funcion pinta el edificio, es decir, el numero de casillas que tenga la matriz 
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+    	
+    	jDesktopPane1 = new javax.swing.JDesktopPane();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         jDesktopPane1.setBackground(new java.awt.Color(204, 204, 255));
         jButton1 = new javax.swing.JButton();
