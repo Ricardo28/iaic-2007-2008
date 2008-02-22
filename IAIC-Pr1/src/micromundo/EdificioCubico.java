@@ -586,7 +586,7 @@ public class EdificioCubico  implements State,Heuristic {
  	 */
     private boolean resolverMono(int e){
  		   
- 		Mono inicial = new Mono(0,false,1,false);
+ 		Mono inicial = new Mono(0,false,2,false);
  		boolean resuelto = true;
  		switch(e){
  		 case 1:
