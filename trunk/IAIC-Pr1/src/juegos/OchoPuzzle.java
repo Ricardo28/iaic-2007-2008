@@ -1,30 +1,29 @@
 package juegos;
 
-import aima.search.AStarSearch;
-import aima.search.BreadthFirstSearch;
-import aima.search.DepthBoundedSearch;
-import aima.search.GreedySearch;
-import aima.search.IteratedDeepeningSearch;
-import aima.search.State;
-import aima.search.Heuristic;
 import aima.search.Successor;
-import aima.search.UniformCostSearch;
 
 import java.util.Vector;
 import java.util.Enumeration;
 
-public class OchoPuzzle implements State,Heuristic{
+public class OchoPuzzle extends Juego{
 	
-	private static int nodosExpandidos = 0;
+	/**
+	 * Coordenada x de la casilla libre
+	 */
+	private int x;
 	
-	private int x; //coordenada x de la casilla libre
+	/**
+	 * Coordenada y de la casilla libre
+	 */
+	private int y;
 	
-	private int y; //coordenada y de la casilla libre
-	
-	private int [][] tablero; //tablero que representa el puzzle;
+	/**
+	 * Tablero que representa el puzzle
+	 */
+	private int [][] tablero;
 
 	/**
-	 * genera un nodo de ocho puzzle con el estado del juego en ese momentop
+	 * Genera un nodo de ocho puzzle con el estado del juego en ese momento
 	 * @param tablero estado actual del problema
 	 * @param x situacion y del blanco
 	 * @param y situacion y del hueco
@@ -40,7 +39,7 @@ public class OchoPuzzle implements State,Heuristic{
 	}
 	
 	/**
-	 * indica si el estado es el estado final
+	 * Indica si el estado es el estado final
 	 * @return true en caso de ser el final de la busqueda false en caso contraio
 	 */
 	public boolean isGoal(){
@@ -50,7 +49,7 @@ public class OchoPuzzle implements State,Heuristic{
 	}
 	
 	 /**
-	  * genera los sucesores de ese estado en el que nos encontramos segun los distintos operadores
+	  * Genera los sucesores de ese estado en el que nos encontramos segun los distintos operadores
 	  * @return devuelve los sucesores generados
 	  */
 	 public Enumeration<Successor> successors(){
@@ -114,151 +113,52 @@ public class OchoPuzzle implements State,Heuristic{
 	  * @return devuelve la heuristica correpondiente float
 	  */
 	 public float h() {
+		 
 	 	float hVal = 0;
-	 	if (tablero[0][0] != 1)
-	 		hVal++;
-	 	if (tablero[0][1] != 2)
-	 		hVal++;
-	 	if (tablero[0][2] != 3)
-	 		hVal++;
-	 	if (tablero[1][0] != 8)
-	 		hVal++;
-	 	if (tablero[1][2] != 4)
-	 		hVal++;
-	 	if (tablero[2][0] != 7)
-	 		hVal++;
-	 	if (tablero[2][1] != 6)
-	 		hVal++;
-	 	if (tablero[2][2] != 5)
-	 		hVal++;
+	 	
+	 	if (tablero[0][0] != 1) hVal++;
+	 	if (tablero[0][1] != 2) hVal++;
+	 	if (tablero[0][2] != 3) hVal++;
+	 	if (tablero[1][0] != 8) hVal++;
+	 	if (tablero[1][2] != 4) hVal++;
+	 	if (tablero[2][0] != 7) hVal++;
+	 	if (tablero[2][1] != 6) hVal++;
+	 	if (tablero[2][2] != 5) hVal++;
 	 		
 	 	return hVal;
 	 }
 	 
-	 /**
-	  * genera el mensaje del estado en el que nos encontramos
-	  * @return String con el mensaje del estado en el que se encuentra
-	  */
-	 public String toString(){
+	/**
+	 * genera el mensaje del estado en el que nos encontramos
+	 * @return String con el mensaje del estado en el que se encuentra
+	 */
+	public String toString(){
 	 	String tabla = "\n(";
-	 	for(int i = 0; i<=2; i++){
-	 		for(int j = 0; j<=2; j++){
-	 			tabla+=" "+tablero[i][j] + " ";
+	 	for (int i = 0; i<=2; i++){
+	 		for (int j = 0; j<=2; j++){
+	 			tabla += " " + tablero[i][j] + " ";
 	 			if (j==2 && i!=2)
-	 			 	tabla+=")"+ "\n"+ "(";
+	 			 	tabla += ")" + "\n" + "(";
 	 			if (j==2 && i == 2)
-	 					tabla+=")"+ "\n";
+	 				tabla += ")" + "\n";
 	 		}
 	 	}
 	 	return tabla;	
 	} 
 	 
-	 /**
-	  * devuelve el numero de nodos expandidos
-	  * @return int
-	  */
-	 public int dameNodosExpandidos(){
-		 return nodosExpandidos;
-	 }
-	 
-	 /**
-	  * pone el numero de nodos expandidos segun el numero indicado en parametros
-	  * @param n int numero de nodos expandidos
-	  */
-	 public void ponNodosExpandidos(int n){
-		 nodosExpandidos = n;
-	 }
-	
-	 /**
-	     * resuleve el problema de ochoPuzzle
-	     * @param e indica la estrategia usada para resilverlo
-	     * @return true en casa de tener solucion false en caso contrario
-	     */
-	    private boolean resolverOchoPuzzle(int e){
-	 	   
-	 	   	int [][] tabla = new int [3][3];
-	 		 tabla[0][0] = 1;
-	 		 tabla[0][1] = 3;
-	 		 tabla[0][2] = 4;
-	 		 tabla[1][0] = 8;
-	 		 tabla[1][1] = 0;
-	 		 tabla[1][2] = 2;
-	 		 tabla[2][0] = 7;
-	 		 tabla[2][1] = 6;
-	 		 tabla[2][2] = 5;
-	 		 
-	 		 OchoPuzzle inicial = new OchoPuzzle(tabla,1,1);
-	 		 boolean resuelto = true;
-	 			switch(e){
-	 			 case 1:
-	 				 inicial.ponNodosExpandidos(0);
-	 				 cont.mostrar("Primero en profundidad(profunidad máxima: 7):\n");
-	 				 resuelto=listPath( ( new DepthBoundedSearch(inicial,7) ).search());
-	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
-
-	 				 inicial.ponNodosExpandidos(0);
-	 				 cont.mostrar("\n");break;
-
-	 			 case 2:
-	 				 cont.mostrar("Primero en anchura:\n");
-	 				 resuelto=listPath( ( new BreadthFirstSearch(inicial) ).search());
-	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
-
-	 				 inicial.ponNodosExpandidos(0);
-	 				 cont.mostrar("\n");break;
-
-	 			 case 4:
-	 				 cont.mostrar("Coste Uniforme:\n");
-	 				 resuelto = listPath( ( new UniformCostSearch(inicial) ).search());
-	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
-
-	 				 inicial.ponNodosExpandidos(0);
-	 				 cont.mostrar("\n");break;
-
-	 			 case 5:
-	 				 cont.mostrar("Profundidad iterativa:\n");
-	 				 resuelto=listPath( (
-	 						 new IteratedDeepeningSearch(inicial) ).search());
-	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
-
-	 				 inicial.ponNodosExpandidos(0);
-	 				 cont.mostrar("\n");break;
-
-	 			 case 3:
-	 				 cont.mostrar("Busqueda A*:\n");
-	 				 resuelto=listPath( (
-	 						 new AStarSearch(inicial) ).search());
-	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
-
-	 				 inicial.ponNodosExpandidos(0);
-	 				 cont.mostrar("\n");break;
-
-	 			 case 6:
-	 				 cont.mostrar("Escalada:\n");
-	 				 resuelto = listPath( (
-	 						 new GreedySearch(inicial) ).search());
-	 				 cont.mostrar("NodosExpandidos: "+inicial.dameNodosExpandidos()+"\n");
-	 				 inicial.ponNodosExpandidos(0);
-	 				 cont.mostrar("\n");break;
-	 			 }
-	 	      return resuelto;
-	    }
-	    
-	    
-	 
-	 /**
-		 * Prueba el problema del mono con todas las estrategias
-		 * @param args
-		 */
-	    public static void main(String[] args){
-	    	int [][] tabla = new int [3][3];
-	 		 tabla[0][0] = 1; tabla[0][1] = 3; tabla[0][2] = 4;
-	 		 tabla[1][0] = 8; tabla[1][1] = 0; tabla[1][2] = 2;
-	 		 tabla[2][0] = 7; tabla[2][1] = 6; tabla[2][2] = 5;
-	    	OchoPuzzle m = new OchoPuzzle(tabla, 1, 1);
-			System.out.println(m);
-			for (int i=1; i<=6; i++)
-				m.resolver(i);
-		}
+	/**
+	 * Prueba el problema con todas las estrategias
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		int[][] tabla = new int[3][3];
+		tabla[0][0] = 1; tabla[0][1] = 3; tabla[0][2] = 4;
+		tabla[1][0] = 8; tabla[1][1] = 0; tabla[1][2] = 2;
+		tabla[2][0] = 7; tabla[2][1] = 6; tabla[2][2] = 5;
+		OchoPuzzle m = new OchoPuzzle(tabla, 1, 1);
+		System.out.println(m);
+		for (int i = 1; i <= 6; i++)
+			m.resolver(i);
+	}
 		 
 }

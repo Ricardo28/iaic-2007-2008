@@ -5,31 +5,24 @@ import aima.search.*;
 import java.util.Enumeration;
 import java.util.Vector;
 
-/**
- * 
- * @author Usuario
- *
- */
-public class Jarras implements State,Heuristic{
+public class Jarras extends Juego{
 
-	private static int nodosExpandidos = 0;
-	
 	private int j3;
 	
 	private int j4;
 	
 	/**
-	 * crea una instancia de un estado de las jarras
+	 * Crea una instancia de un estado de las jarras
 	 * @param g3 indica la cantidad que contiene la jarra de 3
 	 * @param g4 indica la cantidad que contiene la jarra de 4
 	 */
-	public Jarras(int g3, int g4){
-		this.j3= g3;
-		this.j4= g4;
+	public Jarras(int j3, int j4){
+		this.j3 = j3;
+		this.j4 = j4;
 	}
 
 	/**
-	 * indica si un estado es solucion
+	 * Indica si un estado es solucion
 	 * @return true si es solucion false en caso contrario
 	 */
 	public boolean isGoal(){
@@ -37,7 +30,7 @@ public class Jarras implements State,Heuristic{
 	}
 	
 	/**
-	 * genera los sucesores del estado actual
+	 * Genera los sucesores del estado actual
 	 * @return los sucesores del estado actual
 	 */
 	public Enumeration<Successor> successors(){
@@ -108,23 +101,18 @@ public class Jarras implements State,Heuristic{
 	}
 	
 	/**
-	 * dice si un estado es valido y no produce conflicto
+	 * Dice si un estado es valido y no produce conflicto
 	 * @return true si es valido false en caso contrario
 	 */
 	protected boolean isValid() {
-		return (nodosExpandidos<50000);
+		return nodosExpandidos < 5000;
 	}
 	 
 	/**
-	 * devuelve la heuristica de ese estado
+	 * Devuelve la heuristica de ese estado
 	 */
-	public float h() {
-		float h = 0;
-		h = (2-this.j4);
-		if (h>0)
-			return h;
-		else
-			return (this.j4-2);
+	public float h(){
+		return (Math.abs(j4-2));
 	}
 	
 	/**
@@ -135,19 +123,14 @@ public class Jarras implements State,Heuristic{
 	}
 	
 	/**
-	 * devuelve el numero de nodos exapndidos
-	 * @return devuelve el numero de nodos expandidos
+	 * Prueba el problema con todas las estrategias
+	 * @param args
 	 */
-	public int dameNodosExpandidos(){
-		return nodosExpandidos;
-	}
-	
-	/**
-	 * actualiza el numero de nodos exandidos
-	 * @param n es el numero de nodos expandidos al que se va a actualizar
-	 */
-	public void ponNodosExpandidos(int n){
-		nodosExpandidos = n;
+    public static void main(String[] args){
+		Jarras m = new Jarras(0, 0);
+		System.out.println(m);
+		for (int i=1; i<=6; i++)
+			m.resolver(i);
 	}
 	 
 }

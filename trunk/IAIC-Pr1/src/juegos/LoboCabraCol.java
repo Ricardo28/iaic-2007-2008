@@ -1,13 +1,11 @@
 package juegos;
 
-import aima.search.State;
-import aima.search.Heuristic;
 import aima.search.Successor;
 
 import java.util.Vector;
 import java.util.Enumeration;
 
-public class LoboCabraCol implements State,Heuristic{
+public class LoboCabraCol extends Juego{
 	
 	private int lobo;
 	
@@ -16,8 +14,6 @@ public class LoboCabraCol implements State,Heuristic{
 	private int col;
 	
 	private int granjero;
-	
-	private static int nodosExpandidos = 0;
 	
 	/**
 	 * Crea una instancia del juego de la cabra, el lobo y la col
@@ -109,7 +105,7 @@ public class LoboCabraCol implements State,Heuristic{
 	 }
 	 
 	 /**
-	  * genera la heuristica dle estado actual
+	  * Genera la heuristica dle estado actual
 	  * @return la heuristica del estado actual
 	  */
 	 public float h() {
@@ -117,7 +113,7 @@ public class LoboCabraCol implements State,Heuristic{
 	 }
 	 
 	/**
-	 * genera un mensaje indicando el estado actual
+	 * Genera un mensaje indicando el estado actual
 	 * @return devuelve un String que indica el estado actual
 	 */
 	public String toString() {
@@ -125,20 +121,16 @@ public class LoboCabraCol implements State,Heuristic{
               ")   ~~~~   (L:" + (1-lobo) + ", Ca:" + (1-cabra) + ", Co:" + (1-col) +
               ", G:" + (1-granjero) + ")";
 	}
+	
+	/**
+	 * Prueba el problema con todas las estrategias
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		LoboCabraCol m = new LoboCabraCol(1,1,1,1);
+		System.out.println(m);
+		for (int i = 1; i <= 6; i++)
+			m.resolver(i);
+	}
 	 
-	/**
-	 * devuelve el numero de nodos exapndidos
-	 *
-	 */
-	public int dameNodosExpandidos(){
-		return nodosExpandidos;
-	}
-	
-	/**
-	 * actualiza el numero de nodos expandidos al indicado por el parametro
-	 */
-	public void ponNodosExpandidos(int n){
-		nodosExpandidos = n;
-	}
-	
 }

@@ -294,21 +294,33 @@ public class EdificioCubico  implements State,Heuristic {
     }
     
     /**
-     * indica que tipo de juego hay que resolver 
+     * Indica que tipo de juego hay que resolver 
      * @param numJuego indica el juego a resolver
      * @param estrategia indica la estrategia ocn la que hay que resolverlo
      * @return true si se ha resuleto false en caso contrario
      */
-    public boolean resolverProblema(int numJuego,int estrategia){
- 	   switch(numJuego){
- 	   case 1: {return resolverOchoPuzzle(estrategia);}
- 	   case 2: {return resolverMisionerosyCanibales(estrategia);}
- 	   case 3: {return resolverLoboCabraCol(estrategia);}
- 	   case 4: {return resolverMono(estrategia);}
- 	   case 5: {return resolverPalillos(estrategia);}
- 	   case 6: {return resolverJarras(estrategia);}
- 	   default: return false;
- 	   }
+    public boolean resolverProblema(int numJuego, int estrategia){
+ 		switch(numJuego){
+ 			case 1: {
+			return resolverOchoPuzzle(estrategia);
+			}
+			case 2: {
+				return resolverMisionerosyCanibales(estrategia);
+			}
+			case 3: {
+				return resolverLoboCabraCol(estrategia);
+			}
+			case 4: {
+				return resolverMono(estrategia);
+			}
+			case 5: {
+				return resolverPalillos(estrategia);
+			}
+			case 6: {
+				return resolverJarras(estrategia);
+			}
+			default: return false;
+ 		}
     }
     
     /**
@@ -704,7 +716,7 @@ public class EdificioCubico  implements State,Heuristic {
  	  return resuelto;
  	}
  	
-    private boolean listPath(SearchNode node) {
+    public boolean listPath(SearchNode node) {
         ArrayList<String> camino = new ArrayList<String>();
  	    if (node == null) {
  		    cont.mostrar("No hay solución");
