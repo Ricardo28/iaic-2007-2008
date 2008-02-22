@@ -8,10 +8,11 @@ import aima.search.IteratedDeepeningSearch;
 import aima.search.SearchNode;
 import aima.search.UniformCostSearch;
 
+import gui.Visual;
+
 import java.util.ArrayList;
 
 import micromundo.EdificioCubico;
-import Ventana.Visual;;
 
 public class Controlador {
 	
