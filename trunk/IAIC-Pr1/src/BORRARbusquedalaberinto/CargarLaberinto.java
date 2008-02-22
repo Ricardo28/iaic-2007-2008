@@ -1,4 +1,4 @@
-package Busquedalaberinto;
+package BORRARbusquedalaberinto;
 
 import java.io.*;
 import java.util.Vector;

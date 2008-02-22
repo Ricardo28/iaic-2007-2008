@@ -1,4 +1,4 @@
-package Busquedalaberinto;
+package BORRARbusquedalaberinto;
 
 import aima.search.*;
 import java.util.*;
