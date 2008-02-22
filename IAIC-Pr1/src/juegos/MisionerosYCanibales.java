@@ -5,6 +5,8 @@ import aima.search.Successor;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import programa.Controlador;
+
 public class MisionerosYCanibales extends Juego {
 
 	private int misionerosIzq;
@@ -18,11 +20,13 @@ public class MisionerosYCanibales extends Juego {
      * @param misionerosIzq numero de misioneros en la izquierda
      * @param canibalesIzq numero de canibales en la izquierda
      * @param barcaIzq si esta la barca en la izquierda o derecha
-     */
-    public MisionerosYCanibales(int misionerosIzq, int canibalesIzq, int barcaIzq) {
+     * @param c Controlador. Poner null para imprimir por pantalla
+	 */
+    public MisionerosYCanibales(int misionerosIzq, int canibalesIzq, int barcaIzq, Controlador c) {
     	this.misionerosIzq = misionerosIzq;
     	this.canibalesIzq = canibalesIzq;
     	this.barcaIzq = barcaIzq;
+    	cont = c;
     } 
    
     /**
@@ -67,7 +71,7 @@ public class MisionerosYCanibales extends Juego {
 						MisionerosYCanibales nuevoEstado = 
 	  						new MisionerosYCanibales(misionerosIzq+iBarco*iMisioneros,
 	  								canibalesIzq+iBarco*iCanibales,
-	  								barcaIzq+iBarco);
+	  								barcaIzq+iBarco, cont);
 						if (nuevoEstado.isValid()) {
     	  					successorVec.addElement(new Successor(
     	  								nuevoEstado, 
@@ -104,7 +108,7 @@ public class MisionerosYCanibales extends Juego {
 	 * @param args
 	 */
     public static void main(String[] args){
-		MisionerosYCanibales m = new MisionerosYCanibales(3,3,1);
+		MisionerosYCanibales m = new MisionerosYCanibales(3,3,1,null);
 		System.out.println(m);
 		for (int i=1; i<=6; i++)
 			m.resolver(i);

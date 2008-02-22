@@ -5,6 +5,8 @@ import aima.search.*;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import programa.Controlador;
+
 public class Jarras extends Juego{
 
 	private int j3;
@@ -15,8 +17,9 @@ public class Jarras extends Juego{
 	 * Crea una instancia de un estado de las jarras
 	 * @param g3 indica la cantidad que contiene la jarra de 3
 	 * @param g4 indica la cantidad que contiene la jarra de 4
+	 * @param c Controlador. Poner null para imprimir por pantalla
 	 */
-	public Jarras(int j3, int j4){
+	public Jarras(int j3, int j4, Controlador c){
 		this.j3 = j3;
 		this.j4 = j4;
 	}
@@ -93,7 +96,7 @@ public class Jarras extends Juego{
 	 			}
 	 			operador ="Verter jarra de 4 L sobre la de 3 L";
 	 		}
-	 		Jarras nuevoEstado = new Jarras(iJ3,iJ4);
+	 		Jarras nuevoEstado = new Jarras(iJ3,iJ4,cont);
 	 		if (nuevoEstado.isValid())
 	 			successorVec.addElement(new Successor(nuevoEstado, operador, 1 ));
 	 	}
@@ -127,7 +130,7 @@ public class Jarras extends Juego{
 	 * @param args
 	 */
     public static void main(String[] args){
-		Jarras m = new Jarras(0, 0);
+		Jarras m = new Jarras(0, 0, null);
 		System.out.println(m);
 		for (int i=1; i<=6; i++)
 			m.resolver(i);

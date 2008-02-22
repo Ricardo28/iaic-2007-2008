@@ -1,7 +1,5 @@
 package programa;
 
-import micromundo.*;
-import gui.*;
 import aima.search.AStarSearch;
 import aima.search.BreadthFirstSearch;
 import aima.search.DepthBoundedSearch;
@@ -9,14 +7,12 @@ import aima.search.GreedySearch;
 import aima.search.IteratedDeepeningSearch;
 import aima.search.SearchNode;
 import aima.search.UniformCostSearch;
-import java.util.ArrayList;
-import Ventana.*;
 
-/**
- * 
- * @author Usuario
- *
- */
+import java.util.ArrayList;
+
+import micromundo.EdificioCubico;
+import Ventana.Visual;;
+
 public class Controlador {
 	
 	private static Visual vista;
@@ -32,14 +28,13 @@ public class Controlador {
 	}
 
 	/**
-	 * constructor por defecto
-	 *
+	 * Constructor por defecto
 	 */
 	public Controlador(){		
 	}
 	
 	/**
-	 * asocia una vista al controlador
+	 * Asocia una vista al controlador
 	 * @param vista Vista asociada al controlador
 	 */
 	public void asociarVista(Visual vist){
@@ -47,9 +42,8 @@ public class Controlador {
 	}
 	
 	/**
-	 * inicia el juego con el numero de busqueda indicado por el parametro n
-	 * n va de 1 a 6 segun las busquedas implementadas
-	 * @param n indica el tipo de busqueda a utilizar en el problema del laberinto
+	 * Inicia el juego con el numero de busqueda indicado por el parametro n
+	 * @param n indica el tipo de busqueda a utilizar en el problema del laberinto (1-6)
 	 */
 	public void jugar(int n){
         
@@ -125,7 +119,7 @@ public class Controlador {
     }
 	 
 	/**
-	 * asocia un vector que representa el tablero del laberinto al controlador
+	 * Asocia un vector que representa el tablero del laberinto al controlador
 	 * @param hab vector con las habitaciones del laberinto
 	 */
 	public void cargar(EdificioCubico edificio){
@@ -133,17 +127,17 @@ public class Controlador {
 	}
 	
 	/**
-	 * notifica a la vista un mensaje a mostrar por pantalla
-	 * @param s mensaqje que quieres mostrar
+	 * Notifica a la vista un mensaje a mostrar por pantalla
+	 * @param s mensaje que quieres mostrar
 	 */
 	public void mostrar(String s){
 		vista.mostrar(s);
 	}
 	
 	/**
-	 * notifica a la Vista asociada que muestre un menu de solicitud de algoritmo de busqueda
+	 * Notifica a la Vista asociada que muestre un menu de solicitud de algoritmo de busqueda
 	 * @param bol si se trata del juego de las jarras o no 
-	 * @return devuielve el numero de estrategia elegida
+	 * @return devuelve el numero de estrategia elegida
 	 */
 	public int solicitud(){
 		return vista.solicitud();
