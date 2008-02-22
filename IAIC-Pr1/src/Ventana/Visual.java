@@ -34,8 +34,11 @@ public class Visual extends javax.swing.JFrame {
     public Visual() {
         n=2;//dimension	
         z=1;//profundidad del edificio
-        dibuja();//pintamos la interfaz
-        
+        dibuja();//pintamos la interfaz  
+    }
+    public Visual(int dim){
+    	n=dim;
+    	z=1;
     }
     public void rellena(){//esta funcion colorea y rellena las habitaciones con sus respectivos numeros
         
@@ -46,7 +49,7 @@ public class Visual extends javax.swing.JFrame {
             	Edificio[i][j].setText("");
             }
     	}
-    	if(e.getActZ()==z){//si estamos en la misma profundidad pintamos 
+    	if(e.getActZ()+1==z){//si estamos en la misma profundidad pintamos 
     		Edificio[e.getActX()][e.getActY()].setText("X");
     	}
         /*for (int i = 0; i < n; i++) {
@@ -95,8 +98,6 @@ public class Visual extends javax.swing.JFrame {
     public void dibuja(){//Esta funcion pinta el edificio, es decir, el numero de casillas que tenga la matriz 
     	
     	jDesktopPane1 = new javax.swing.JDesktopPane();
-       // setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        jDesktopPane1.setBackground(new java.awt.Color(204, 204, 255));
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -107,15 +108,17 @@ public class Visual extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField18 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jCheckBox1=new javax.swing.JCheckBox();
-        jCheckBox2=new javax.swing.JCheckBox();
-        jCheckBox3=new javax.swing.JCheckBox();
-        jCheckBox4=new javax.swing.JCheckBox();
-        jCheckBox5=new javax.swing.JCheckBox();
-        jCheckBox6=new javax.swing.JCheckBox();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
+        jCheckBox6 = new javax.swing.JCheckBox();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jDesktopPane1.setBackground(new java.awt.Color(204, 204, 255));
         int x=20;//eje x
         int y=80;//eje y
         Edificio=new JTextField[n][n];
@@ -245,6 +248,8 @@ public class Visual extends javax.swing.JFrame {
         jScrollPane1.setBounds(20,jLabel2.getY()+20, 570, 280);
         jDesktopPane1.add(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         
+       
+        
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -257,7 +262,9 @@ public class Visual extends javax.swing.JFrame {
         );
         pack();
         this.setSize(1025,735);//ajustamos el tamaño de la ventana
-        setVisible(true);//mostarmos la ventana
+        this.setVisible(true);//mostarmos la ventana
+        
+ 
         
         
     }
@@ -603,8 +610,8 @@ public class Visual extends javax.swing.JFrame {
         		EdificioCubico edi = new EdificioCubico(controlador);
         		c.cargarEdificio(edi, ruta);
         		vaciar();//vaciamos la ventana
-        		n=edi.getDimension();
-        		dibuja();
+        		Visual v=new Visual(edi.getDimension());
+        		v.dibuja();
         		controlador.cargar(edi);
         	} catch(Exception ex){
         		mostrar("Imposible abrir el archivo");
@@ -614,31 +621,30 @@ public class Visual extends javax.swing.JFrame {
     	
     }                                     
     public void vaciar(){//vaciamos la ventana
-    	/*for(int i=0;i<n;i++){
-    		for(int j=0;j<n;j++){
-    			this.remove(Edificio[i][j]);
-    		}
-    	}
-    	this.remove(jButton1);
-    	this.remove(jButton2);
-    	this.remove(jButton3);
-    	this.remove(jButton4);
-    	this.remove(jTextArea1);
-    	this.remove(jLabel1);
-    	this.remove(jLabel2);
-    	this.remove(jLabel3);
-    	this.remove(jLabel4);
-    	this.remove(jTextField17);
-    	this.remove(jTextField18);
-    	this.remove(jCheckBox1);
-    	this.remove(jCheckBox2);
-    	this.remove(jCheckBox3);
-    	this.remove(jCheckBox4);
-    	this.remove(jCheckBox5);
-    	this.remove(jCheckBox6);	*/
+//    	for(int i=0;i<n;i++){
+//    		for(int j=0;j<n;j++){
+//    			jDesktopPane1.remove(Edificio[i][j]);
+//    		}
+//    	}
+//    	jDesktopPane1.remove(jButton1);
+//    	jDesktopPane1.remove(jButton2);
+//    	jDesktopPane1.remove(jButton3);
+//    	jDesktopPane1.remove(jButton4);
+//    	jDesktopPane1.remove(jTextArea1);
+//    	jDesktopPane1.remove(jLabel1);
+//    	jDesktopPane1.remove(jLabel2);
+//    	jDesktopPane1.remove(jLabel3);
+//    	jDesktopPane1.remove(jLabel4);
+//    	jDesktopPane1.remove(jTextField17);
+//    	jDesktopPane1.remove(jTextField18);
+//    	jDesktopPane1.remove(jCheckBox1);
+//    	jDesktopPane1.remove(jCheckBox2);
+//    	jDesktopPane1.remove(jCheckBox3);
+//    	jDesktopPane1.remove(jCheckBox4);
+//    	jDesktopPane1.remove(jCheckBox5);
+//    	jDesktopPane1.remove(jCheckBox6);	
     	this.removeAll();
     	this.setVisible(false);
-    	
     }
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {                                      
 // TODO add your handling code here:
@@ -708,5 +714,12 @@ public class Visual extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration                   
+
+	public int getN() {
+		return n;
+	}
+	public void setN(int n) {
+		this.n = n;
+	}
     
 }
