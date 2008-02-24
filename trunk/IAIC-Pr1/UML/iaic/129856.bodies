@@ -1,0 +1,234 @@
+class EdificioCubico
+!!!137792.java!!!	EdificioCubico(inout cont : Controlador)
+
+    	this.cont = cont;
+    	nodosExpandidos = 0;
+!!!137920.java!!!	EdificioCubico(in n : int, in iniX : int, in iniY : int, in iniZ : int, in actX : int, in actY : int, in actZ : int, inout edificio : HabitacionCubica, inout cont : Controlador)
+
+    	dimension = n;
+		this.iniX = iniX; this.iniY = iniY; this.iniZ = iniZ;
+		this.actX = actX; this.actY = actY; this.actZ = actZ;
+		this.edificio = edificio;
+		this.cont = cont;
+		nodosExpandidos = 0;
+!!!138048.java!!!	EdificioCubico(in ruta : String, inout cont : Controlador)
+
+    	this.cont = cont;
+    	CargarEdificio.cargarEdificio(this, ruta);
+    	nodosExpandidos = 0;
+!!!138176.java!!!	dameNodosExpandidos() : int
+
+		return nodosExpandidos;
+!!!138304.java!!!	ponNodosExpandidos(in n : int) : void
+
+		nodosExpandidos = n;
+!!!138432.java!!!	isGoal() : boolean
+
+		return edificio[actX][actY][actZ].esSalida();
+!!!138560.java!!!	successors() : Enumeration<Successor>
+
+		Vector<Successor> successorVec = new Vector<Successor>();
+		nodosExpandidos++;
+		int estrategia = cont.solicitud();
+		if (edificio[actX][actY][actZ].puedeIncX() &&
+                resolverProblema(edificio[actX][actY][actZ].getJuegos()[0], estrategia)){
+			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX+1, actY, actZ, edificio, cont);
+			String operador = "Incrementa X -> ("+(actX+1)+","+actY+","+actZ+")";
+			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
+		}
+		if (edificio[actX][actY][actZ].puedeDecX() &&
+                resolverProblema(edificio[actX][actY][actZ].getJuegos()[1], estrategia)){
+			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX-1, actY, actZ, edificio, cont);
+			String operador = "Decrementa X -> ("+(actX-1)+","+actY+","+actZ+")";
+			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
+		}
+		if (edificio[actX][actY][actZ].puedeIncY() &&
+                resolverProblema(edificio[actX][actY][actZ].getJuegos()[2], estrategia)){
+			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX, actY+1, actZ, edificio, cont);
+			String operador = "Incrementa Y -> ("+actX+","+(actY+1)+","+actZ+")";
+			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
+		}
+		if (edificio[actX][actY][actZ].puedeDecY() &&
+                resolverProblema(edificio[actX][actY][actZ].getJuegos()[3], estrategia)){
+			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX, actY-1, actZ, edificio, cont);
+			String operador = "Decrementa Y -> ("+actX+","+(actY-1)+","+actZ+")";
+			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
+		}
+		if (edificio[actX][actY][actZ].puedeIncZ() &&
+                  resolverProblema(edificio[actX][actY][actZ].getJuegos()[4], estrategia)){
+			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX, actY, actZ+1, edificio, cont);
+			String operador = "Incrementa Z -> ("+actX+","+actY+","+(actZ+1)+")";
+			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
+		}
+		if (edificio[actX][actY][actZ].puedeDecZ() &&
+                  resolverProblema(edificio[actX][actY][actZ].getJuegos()[5], estrategia)){
+			EdificioCubico nuevoEstado = new EdificioCubico(dimension, iniX, iniY, iniZ, actX, actY, actZ-1, edificio, cont);
+			String operador = "Decrementa Z -> ("+actX+","+actY+","+(actZ-1)+")";
+			successorVec.add(new Successor((EdificioCubico)nuevoEstado,operador,1));
+		}
+		return successorVec.elements();
+!!!138688.java!!!	h() : float
+
+ 	    float heuristica = distanciaMinSalida(edificio[actX][actY][actZ]);
+ 	    if (edificio[actX][actY][actZ].puedeIncX())
+			heuristica += distanciaMinSalida(edificio[actX+1][actY][actZ]);
+ 	    if (edificio[actX][actY][actZ].puedeDecX())
+ 	    	heuristica += distanciaMinSalida(edificio[actX-1][actY][actZ]);
+ 	    if (edificio[actX][actY][actZ].puedeIncY())
+ 	    	heuristica += distanciaMinSalida(edificio[actX][actY+1][actZ]);
+ 	    if (edificio[actX][actY][actZ].puedeDecY())
+ 	    	heuristica += distanciaMinSalida(edificio[actX][actY-1][actZ]);
+ 	    if (edificio[actX][actY][actZ].puedeIncZ())
+ 	    	heuristica += distanciaMinSalida(edificio[actX][actY][actZ+1]);
+ 	    if (edificio[actX][actY][actZ].puedeDecZ())
+ 	    	heuristica += distanciaMinSalida(edificio[actX][actY][actZ-1]);
+ 	    return heuristica;
+!!!138816.java!!!	distanciaMinSalida(inout ini : HabitacionCubica) : int
+
+    	int x = Math.min(ini.getX(), dimension-1-ini.getX());
+    	int y = Math.min(ini.getY(), dimension-1-ini.getY());
+    	int z = Math.min(ini.getZ(), dimension-1-ini.getZ());
+        return x + y + z;
+!!!138944.java!!!	toString() : String
+
+	    String msg = "\n Habitacion actual: "+actX+","+actY+","+actZ+"\n";
+	    HabitacionCubica hAct = edificio[actX][actY][actZ];
+	    if (hAct.puedeIncX() && hAct.getJuegos()[0]!=0){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[0] + 
+	    		   " subes a la habitacion "+(actX+1)+","+actY+","+actZ+"\n";
+	    }
+	    if (hAct.puedeDecX() && hAct.getJuegos()[1]!=0){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[1] + 
+	    		   " bajas a la habitacion "+(actX-1)+","+actY+","+actZ+"\n";
+	    }
+	    if (hAct.puedeIncY() && hAct.getJuegos()[2]!=0){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[2] +
+	    	       " giras a la habitacion "+actX+","+(actY+1)+","+actZ+"\n";
+	    }
+	    if (hAct.puedeDecY() && hAct.getJuegos()[3]!=0){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[3] +
+	    		   " giras a la habitacion "+actX+","+(actY-1)+","+actZ+"\n";
+	    }
+	    if (hAct.puedeIncZ() && hAct.getJuegos()[4]!=0){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[4] +
+	    		   " avanzas a la habitacion "+actX+","+actY+","+(actZ+1)+"\n";
+	    }
+	    if (hAct.puedeDecZ() && hAct.getJuegos()[5]!=0){
+	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[5] +
+	 	   		   " retrocedes a la habitacion "+actX+","+actY+","+(actZ-1)+"\n";;
+	    }
+	    return msg;
+!!!139072.java!!!	getIniX() : int
+
+		return iniX;
+!!!139200.java!!!	setIniX(in iniX : int) : void
+
+		this.iniX = iniX;
+!!!139328.java!!!	getIniY() : int
+
+		return iniY;
+!!!139456.java!!!	setIniY(in iniY : int) : void
+
+		this.iniY = iniY;
+!!!139584.java!!!	getIniZ() : int
+
+		return iniZ;
+!!!139712.java!!!	setIniZ(in iniZ : int) : void
+
+		this.iniZ = iniZ;
+!!!139840.java!!!	getActX() : int
+
+		return actX;
+!!!139968.java!!!	setActX(in actX : int) : void
+
+		this.actX = actX;
+!!!140096.java!!!	getActY() : int
+
+		return actY;
+!!!140224.java!!!	setActY(in actY : int) : void
+
+		this.actY = actY;
+!!!140352.java!!!	getActZ() : int
+
+		return actZ;
+!!!140480.java!!!	setActZ(in actZ : int) : void
+
+		this.actZ = actZ;
+!!!140608.java!!!	getEdificio() : HabitacionCubica
+
+		return edificio;
+!!!140736.java!!!	setEdificio(inout edificio : HabitacionCubica) : void
+
+		int n = edificio.length;
+		HabitacionCubica[][][] edi = new HabitacionCubica[n][n][n];
+		for (int i=0; i<n; i++)
+			for (int j=0; j<n; j++)
+				for (int k=0; k<n; k++)
+					edi[i][j][k] = edificio[i][j][k].clone();
+		this.edificio = edi;
+!!!140864.java!!!	getCont() : Controlador
+
+		return cont;
+!!!140992.java!!!	setCont(inout cont : Controlador) : void
+
+		this.cont = cont;
+!!!141120.java!!!	getDimension() : int
+
+		return dimension;
+!!!141248.java!!!	setDimension(in dimension : int) : void
+
+		this.dimension = dimension;
+!!!141376.java!!!	vuelveAlInicio() : void
+
+		actX = iniX;
+		actY = iniY;
+		actZ = iniZ;
+!!!141504.java!!!	isValid() : boolean
+
+        return true;
+!!!141632.java!!!	resolverProblema(in numJuego : int, in estrategia : int) : boolean
+
+ 		switch(numJuego){
+ 			// Puerta no se puede abrir, cerrada
+ 			case 0: {
+ 				return false;
+ 			}
+ 			// OchoPuzzle
+ 			case 1: {
+ 				int [][] tabla = new int [3][3];
+ 		 		tabla[0][0] = 1; tabla[0][1] = 3; tabla[0][2] = 4;
+ 		 		tabla[1][0] = 8; tabla[1][1] = 0; tabla[1][2] = 2;
+ 		 		tabla[2][0] = 7; tabla[2][1] = 6; tabla[2][2] = 5;
+ 		 		OchoPuzzle op = new OchoPuzzle(tabla,1,1,cont);
+ 		 		return op.resolver(estrategia);
+			}
+ 			// Misioneros y canibales
+ 			case 2: {
+				MisionerosYCanibales myc = new MisionerosYCanibales(3,3,1,cont);
+				return myc.resolver(estrategia);
+			}
+			// Lobo, Cabra y Col
+ 			case 3: {
+				LoboCabraCol lcc = new LoboCabraCol(1,1,1,1,cont);
+				return lcc.resolver(estrategia);
+			}
+			// Mono
+ 			case 4: {
+				Mono m = new Mono(0,false,2,false,cont);
+				return m.resolver(estrategia);
+			}
+			// Palillos
+ 			case 5: {
+				Palillos p = new Palillos(6,5,cont);
+				return p.resolver(estrategia);
+			}
+			// Jarras
+ 			case 6: {
+				Jarras j = new Jarras(0,0,cont);
+				return j.resolver(estrategia);
+			}
+			default: {
+				cont.mostrar("No existe el juego " + numJuego);
+				return false;
+			}
+ 		}

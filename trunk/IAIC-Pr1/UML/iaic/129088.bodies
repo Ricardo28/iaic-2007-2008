@@ -1,0 +1,82 @@
+class LoboCabraCol
+!!!132800.java!!!	LoboCabraCol(in lobo : int, in cabra : int, in col : int, in granjero : int, inout c : Controlador)
+
+		this.lobo = lobo;
+		this.cabra = cabra;
+		this.col = col;
+		this.granjero = granjero;
+		cont = c;
+!!!132928.java!!!	isValid() : boolean
+
+		if (lobo == cabra && lobo == (1 - granjero))
+			return false;
+		if (cabra == col && cabra == (1 - granjero))
+		  	return false;
+		return true;		
+!!!133056.java!!!	isGoal() : boolean
+
+		return lobo ==0 && cabra == 0 && col == 0 && granjero == 0;
+!!!133184.java!!!	successors() : Enumeration<Successor>
+
+	 	
+	 	 Vector<Successor> successorVec = new Vector<Successor>();
+	 	 
+	 	 int operadores;
+	 	 int iLobo=1;
+	 	 int iCabra=1;
+	 	 int iCol=0;
+	 	 int iGranjero=0;
+	 	 String operador = "";
+	 	 nodosExpandidos++;
+	 	 for(operadores = 0; operadores <=3; operadores++){
+	 	 	if(operadores == 0 && lobo == granjero){
+	 	 		iLobo = (1 - this.lobo);
+	 	 		iCabra = this.cabra;
+	 	 		iCol = this.col;
+	 	 		iGranjero = (1 - this.granjero);
+	 	 		operador = "cruzaLobo";
+	 	 	}
+	 	 	else if(operadores == 1 && cabra == granjero){
+	 	 		iLobo = this.lobo;
+	 	 		iCabra = (1 - this.cabra);
+	 	 		iCol = this.col;
+	 	 		iGranjero = (1 - this.granjero);
+	 	 		operador = "cruzaCabra";
+	 	 	}
+	 	 	else if(operadores == 2 && col == granjero){
+	 	 		iLobo = this.lobo;
+	 	 		iCabra = this.cabra;
+	 	 		iCol = (1 - this.col);
+	 	 		iGranjero = (1 - this.granjero);
+	 	 		operador = "cruzaCol";
+	 	 	}
+	 	 	else if(operadores == 3){
+	 	 		iLobo = this.lobo;
+	 	 		iCabra = this.cabra;
+	 	 		iCol = this.col;
+	 	 		iGranjero = (1 - this.granjero);
+	 	 		operador = "cruzaGranjero";
+	 	 	}
+	 	 	
+	 	 	LoboCabraCol nuevoEstado = 
+	 	 			new LoboCabraCol(iLobo,iCabra,iCol,iGranjero,cont);
+	 	 		
+	 	 	if (nuevoEstado.isValid()){
+	 	 		successorVec.addElement(new Successor(nuevoEstado, operador, 1 )); 
+	 	 	}
+	 	 }
+	 	 return successorVec.elements();
+!!!133312.java!!!	h() : float
+
+	 	return (float)lobo + (float)cabra + (float)granjero + (float)col;
+!!!133440.java!!!	toString() : String
+
+		return "\t(L:" + lobo + ", Ca:" + cabra + ", Co:" + col + ", G:" + granjero +
+              ")   ~~~~   (L:" + (1-lobo) + ", Ca:" + (1-cabra) + ", Co:" + (1-col) +
+              ", G:" + (1-granjero) + ")";
+!!!133568.java!!!	main(in args : String) : void
+
+		LoboCabraCol m = new LoboCabraCol(1,1,1,1,null);
+		System.out.println(m);
+		for (int i = 1; i <= 6; i++)
+			m.resolver(i);

@@ -1,0 +1,256 @@
+format 50
+"programa" // UML::programa
+  revision 1
+  modified_by 64 "Pentium 4"
+  // class settings
+  //class diagram settings
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+  //use case diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  //sequence diagram settings
+  show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default
+  //collaboration diagram settings
+  show_full_operations_definition default show_hierarchical_rank default write_horizontally default drawing_language default package_name_in_tab default show_context default draw_all_relations default shadow default
+  //object diagram settings
+   write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  //component diagram settings
+  package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default
+  //deployment diagram settings
+  package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+  draw_component_as_icon default show_component_req_prov default show_component_rea default
+  //state diagram settings
+  package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+  show_activities default region_horizontally default drawing_language default
+  //activity diagram settings
+  package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+  show_infonote default drawing_language default
+  
+  java_dir "programa"
+  java_package "programa"
+  classview 128320 "programa"
+    //class diagram settings
+    draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+    //collaboration diagram settings
+    show_full_operations_definition default show_hierarchical_rank default write_horizontally default drawing_language default package_name_in_tab default show_context default draw_all_relations default shadow default
+    //object diagram settings
+     write_horizontally default package_name_in_tab default show_context default auto_label_position default draw_all_relations default shadow default
+    //sequence diagram settings
+    show_full_operations_definition default write_horizontally default class_drawing_mode default drawing_language default draw_all_relations default shadow default
+    //state diagram settings
+    package_name_in_tab default show_context default auto_label_position default write_trans_label_horizontally default show_trans_definition default draw_all_relations default shadow default
+    show_activities default region_horizontally default drawing_language default
+    //class settings
+    //activity diagram settings
+    package_name_in_tab default show_context default show_opaque_action_definition default auto_label_position default write_flow_label_horizontally default draw_all_relations default shadow default
+    show_infonote default drawing_language default
+    class 128448 "Controlador"
+      visibility public 
+      cpp_decl ""
+      java_decl "${comment}${@}${visibility}${final}${abstract}class ${name}${extends}${implements} {
+${members}}
+"
+      php_decl ""
+      idl_decl ""
+      explicit_switch_type ""
+      
+      comment "
+Controlador de la aplicacion
+@author Miguel Angel Diaz
+@author David Martin
+@author Alberto Vaquero
+"
+      classrelation 129984 // vista (<unidirectional association>)
+	relation 129984 --->
+	  a role_name "vista" class_relation private
+	    comment "
+Referencia a la visual 
+
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 129984 // vista (<unidirectional association>)
+	  b parent class_ref 128192 // Visual
+      end
+
+      classrelation 130112 // edificio (<unidirectional association>)
+	relation 130112 --->
+	  a role_name "edificio" private
+	    comment "
+EdificioCubico leido 
+
+"
+	    java "  ${comment}${@}${visibility}${static}${final}${transient}${volatile}${type} ${name}${value};
+"
+	    classrelation_ref 130112 // edificio (<unidirectional association>)
+	  b parent class_ref 129856 // EdificioCubico
+      end
+
+      operation 144064 "getEdificio"
+	public return_type class_ref 129856 // EdificioCubico
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	comment "
+Consulta el edificioCubico 
+@return edificio
+"
+      end
+
+      operation 144192 "setEdificio"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "edificio" type class_ref 129856 // EdificioCubico
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	comment "
+Actualiza el edificio 
+@param edificio Nuevo edificio
+"
+      end
+
+      operation 144320 "Controlador"
+	public explicit_return_type ""
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${synchronized}${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	comment "
+Constructor por defecto
+"
+      end
+
+      operation 144448 "asociarVista"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "vist" type class_ref 128192 // Visual
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	comment "
+Asocia una vista al controlador
+@param vist Vista asociada al controlador
+"
+      end
+
+      operation 144576 "jugar"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "n" explicit_type "int"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	comment "
+Inicia el juego con el numero de busqueda indicado por el parametro n
+@param n indica el tipo de busqueda a utilizar en el problema del laberinto (1-6)
+"
+      end
+
+      operation 144704 "listPath"
+	protected explicit_return_type "void"
+	nparams 1
+	  param inout name "node" explicit_type "SearchNode"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	comment "
+Muestra la salida del edificio calculada 
+@param node Resultado de la busqueda
+"
+      end
+
+      operation 144832 "cargar"
+	public explicit_return_type "void"
+	nparams 1
+	  param inout name "edificio" type class_ref 129856 // EdificioCubico
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	comment "
+Asocia un vector que representa el tablero del laberinto al controlador
+@param edificio vector con las habitaciones del laberinto
+"
+      end
+
+      operation 144960 "mostrar"
+	public explicit_return_type "void"
+	nparams 1
+	  param in name "s" explicit_type "String"
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${t0} ${p0}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	comment "
+Notifica a la vista un mensaje a mostrar por pantalla
+@param s mensaje que quieres mostrar
+"
+      end
+
+      operation 145088 "solicitud"
+	public explicit_return_type "int"
+	nparams 0
+	
+	preserve_java_body_indent java_def "  ${comment}${@}${visibility}${final}${static}${abstract}${synchronized}${type} ${name}${(}${)}${throws}${staticnl}{
+  ${body}}
+"
+	
+	
+	comment "
+Notifica a la Vista asociada que muestre un menu de solicitud de algoritmo de busqueda
+@return devuelve el numero de estrategia elegida
+"
+      end
+    end
+  end
+
+  deploymentview 128448 "programa"
+    //deployment diagram settings
+    package_name_in_tab default show_context default write_horizontally default auto_label_position default draw_all_relations default shadow default
+    draw_component_as_icon default show_component_req_prov default show_component_rea default
+    artifact 129728 "Controlador"
+      stereotype "source"
+      java_src "${comment}
+${package}
+${imports}
+import aima.search.AStarSearch;
+import aima.search.BreadthFirstSearch;
+import aima.search.DepthBoundedSearch;
+import aima.search.GreedySearch;
+import aima.search.IteratedDeepeningSearch;
+import aima.search.SearchNode;
+import aima.search.UniformCostSearch;
+import gui.Visual;
+import java.util.ArrayList;
+import micromundo.EdificioCubico;
+${definition}"
+      associated_classes
+	class_ref 128448 // Controlador
+      end
+    end
+  end
+end

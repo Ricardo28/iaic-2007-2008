@@ -1,0 +1,71 @@
+format 50
+
+classcanvas 128064 class_ref 128704 // Juego
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+  xyz 243 261 2000
+  end
+classcanvas 128192 class_ref 128576 // Jarras
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+  xyz 629 500 2004
+  end
+classcanvas 128448 class_ref 129088 // LoboCabraCol
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+  xyz 751 18 2009
+  end
+classcanvas 128704 class_ref 129216 // MisionerosYCanibales
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+  xyz 944 119 2004
+  end
+classcanvas 128960 class_ref 129344 // Mono
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+  xyz 956 324 2005
+  end
+classcanvas 129216 class_ref 129472 // OchoPuzzle
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+  xyz 512 36 2004
+  end
+classcanvas 129472 class_ref 129600 // Palillos
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+  xyz 807 450 2004
+  end
+classcanvas 129728 class_ref 128832 // State
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+  xyz 85 446 2004
+  end
+classcanvas 129984 class_ref 128960 // Heuristic
+  draw_all_relations default hide_attributes default hide_operations default show_members_full_definition default show_members_visibility default show_members_stereotype default show_parameter_dir default show_parameter_name default package_name_in_tab default class_drawing_mode default drawing_language default show_context_mode default auto_label_position default show_infonote default shadow default
+  xyz 72 183 2004
+  end
+relationcanvas 128320 relation_ref 128704 // <generalisation>
+  from ref 128192 z 1999 to ref 128064
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+relationcanvas 128576 relation_ref 128832 // <generalisation>
+  from ref 128448 z 1999 to ref 128064
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+relationcanvas 128832 relation_ref 128960 // <generalisation>
+  from ref 128704 z 1999 to ref 128064
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+relationcanvas 129088 relation_ref 129088 // <generalisation>
+  from ref 128960 z 1999 to ref 128064
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+relationcanvas 129344 relation_ref 129216 // <generalisation>
+  from ref 129216 z 1999 to ref 128064
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+relationcanvas 129600 relation_ref 129344 // <generalisation>
+  from ref 129472 z 1999 to ref 128064
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+relationcanvas 129856 relation_ref 128320 // <realization>
+  from ref 128064 z 1999 to ref 129728
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+relationcanvas 130112 relation_ref 128448 // <realization>
+  from ref 128064 z 1999 to ref 129984
+  no_role_a no_role_b
+  no_multiplicity_a no_multiplicity_b
+end

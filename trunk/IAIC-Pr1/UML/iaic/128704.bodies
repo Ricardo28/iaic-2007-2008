@@ -1,0 +1,102 @@
+class Juego
+!!!131136.java!!!	dameNodosExpandidos() : int
+
+		 return nodosExpandidos;
+!!!131264.java!!!	ponNodosExpandidos(in n : int) : void
+
+		nodosExpandidos = n;
+!!!131392.java!!!	getCont() : Controlador
+
+		return cont;
+!!!131520.java!!!	setCont(inout cont : Controlador) : void
+
+		this.cont = cont;
+!!!131648.java!!!	resolver(in e : int) : boolean
+
+		String mensaje="";   
+ 		boolean resuelto = true;
+ 		switch(e){
+	 		case 1:
+	 			mensaje+="Primero en profundidad (profunidad máxima 7):\n";
+	 			resuelto = listPath((new DepthBoundedSearch(this,7)).search());
+	 			break;
+	 	
+	 		case 2:
+	 			mensaje+="Primero en anchura:\n";
+	 			resuelto = listPath((new BreadthFirstSearch(this)).search());
+	 			break;
+	 	
+	 		case 4:
+	 			mensaje+="Coste Uniforme:\n";
+	 			resuelto = listPath((new UniformCostSearch(this)).search());
+	 			break;
+	 	
+	 		case 5:
+	 			mensaje+="Profundidad iterativa:\n";
+	 			resuelto = listPath((new IteratedDeepeningSearch(this)).search());
+	 			break;
+	 	
+	 		case 3:
+	 			mensaje+="Busqueda A*:\n";
+	 			resuelto = listPath((new AStarSearch(this)).search());
+	 			break;
+	 	
+	 		case 6:
+	 			mensaje+="Escalada:\n";
+	 			resuelto = listPath((new GreedySearch(this)).search());
+	 			break;
+	 		}
+ 		mensaje += "NodosExpandidos: "+nodosExpandidos+"\n";
+		nodosExpandidos = 0;
+		mensaje += "\n";
+ 		if (cont != null){
+ 			cont.mostrar(mensaje);
+ 		} else {
+ 			System.out.println(mensaje);
+ 		}
+ 		return resuelto;
+!!!131776.java!!!	listPath(inout node : SearchNode) : boolean
+
+        ArrayList<String> camino = new ArrayList<String>();
+        String mensaje = "";   
+ 		if (node == null) {
+ 		    mensaje += "No hay solución";
+ 		    return false;
+ 	    }
+ 	    String linea = "";
+ 	    while (node.getParent() != null) {
+ 		    linea =  "Estado: " + node.getState() +
+            				  " Profundidad: " + node.getDepth() +
+            				  " Coste: " + node.getPathCost() +
+            				  " Operador: " + node.getAppliedOp();
+ 		    camino.add("\n"+linea);
+ 		    node = node.getParent();
+ 	    }
+ 	    
+ 	    linea = "JUEGO: ";
+ 	    if (this instanceof OchoPuzzle)
+ 	    	linea += "OchoPuzzle";
+ 	    else if (this instanceof MisionerosYCanibales)
+	    	linea += "Misioneros y canibales";
+ 	    else if (this instanceof LoboCabraCol)
+	    	linea += "Lobo, cabra y col";
+ 	    else if (this instanceof Mono)
+	    	linea += "Mono";
+ 	    else if (this instanceof Palillos)
+	    	linea += "Palillos";
+ 	    else if (this instanceof Jarras)
+ 	    	linea += "Jarras";
+ 	    
+        linea += ( "\nESTADO INICIAL: " + node.getState());  
+ 	    camino.add(linea);
+ 	    for (int j=camino.size()-1; j>=0;j--){
+ 	    	mensaje += (String)camino.get(j);
+ 	    }
+ 	    mensaje += "\n";
+ 	    if (cont != null){
+			cont.mostrar(mensaje);
+		}
+ 	    else {
+			System.out.println(mensaje);
+		}
+ 	    return true;
