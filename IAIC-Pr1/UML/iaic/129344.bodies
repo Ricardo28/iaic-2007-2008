@@ -1,0 +1,81 @@
+class Mono
+!!!134592.java!!!	Mono(in pos : int, inout subido : boolean, in caja : int, inout platano : boolean, inout c : Controlador)
+
+		this.pos = pos;
+		this.sobreCaja = subido;
+		this.caja = caja;
+		this.platano = platano;
+		cont = c;
+!!!134720.java!!!	isGoal() : boolean
+
+		return platano == true;
+!!!134848.java!!!	successors() : Enumeration<Successor>
+
+
+	 	Vector<Successor> successorVec = new Vector<Successor>();
+
+	 	String operador = "";
+	 	nodosExpandidos++;
+
+	 	if (pos != 2 && !sobreCaja){
+	 		operador = "andaHaciaVentana";
+	 		Mono nuevoEstado = new Mono(pos+1,sobreCaja,caja,platano,cont);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
+
+	 	if (pos != 0 && !sobreCaja){
+	 		operador = "andaHaciaPuerta";
+	 		Mono nuevoEstado = new Mono(pos-1,sobreCaja,caja,platano,cont);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
+
+	 	if (pos == caja && sobreCaja && pos != 2){
+	 		operador = "empujaCajaHaciaVentana";
+	 		Mono nuevoEstado = new Mono(pos+1,sobreCaja,caja+1,platano,cont);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
+
+	 	if (pos == caja && sobreCaja && pos !=0){
+	 		operador = "empujaCajaHaciaPuerta";
+	 		Mono nuevoEstado = new Mono(pos-1,sobreCaja,caja-1,platano,cont);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
+
+	 	if (pos == caja && !sobreCaja){
+	 		operador ="subeCaja";
+	 		Mono nuevoEstado = new Mono(pos,true,caja,platano,cont);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
+	 	
+	 	if (pos == caja && sobreCaja){
+	 		operador ="bajaCaja";
+	 		Mono nuevoEstado = new Mono(pos,false,caja,platano,cont);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
+	 	
+	 	if (sobreCaja && caja == 1 && !platano){
+	 		operador ="cogePlatano";
+	 		Mono nuevoEstado = new Mono(pos,sobreCaja,caja,true,cont);
+		 	successorVec.addElement(new Successor(nuevoEstado, operador, 1));
+		}
+	 		 
+	 	return successorVec.elements();
+!!!134976.java!!!	h() : float
+
+		if (pos == 0) return 5;
+		if (pos == 2 && caja != 2) return 5;
+		if (pos == 1 && caja != 1) return 4;
+		if (pos == 2 && caja == 2 && !sobreCaja) return 3;
+		if (pos == 2 && caja == 2 && sobreCaja) return 2;
+		if (pos == 1 && sobreCaja && !platano) return 1;
+		if (pos == 1 && sobreCaja && platano) return 0;
+		return 6;
+!!!135104.java!!!	toString() : String
+
+		return "\t(Pos:" + pos + ", Subido:" + (sobreCaja?1:0) + ", C:" + caja + ", Pl:" + (platano?1:0) + ")";
+!!!135232.java!!!	main(in args : String) : void
+
+		Mono m = new Mono(0, false, 2, false, null);
+		System.out.println(m);
+		for (int i=1; i<=6; i++)
+			m.resolver(i);
