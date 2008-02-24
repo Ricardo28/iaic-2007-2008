@@ -46,6 +46,11 @@ public class EdificioCubico  implements State,Heuristic {
 		this.edificio = edificio;
 		this.cont = cont;
 	}
+    
+    public EdificioCubico(String ruta, Controlador cont){
+    	this.cont = cont;
+    	CargarEdificio.cargarEdificio(this, ruta);
+    }
 	
 	/**
 	 * devuelve el numero de nodos exapndidos

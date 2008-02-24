@@ -126,8 +126,7 @@ public class CargarEdificio {
 	
 	public static void main(String[] args){
 		EdificioCubico edi = new EdificioCubico(null);
-		CargarEdificio ce = new CargarEdificio();
-		ce.cargarEdificio(edi, "prueba.txt");
+		CargarEdificio.cargarEdificio(edi, ".\\pruebas\\juego1.txt");
 		edi.imprime();
 		System.out.println(edi.h());
 	}

@@ -2,6 +2,12 @@ package gui;
 
 import programa.Controlador;
 
+/**
+ * Lanza a ejecucion el programa asociandolo a la interfaz grafica
+ * @author Miguel Angel Díaz
+ * @author David Martín
+ * @author Alberto Vaquero
+ */
 public class Principal {
 	
 	/**
