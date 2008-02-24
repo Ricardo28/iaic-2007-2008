@@ -55,19 +55,20 @@ public class CargarEdificio {
     /**
 	 * Este metodo se encarga de leer cada linea y de ir creando cada habitación 
 	 * @param linea del archivo de entrada
+	 * @param n dimension del edificio cubico
 	 * @return Habitacion con la informacion de la linea
 	 */
     private static HabitacionCubica procesar(String linea, int n){
     	
-    	linea = eliminaEspaciosTabs(linea);
+    	String linea2 = eliminaEspaciosTabs(linea);
 		
 		// Posicion
-    	int dosPuntos = linea.indexOf(':');
-    	int[] hab = trataLista(linea.substring(0, dosPuntos));
-    	for (int i=0; i<n; i++)
+    	int dosPuntos = linea2.indexOf(':');
+    	int[] hab = trataLista(linea2.substring(0, dosPuntos));
+    	for (int i=0; i<3; i++)
     		hab[i] = hab[i] - 1;
     	// Juegos de cada puerta
-    	int[] juegos = trataLista(linea.substring(dosPuntos+1));
+    	int[] juegos = trataLista(linea2.substring(dosPuntos+1));
 		
 		return new HabitacionCubica(hab[0], hab[1], hab[2], n, juegos);
 	}
