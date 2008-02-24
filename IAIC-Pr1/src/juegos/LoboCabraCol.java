@@ -7,14 +7,32 @@ import java.util.Enumeration;
 
 import programa.Controlador;
 
+/**
+ * Juego del granjero, el lobo, la cabra, y la col
+ * @author Miguel Angel Díaz
+ * @author David Martín
+ * @author Alberto Vaquero
+ */
 public class LoboCabraCol extends Juego{
 	
+	/**
+	 * Indica si el lobo esta a la izquierda (1) o a la derecha (0) del rio 
+	 */
 	private int lobo;
 	
+	/**
+	 * Indica si la cabra esta a la izquierda (1) o a la derecha (0) del rio 
+	 */
 	private int cabra;
 	
+	/**
+	 * Indica si la col esta a la izquierda (1) o a la derecha (0) del rio 
+	 */
 	private int col;
 	
+	/**
+	 * Indica si el granjero esta a la izquierda (1) o a la derecha (0) del rio 
+	 */
 	private int granjero;
 	
 	/**
@@ -109,7 +127,7 @@ public class LoboCabraCol extends Juego{
 	 }
 	 
 	 /**
-	  * Genera la heuristica dle estado actual
+	  * Genera la heuristica del estado actual
 	  * @return la heuristica del estado actual
 	  */
 	 public float h() {

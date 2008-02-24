@@ -15,6 +15,7 @@ public class CargarEdificio {
     /**
      * Carga la informacion del fichero de entrada
      * @param ruta del fichero
+     * @throws IOException 
      */
     public static void cargarEdificio(EdificioCubico edi, String ruta){
     	FileReader archivo;
@@ -27,7 +28,7 @@ public class CargarEdificio {
 	        int n = leerDimension(linea);
 	        linea = buf.readLine();
 	        // Posicion inicial y dimension
-	        int[] inicial = leerInicio(linea, n);
+	        int[] inicial = leerInicio(linea);
 	        edi.setDimension(n);
 	        edi.setIniX(inicial[0]);
 	        edi.setIniY(inicial[1]);
@@ -52,7 +53,7 @@ public class CargarEdificio {
     }
     
     /**
-	 * Esta función se encarga de leer cada linea y de ir creando cada habitación 
+	 * Este metodo se encarga de leer cada linea y de ir creando cada habitación 
 	 * @param linea del archivo de entrada
 	 * @return Habitacion con la informacion de la linea
 	 */
@@ -71,6 +72,11 @@ public class CargarEdificio {
 		return new HabitacionCubica(hab[0], hab[1], hab[2], n, juegos);
 	}
     
+    /**
+     * Extrae la dimension de la primera linea de texto
+     * @param linea Primera linea del archivo de entrada
+     * @return dimension leida
+     */
     private static int leerDimension(String linea){
     	String n = linea.substring(11);
     	int dim;
@@ -83,11 +89,16 @@ public class CargarEdificio {
     	return dim;
     }
     
-    private static int[] leerInicio(String linea, int n){
+    /**
+     * Lee la posicion inicial
+     * @param linea del archivo de entrada
+     * @return [x,y,z] array de enteros
+     */
+    private static int[] leerInicio(String linea){
     	String aux = eliminaEspaciosTabs(linea);
     	aux = aux.substring(7);
     	int[] inicio = trataLista(aux);
-    	for (int i=0; i<n; i++)
+    	for (int i=0; i<3; i++)
     		inicio[i] = inicio[i]-1;
     	return inicio;
     }
@@ -122,13 +133,6 @@ public class CargarEdificio {
 			i++;
 		}
 		return puertas;
-	}
-	
-	public static void main(String[] args){
-		EdificioCubico edi = new EdificioCubico(null);
-		CargarEdificio.cargarEdificio(edi, ".\\pruebas\\juego1.txt");
-		edi.imprime();
-		System.out.println(edi.h());
 	}
 	
 }

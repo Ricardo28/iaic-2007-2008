@@ -7,7 +7,7 @@ import programa.Controlador;
 
 import aima.search.Successor;
 
-/** <b>Problema del Mono:</b><br>
+/** <b>Juego del Mono:</b><br>
  * Hay un mono en la puerta de una habitación. En el centro de la habitación hay un
  * plátano colgado del techo. El mono está hambriento y quiere conseguir el plátano
  * pero no alcanza porque está muy alto. En la habitación también hay una ventana y
@@ -18,6 +18,9 @@ import aima.search.Successor;
  * \t0: el mono/caja se encuentran en la puerta<br>
  * \t1: el mono/caja se encuentran en la centro<br>
  * \t2: el mono/caja se encuentran en el ventana
+ * @author Miguel Angel Díaz
+ * @author David Martín
+ * @author Alberto Vaquero
  */
 public class Mono extends Juego{
 
@@ -57,46 +60,6 @@ public class Mono extends Juego{
 		cont = c;
 	}	
 	
-	/**
-	 * Modifica la posicion del mono encima de la caja o en el suelo
-	 * @param p indica la posicion del mono
-	 */
-	 public void ponPos(int p){
-		this.pos = p;
-	 }	
-	 
-	 /**
-	  * Indica la posicion de la ventana
-	  * @param s
-	  */
-	public void ponSubido(boolean s){
-		this.sobreCaja = s;
-	}
-	
-	public void ponCaja(int p){
-		this.caja = p;
-	}	
-	
-	public void ponPlatano(boolean p){
-		this.platano = p;
-	}
-	
-	public int damePos(){
-		return this.pos;
-	}
-	
-	public boolean dameSubido(){
-		return this.sobreCaja;
-	}
-	
-	public int damePosCaja(){
-		return this.caja;
-	}
-	
-	public boolean damePlatano(){
-		return this.platano;
-	}
-
 	/**
 	 * Indica si un estado es solucion
 	 * @return true si es final el estado

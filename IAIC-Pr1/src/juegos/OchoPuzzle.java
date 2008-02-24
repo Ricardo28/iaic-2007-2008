@@ -7,15 +7,21 @@ import java.util.Enumeration;
 
 import programa.Controlador;
 
+/**
+ * Juego del ocho puzzle
+ * @author Miguel Angel Díaz
+ * @author David Martín
+ * @author Alberto Vaquero
+ */
 public class OchoPuzzle extends Juego{
 	
 	/**
-	 * Coordenada x de la casilla libre
+	 * Coordenada horizontal de la casilla libre
 	 */
 	private int x;
 	
 	/**
-	 * Coordenada y de la casilla libre
+	 * Coordenada vertical de la casilla libre
 	 */
 	private int y;
 	
@@ -132,7 +138,7 @@ public class OchoPuzzle extends Juego{
 	 }
 	 
 	/**
-	 * genera el mensaje del estado en el que nos encontramos
+	 * Genera el mensaje del estado en el que nos encontramos
 	 * @return String con el mensaje del estado en el que se encuentra
 	 */
 	public String toString(){

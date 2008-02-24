@@ -7,10 +7,22 @@ import java.util.Vector;
 
 import programa.Controlador;
 
+/**
+ * Juego de las jarras de 3 y 4 litros, objetivo 2 litros en la garrafa de 4
+ * @author Miguel Angel Díaz
+ * @author David Martín
+ * @author Alberto Vaquero
+ */
 public class Jarras extends Juego{
 
+	/**
+	 * Litros en la jarra de capacidad 3
+	 */
 	private int j3;
 	
+	/**
+	 * Litros en la jarra de capacidad 4
+	 */
 	private int j4;
 	
 	/**
@@ -48,7 +60,6 @@ public class Jarras extends Juego{
 
 	 	for (operadores = 0; operadores <=5; operadores++){
 
-	 		
 	 		//llenar garrafa de 3L
 	 		if (operadores == 0 && j3<3 ){
 	 			iJ3 = 3;
@@ -120,7 +131,7 @@ public class Jarras extends Juego{
 	}
 	
 	/**
-	 * devuelve un mensaje representativo del estado en el que se encuentra
+	 * Devuelve un mensaje representativo del estado en el que se encuentra
 	 */
 	public String toString() {
 		return "\t( Jarra de 3:" + j3 + "; Jarra de 4:" + j4 +" )";
