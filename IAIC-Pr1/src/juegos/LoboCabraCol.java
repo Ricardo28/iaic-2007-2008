@@ -121,7 +121,7 @@ public class LoboCabraCol extends Juego{
 	 * @return devuelve un String que indica el estado actual
 	 */
 	public String toString() {
-		return "(L:" + lobo + ", Ca:" + cabra + ", Co:" + col + ", G:" + granjero +
+		return "\t(L:" + lobo + ", Ca:" + cabra + ", Co:" + col + ", G:" + granjero +
               ")   ~~~~   (L:" + (1-lobo) + ", Ca:" + (1-cabra) + ", Co:" + (1-col) +
               ", G:" + (1-granjero) + ")";
 	}

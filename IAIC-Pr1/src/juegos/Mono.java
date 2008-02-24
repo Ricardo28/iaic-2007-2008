@@ -181,7 +181,7 @@ public class Mono extends Juego{
 	 * @return un string con el mensaje que especifica en el estado que se encuentra
 	 */
 	public String toString() {
-		return "(Pos:" + pos + ", Subido:" + (sobreCaja?1:0) + ", C:" + caja + ", Pl:" + (platano?1:0) + ")";
+		return "\t(Pos:" + pos + ", Subido:" + (sobreCaja?1:0) + ", C:" + caja + ", Pl:" + (platano?1:0) + ")";
 	}
 	
 	/**
