@@ -42,7 +42,7 @@ public class GeneraMicromundos {
 			}
 			// Pruebas aleatorias, edificios cubicos (3x3x3) con distintos juegos
 			for (int h=1; h<=6; h++){
-				FileWriter archivo = new FileWriter(new File("."+File.separator+"pruebas"+File.separator+"prueba"+h+".txt"));
+				FileWriter archivo = new FileWriter(new File("."+File.separator+"pruebas"+File.separator+"aleatoria"+h+".txt"));
 		        BufferedWriter buf = new BufferedWriter(archivo);
 		        int n = 3;
 		        int centro = n/2 + 1;
@@ -60,8 +60,9 @@ public class GeneraMicromundos {
 		        				int nr = r.nextInt(12);
 		        				if (nr > 6)
 		        					nr = 0;
+		        				buf.write(Integer.toString(nr));
 		        				if (m != 5)
-		        					buf.write(nr+",\t\t");
+		        					buf.write(",\t\t");
 		        			}
 		        			buf.write("\n");
 		        		}
@@ -71,7 +72,7 @@ public class GeneraMicromundos {
 		        archivo.close();
 			}
 			// Un edificio cubico aleatorio de 5x5x5
-			FileWriter archivo = new FileWriter(new File("."+File.separator+"pruebas"+File.separator+"edificio5x5x5.txt"));
+			FileWriter archivo = new FileWriter(new File("."+File.separator+"pruebas"+File.separator+"edificio.txt"));
 	        BufferedWriter buf = new BufferedWriter(archivo);
 	        int n = 5;
 	        int centro = n/2 + 1;
@@ -89,7 +90,9 @@ public class GeneraMicromundos {
 	        				int nr = r.nextInt(12);
 	        				if (nr > 6)
 	        					nr = 0;
-	        				buf.write(nr+",\t\t");
+	        				buf.write(Integer.toString(nr));
+	        				if (m != 5)
+	        					buf.write(",\t\t");
 	        			}
 	        			buf.write("\n");
 	        		}
