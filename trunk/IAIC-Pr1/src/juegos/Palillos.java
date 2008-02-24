@@ -7,10 +7,22 @@ import java.util.Vector;
 
 import programa.Controlador;
 
+/**
+ * Juego de los palillos
+ * @author Miguel Angel Díaz
+ * @author David Martín
+ * @author Alberto Vaquero
+ */
 public class Palillos extends Juego{
 	
+	/**
+	 * Numero de palillos que quedan, es decir, que no ha cogido ningun jugador
+	 */
 	private int palillos;
 	
+	/**
+	 * Numero de turno, empieza el rival en el turno 1 
+	 */
 	private int turno;
 	
 	/**

@@ -1,12 +1,18 @@
 package micromundo;
 
 /**
- * 
- * @author Miguel Angel Diaz
- *
+ * Representa una habitacion de un edificio cubico.<br>
+ * Tiene puertas en las cuatro paredes, en el techo y en el suelo.<br>
+ * Cada puerta puede tener un juego distinto. Puede haber puertas cerradas.<br>
+ * @author Miguel Angel Díaz
+ * @author David Martín
+ * @author Alberto Vaquero
  */
 public class HabitacionCubica {
 	
+	/**
+	 * Coordenadas de la habitacion dentro del edificio cubico
+	 */
 	private int x, y, z;
 	
 	/**
@@ -14,19 +20,31 @@ public class HabitacionCubica {
 	 */
 	private int n;
 	
+	/**
+	 * Juegos de cada puerta (arriba, abajo, izquierda, derecha, delante y detras) 
+	 */
 	private int[] juegos;
 	
-	private boolean resuelto;
-	
+	/**
+	 * Crea una nueva instancia de una habitacion cubica
+	 * @param x Coordenada x
+	 * @param y Coordenada y
+	 * @param z Coordenada z
+	 * @param n Dimension del edificio
+	 * @param juegos Juego de cada puerta
+	 */
 	public HabitacionCubica(int x, int y, int z, int n, int[] juegos){
 		this.x = x;
 		this.y = y;
 		this.z = z;
 		this.n = n;
 		this.juegos = juegos;
-		resuelto = false;
 	}
 	
+	/**
+	 * Devuelve una copia del objeto actual
+	 * @return copia 
+	 */
 	public HabitacionCubica clone(){
 		int[] j = new int[6];
 		for (int i=0; i<6; i++)
@@ -35,27 +53,31 @@ public class HabitacionCubica {
 	}
 
 	/**
-	 * @return the x
+	 * Consulta la coordenada x
+	 * @return x
 	 */
 	public int getX() {
 		return x;
 	}
 
 	/**
-	 * @return the y
+	 * Consulta la coordenada y
+	 * @return y
 	 */
 	public int getY() {
 		return y;
 	}
 
 	/**
-	 * @return the z
+	 * Consulta la coordenada z
+	 * @return z
 	 */
 	public int getZ() {
 		return z;
 	}
 	
 	/**
+	 * Actualiza las coordenadas de la habitacion
 	 * @param x the x to set
 	 * @param y the y to set
 	 * @param z the z to set
@@ -67,13 +89,15 @@ public class HabitacionCubica {
 	}
 	
 	/**
-	 * @return the n
+	 * Consulta la dimension
+	 * @return la dimension
 	 */
 	public int getN() {
 		return n;
 	}
 
 	/**
+	 * Actualiza la dimension
 	 * @param n the n to set
 	 */
 	public void setN(int n) {
@@ -81,13 +105,15 @@ public class HabitacionCubica {
 	}
 	
 	/**
-	 * @return the juego
+	 * Consulta los juegos
+	 * @return juegos
 	 */
 	public int[] getJuegos() {
 		return juegos;
 	}
 
 	/**
+	 * Actualiza los juegos
 	 * @param juegos the juego to set
 	 */
 	public void setJuego(int[] juegos) {
@@ -95,20 +121,7 @@ public class HabitacionCubica {
 	}
 
 	/**
-	 * @return the resuelto
-	 */
-	public boolean isResuelto() {
-		return resuelto;
-	}
-
-	/**
-	 * @param resuelto the resuelto to set
-	 */
-	public void setResuelto(boolean resuelto) {
-		this.resuelto = resuelto;
-	}
-
-	/**
+	 * Consulta si la habitacion actual es una salida del edificio cubico (esquina)
 	 * @return true si la habitacion es una esquina del edificio cubico
 	 */
 	public boolean esSalida(){

@@ -14,16 +14,36 @@ import java.util.ArrayList;
 
 import micromundo.EdificioCubico;
 
+/**
+ * Controlador de la aplicacion
+ * @author Miguel Angel Diaz
+ * @author David Martin
+ * @author Alberto Vaquero
+ */
 public class Controlador {
 	
+	/**
+	 * Referencia a la visual 
+	 */
 	private static Visual vista;
 	
+	/**
+	 * EdificioCubico leido 
+	 */
 	private EdificioCubico edificio;
 	
+	/**
+	 * Consulta el edificioCubico 
+	 * @return edificio
+	 */
 	public EdificioCubico getEdificio() {
 		return edificio;
 	}
 
+	/**
+	 * Actualiza el edificio 
+	 * @param edificio Nuevo edificio
+	 */
 	public void setEdificio(EdificioCubico edificio) {
 		this.edificio = edificio;
 	}
@@ -92,6 +112,10 @@ public class Controlador {
 		}
 	}
 	
+	/**
+	 * Muestra la salida del edificio calculada 
+	 * @param node Resultado de la busqueda
+	 */
 	protected void listPath(SearchNode node) {
     	ArrayList<String> camino = new ArrayList<String>();
     	ArrayList<int[]> salida = new ArrayList<int[]>();

@@ -7,12 +7,29 @@ import java.util.Vector;
 
 import programa.Controlador;
 
+/**
+ * Juego de los misioneros y los canibales.
+ * @author Miguel Angel Díaz
+ * @author David Martín
+ * @author Alberto Vaquero
+ */
 public class MisionerosYCanibales extends Juego {
 
+	/**
+	 * Indica el numero de misioneros que estan a la izquierda del rio
+	 * Los misioneros que estan a la derecha son 3-misionerosIzq 
+	 */
 	private int misionerosIzq;
    
+	/**
+	 * Indica el numero de canibales que estan a la izquierda del rio
+	 * Los canibales que estan a la derecha son 3-canibalesIzq 
+	 */
 	private int canibalesIzq;
    
+	/**
+	 * Indica si la barca esta a la izquierda (1) o derecha (0) del rio
+	 */
 	private int barcaIzq;
    
 	/**
@@ -55,7 +72,6 @@ public class MisionerosYCanibales extends Juego {
 	/**
 	 * Genera los sucesores del esatdo actual
 	 * @return devuelve los sucesores del estado actual en Enumeration
-	 * 
 	 */
 	public Enumeration<Successor> successors() { 
 
@@ -64,9 +80,9 @@ public class MisionerosYCanibales extends Juego {
 		Vector<Successor> successorVec = new Vector<Successor>();
 		nodosExpandidos++;
     
-		for (iBarco= -1; iBarco<=1; iBarco+=2){
-			for (iMisioneros=0; iMisioneros<=2; iMisioneros++){
-				for (iCanibales=0; iCanibales+iMisioneros<=2; iCanibales++){
+		for (iBarco= -1; iBarco<=1; iBarco+=2)
+			for (iMisioneros=0; iMisioneros<=2; iMisioneros++)
+				for (iCanibales=0; iCanibales+iMisioneros<=2; iCanibales++)
 					if ((iMisioneros+iCanibales>0) && (barcaIzq+iBarco>=0 && barcaIzq+iBarco<=1)) {
 						MisionerosYCanibales nuevoEstado = 
 	  						new MisionerosYCanibales(misionerosIzq+iBarco*iMisioneros,
@@ -79,9 +95,6 @@ public class MisionerosYCanibales extends Juego {
     	  							    1)); 
     	  				}
 					}  
-				}
-			}
-		}
 		return successorVec.elements();
 	}
    

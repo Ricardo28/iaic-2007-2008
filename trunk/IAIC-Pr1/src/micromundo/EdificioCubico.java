@@ -16,28 +16,63 @@ import juegos.Jarras;
 import programa.Controlador;
 
 /**
- * 
- * @author Miguel Angel Diaz
- *
+ * Representa un edificio cubico de dimension NxNxN
+ * @author Miguel Angel Díaz
+ * @author David Martín
+ * @author Alberto Vaquero
  */
 public class EdificioCubico  implements State,Heuristic {
 	
+	/**
+	 * Dimension del edificio
+	 */
 	private int dimension;
 	
+	/**
+	 * Coordenadas de la posicion inicial 
+	 */
 	private int iniX, iniY, iniZ;
 	
+	/**
+	 * Coordenadas de la posicion actual
+	 */
 	private int actX, actY, actZ;
 	
+	/**
+	 * Edificio
+	 */
 	private HabitacionCubica[][][] edificio;
 	
+	/**
+	 * Referencia al controlador 
+	 */
 	private Controlador cont;
     
-    private static int nodosExpandidos = 0; 
+	/**
+	 * Numero de nodos expandidos para resolver el problema con una determinada heuristica
+	 */
+	private static int nodosExpandidos = 0; 
     
-    public EdificioCubico(Controlador cont){
+    /**
+     * Crea una nueva instancia de EdificioCubico 
+     * @param cont referencia al controlador
+     */
+	public EdificioCubico(Controlador cont){
     	this.cont = cont;
     }
     
+	/**
+	 * Crea una nueva instancia de EdificioCubico a partir de todos sus atributos
+	 * @param n dimension
+	 * @param iniX coordenada inicial x
+	 * @param iniY coordenada inicial y
+	 * @param iniZ coordenada inicial z
+	 * @param actX coordenada actual x
+	 * @param actY coordenada actual y
+	 * @param actZ coordenada actual z
+	 * @param edificio edificio inicializado
+	 * @param cont Referencia al controlador
+	 */
     public EdificioCubico(int n, int iniX, int iniY, int iniZ, int actX, int actY, int actZ, 
 			HabitacionCubica[][][] edificio, Controlador cont){
     	dimension = n;
@@ -47,13 +82,18 @@ public class EdificioCubico  implements State,Heuristic {
 		this.cont = cont;
 	}
     
+    /**
+     * Crea una nueva instancia de EdificioCubico a partir de un archivo 
+     * @param ruta del archivo
+     * @param cont referencia al controlador
+     */
     public EdificioCubico(String ruta, Controlador cont){
     	this.cont = cont;
     	CargarEdificio.cargarEdificio(this, ruta);
     }
 	
 	/**
-	 * devuelve el numero de nodos exapndidos
+	 * Devuelve el numero de nodos exapndidos
 	 * @return devuelve el numero de nodos expandidos
 	 */
 	public int dameNodosExpandidos(){
@@ -61,7 +101,7 @@ public class EdificioCubico  implements State,Heuristic {
 	}
    
 	/**
-	 * actualiza el numero de nodos exapandidos
+	 * Actualiza el numero de nodos exapandidos
 	 * @param n actualiza el numero de nodos expandidos con el parametro n
 	 */
 	public void ponNodosExpandidos(int n){
@@ -75,6 +115,10 @@ public class EdificioCubico  implements State,Heuristic {
 		return edificio[actX][actY][actZ].esSalida();
 	}
 	
+	/**
+	 * Genera los sucesores del estado actual
+	 * @return los sucesores del estado actual
+	 */
 	public Enumeration<Successor> successors() {
 		Vector<Successor> successorVec = new Vector<Successor>();
 		nodosExpandidos++;
@@ -119,11 +163,11 @@ public class EdificioCubico  implements State,Heuristic {
 	}
 
 	/**
-     * genera la heuristica del estado actual
-     */
+     * Genera la heuristica del estado actual<br>
+     * Heuristica: Distancia minima entre la habitacion actual y una de salida 
+ 	 *            mas las distancias entre las adyacentes y una de salida
+ 	 */
     public float h() {
- 	    //Heuristica: Distancia minima entre la habitacion actual y una de salida 
- 	    //            mas las distancias entre las adyacentes y una de salida
  	    float heuristica = distanciaMinSalida(edificio[actX][actY][actZ]);
  	    if (edificio[actX][actY][actZ].puedeIncX())
 			heuristica += distanciaMinSalida(edificio[actX+1][actY][actZ]);
@@ -142,7 +186,7 @@ public class EdificioCubico  implements State,Heuristic {
     
     /**
      * Calcula la distancia minima entre la habitacion ini y la salida mas cercana
-     * @param ini
+     * @param ini posicion inicial desde la que se calcula la distancia minima
      * @return distancia minima a una salida
      */
     private int distanciaMinSalida(HabitacionCubica ini){
@@ -153,7 +197,7 @@ public class EdificioCubico  implements State,Heuristic {
     }
 	
 	/**
-     * genera un mensaje que indica el estado actual 
+     * Genera un mensaje que indica el estado actual 
      */
 	public String toString(){
 	    String msg = "\n Habitacion actual: "+actX+","+actY+","+actZ+"\n";
@@ -185,58 +229,114 @@ public class EdificioCubico  implements State,Heuristic {
 	    return msg;
 	}
 
+	/**
+	 * Consulta la posicion inicial<br>
+	 * @return Coordenada x
+	 */
 	public int getIniX() {
 		return iniX;
 	}
 
+	/**
+	 * Actualiza la posicion inicial<br>
+	 * @param iniX Coordenada x
+	 */
 	public void setIniX(int iniX) {
 		this.iniX = iniX;
 	}
 
+	/**
+	 * Consulta la posicion inicial<br>
+	 * @return Coordenada y
+	 */
 	public int getIniY() {
 		return iniY;
 	}
 
+	/**
+	 * Actualiza la posicion inicial<br>
+	 * @param iniY Coordenada y
+	 */
 	public void setIniY(int iniY) {
 		this.iniY = iniY;
 	}
 
+	/**
+	 * Consulta la posicion inicial<br>
+	 * @return Coordenada z
+	 */
 	public int getIniZ() {
 		return iniZ;
 	}
 
+	/**
+	 * Actualiza la posicion inicial<br>
+	 * @param iniZ Coordenada z
+	 */
 	public void setIniZ(int iniZ) {
 		this.iniZ = iniZ;
 	}
 
+	/**
+	 * Consulta la posicion actual<br>
+	 * @return Coordenada x
+	 */
 	public int getActX() {
 		return actX;
 	}
 
+	/**
+	 * Actualiza la posicion actual<br>
+	 * @param actX Coordenada x
+	 */
 	public void setActX(int actX) {
 		this.actX = actX;
 	}
 
+	/**
+	 * Consulta la posicion actual<br>
+	 * @return Coordenada y
+	 */
 	public int getActY() {
 		return actY;
 	}
 
+	/**
+	 * Actualiza la posicion actual<br>
+	 * @param actY Coordenada y
+	 */
 	public void setActY(int actY) {
 		this.actY = actY;
 	}
 
+	/**
+	 * Consulta la posicion actual<br>
+	 * @return Coordenada z
+	 */
 	public int getActZ() {
 		return actZ;
 	}
 
+	/**
+	 * Actualiza la posicion actual<br>
+	 * @param actZ Coordenada z
+	 */
 	public void setActZ(int actZ) {
 		this.actZ = actZ;
 	}
 
+	/**
+	 * Consulta el edificio
+	 * @return edificio
+	 */
 	public HabitacionCubica[][][] getEdificio() {
 		return edificio;
 	}
 
+	/**
+	 * Actualiza el edificio
+	 * @param edificio Nuevo edificio
+	 */
 	public void setEdificio(HabitacionCubica[][][] edificio) {
 		int n = edificio.length;
 		HabitacionCubica[][][] edi = new HabitacionCubica[n][n][n];
@@ -247,48 +347,49 @@ public class EdificioCubico  implements State,Heuristic {
 		this.edificio = edi;
 	}
 
+	/**
+	 * Consulta la referencia al controlador
+	 * @return Referencia al controlador
+	 */
 	public Controlador getCont() {
 		return cont;
 	}
 
+	/**
+	 * Actualiza la referencia al controlador
+	 * @return cont Nueva referencia al controlador
+	 */
 	public void setCont(Controlador cont) {
 		this.cont = cont;
 	} 
 	
+	/**
+	 * Consulta la dimension
+	 * @return dimension
+	 */
 	public int getDimension(){
 		return dimension;
 	}
 	
+	/**
+	 * Actualiza la dimensicon
+	 * @param dimension Nueva dimension
+	 */
 	public void setDimension(int dimension){
 		this.dimension = dimension;
 	}
 	
+	/**
+	 * Cambia la posicion actual a la inicial 
+	 */
 	public void vuelveAlInicio(){
 		actX = iniX;
 		actY = iniY;
 		actZ = iniZ;
 	}
 	
-	public void imprime(){
-		System.out.println("Dimension: " + dimension);
-		System.out.println("Inicio:\t" + iniX + "," + iniY + "," + iniZ);
-		System.out.println("Actual:\t" + actX + "," + actY + "," + actZ);
-		System.out.println("Hab\tJuegos (arriba,\tabajo,\tizq,\tder,\tdel,\tdet)");
-		for (int i=0; i<dimension; i++)
-			for (int j=0; j<dimension; j++)
-				for (int k=0; k<dimension; k++){
-					System.out.println(i+","+j+","+k+"\t:\t"+
-							edificio[i][j][k].getJuegos()[0]+",\t"+
-							edificio[i][j][k].getJuegos()[1]+",\t"+
-							edificio[i][j][k].getJuegos()[2]+",\t"+
-							edificio[i][j][k].getJuegos()[3]+",\t"+
-							edificio[i][j][k].getJuegos()[4]+",\t"+
-							edificio[i][j][k].getJuegos()[5]);
-				}
-	}
-	
 	/**
-     * indica si un estado es valido o no
+     * Indica si un estado es valido o no
      * @return true si es valido false en caso contrario
      */
     protected boolean isValid(){

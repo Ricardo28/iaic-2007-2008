@@ -522,13 +522,14 @@ public class Visual extends javax.swing.JFrame {
         		dispose();
         		copia(v);
         	} catch(Exception ex){
+        		limpiar();
         		mostrar("Imposible abrir el archivo");
         	}
         }
     }     
     
     /**
-     * Vaciamos la ventana
+     * Vacia la ventana
      */
 	public void vaciar(){
     	this.setVisible(false);
@@ -575,13 +576,19 @@ public class Visual extends javax.swing.JFrame {
 		return n;
 	}
     
+	/**
+     * Actualiza la dimension de la visual 
+     * @param n Nueva dimension
+     */
 	public void setN(int n) {
 		this.n = n;
 	}
 	
+	/**
+	 * Centra la ventana en pantalla
+	 */
 	private void centrarVentana(){
-	   	// Centrar ventana en pantalla
-	    try {
+	   	try {
 	        Dimension ventana = Toolkit.getDefaultToolkit().getScreenSize();
 	        int alto = ventana.height;
 	        int ancho = ventana.width;

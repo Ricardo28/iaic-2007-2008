@@ -17,14 +17,21 @@ import java.util.Enumeration;
 import programa.Controlador;
 
 /**
- * 
- * Juego generico
- *
+ * Juego generico. Define los atributos y metodos comunes a todos los juegos
+ * @author Miguel Angel Díaz
+ * @author David Martín
+ * @author Alberto Vaquero
  */
 public abstract class Juego implements State, Heuristic{
 	
+	/**
+	 * Referencia al controlador para poder escribir en su consola
+	 */
 	protected Controlador cont;
 	
+	/**
+	 * Numero de nodos expandidos para resolver el problema con una determinada heuristica
+	 */
 	protected static int nodosExpandidos = 0;
 	
 	public abstract boolean isGoal();
@@ -79,54 +86,36 @@ public abstract class Juego implements State, Heuristic{
 	 		case 1:
 	 			mensaje+="Primero en profundidad (profunidad máxima 7):\n";
 	 			resuelto = listPath((new DepthBoundedSearch(this,7)).search());
-//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-//	 			nodosExpandidos = 0;
-//	 			mensaje+="\n";
 	 			break;
 	 	
 	 		case 2:
 	 			mensaje+="Primero en anchura:\n";
 	 			resuelto = listPath((new BreadthFirstSearch(this)).search());
-//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-//	 			nodosExpandidos = 0;
-//	 			mensaje+="\n";
 	 			break;
 	 	
 	 		case 4:
 	 			mensaje+="Coste Uniforme:\n";
 	 			resuelto = listPath((new UniformCostSearch(this)).search());
-//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-//	 			nodosExpandidos = 0;
-//	 			mensaje+="\n";
 	 			break;
 	 	
 	 		case 5:
 	 			mensaje+="Profundidad iterativa:\n";
 	 			resuelto = listPath((new IteratedDeepeningSearch(this)).search());
-//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-//	 			nodosExpandidos = 0;
-//	 			mensaje+="\n";
 	 			break;
 	 	
 	 		case 3:
 	 			mensaje+="Busqueda A*:\n";
 	 			resuelto = listPath((new AStarSearch(this)).search());
-//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-//	 			nodosExpandidos = 0;
-//	 			mensaje+="\n";
 	 			break;
 	 	
 	 		case 6:
 	 			mensaje+="Escalada:\n";
 	 			resuelto = listPath((new GreedySearch(this)).search());
-//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-//	 			nodosExpandidos = 0;
-//	 			mensaje+="\n";
 	 			break;
 	 		}
- 		mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
+ 		mensaje += "NodosExpandidos: "+nodosExpandidos+"\n";
 		nodosExpandidos = 0;
-		mensaje+="\n";
+		mensaje += "\n";
  		if (cont != null){
  			cont.mostrar(mensaje);
  		} else {
@@ -138,7 +127,7 @@ public abstract class Juego implements State, Heuristic{
 	/**
      * Muestra el camino calculado por el algoritmo
      * @param node contiene el camino
-     * @return 
+     * @return <i>cierto</i> si el camino lleva a una solucion
      */
     private boolean listPath(SearchNode node) {
         ArrayList<String> camino = new ArrayList<String>();
