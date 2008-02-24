@@ -1,10 +1,10 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 import java.util.ArrayList;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -21,11 +21,14 @@ public class Visual extends javax.swing.JFrame {
     
     private static final long serialVersionUID = 4854326049449294658L;
     
+    private static final String titulo = "Practica 1 IAIC:    Diaz_Martin_Vaquero";
+    
 	private int n;//numero de habitaciones
     private int z;//profundidad
     private Controlador controlador;
     private String mensaje="";//este string sirve para hacer print sobre el jTextArea1
     private boolean cargado;
+    private String nombreArchivoCargado;
     private ArrayList<int[]> salida;
     
     private javax.swing.JTextField edificio[][];//aqui se verá reflejado el edificio
@@ -50,7 +53,7 @@ public class Visual extends javax.swing.JFrame {
     private javax.swing.JTextArea textoConsola;
     
     public Visual() {
-    	setTitle("Practica 1 IAIC:    Diaz_Martin_Vaquero");
+    	//setTitle(titulo);
         n = 2;//dimension	
         z = 1;//profundidad del edificio
         cargado = false;
@@ -59,7 +62,7 @@ public class Visual extends javax.swing.JFrame {
     }
     
     public Visual(int dim){
-    	setTitle("Practica 1 IAIC:    Diaz_Martin_Vaquero");
+    	//setTitle(titulo);
         n = dim;
     	z = 1;
     }
@@ -70,6 +73,7 @@ public class Visual extends javax.swing.JFrame {
         controlador = v.controlador;
         mensaje = v.mensaje;
         cargado = v.cargado;
+        nombreArchivoCargado = v.nombreArchivoCargado;
         for(int i=0;i<n;i++){
         	for(int j=0;j<n;j++){
         		edificio[i][j]=v.edificio[i][j];
@@ -103,7 +107,7 @@ public class Visual extends javax.swing.JFrame {
     	for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
             	edificio[i][j].setText("");
-            	edificio[i][j].setBackground(new java.awt.Color(255, 255, 255));
+            	edificio[i][j].setBackground(new Color(255, 255, 255));
             }
     	}
     	
@@ -113,14 +117,14 @@ public class Visual extends javax.swing.JFrame {
     	if (salida != null){
 	    	for (int i = 0; i < salida.size(); i++) {
 	            if (salida.get(i)[2]+1==z)
-	            	edificio[salida.get(i)[0]][salida.get(i)[1]].setBackground(new java.awt.Color(204, 255, 204));
+	            	edificio[salida.get(i)[0]][salida.get(i)[1]].setBackground(new Color(204, 255, 204));
 	    	}
 	    	if (controlador.getEdificio().getIniZ()+1==z)
 	    		edificio[controlador.getEdificio().getIniX()][controlador.getEdificio().getIniY()].setBackground(new java.awt.Color(204, 255, 204));
 	    	if (salida.get(0)[2]+1==z)
 		    		edificio[salida.get(0)[0]][salida.get(0)[1]].setText("X");
 	    }
-    	else if (controlador.getEdificio().getIniZ()+1==z)
+    	else if (controlador.getEdificio() != null && controlador.getEdificio().getIniZ()+1==z)
     		edificio[controlador.getEdificio().getIniX()][controlador.getEdificio().getIniY()].setText("X");
     	
     }
@@ -175,7 +179,7 @@ public class Visual extends javax.swing.JFrame {
         botonEjecutar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        jDesktopPane1.setBackground(new java.awt.Color(204, 204, 255));
+        jDesktopPane1.setBackground(new Color(204, 204, 255));
         int x=20;//eje x
         int y=80;//eje y
         edificio=new JTextField[n][n];
@@ -184,10 +188,11 @@ public class Visual extends javax.swing.JFrame {
                 y=y+30;
             }
             for(int j=0;j<n;j++){//colocamos las casillas
-                edificio[i][j]=new javax.swing.JTextField();//hay que meterle el numero de habitacion y el booleano que indica si se ha pasado por ahí
+                edificio[i][j]=new javax.swing.JTextField();
                 edificio[i][j].setBounds(x,y,30,30);//coloco la habitacion
                 edificio[i][j].setHorizontalAlignment(JTextField.CENTER);
                 edificio[i][j].setEditable(false);
+                edificio[i][j].setBackground(Color.WHITE);
                 jDesktopPane1.add(edificio[i][j],javax.swing.JLayeredPane.DEFAULT_LAYER);
                 //actualizamos las variables de posicionamiento
                 x=x+30;
@@ -318,8 +323,10 @@ public class Visual extends javax.swing.JFrame {
         this.setSize(1025,735);//ajustamos el tamaño de la ventana
         this.setVisible(true);//mostarmos la ventana
         botonEjecutar.setEnabled(cargado);
-        botonZoomMas.setEnabled(cargado && controlador.getEdificio().getActZ()<n);
-        botonZoomMenos.setEnabled(cargado && controlador.getEdificio().getActZ()>1);
+        botonZoomMas.setEnabled(z<n);
+        botonZoomMenos.setEnabled(z>1);
+        setResizable(false);
+        setTitle(titulo + "    " + (cargado?nombreArchivoCargado:""));
     }
     
     /**
@@ -331,22 +338,23 @@ public class Visual extends javax.swing.JFrame {
 	}
 	
 	/**
-	 * Genera una solicitud de estrategia la usuarioa para resolver cada una de las habitaciones
-	 * @return el nuemro de estrategia
+	 * Genera una solicitud de estrategia al usuario para resolver cada una de las habitaciones
+	 * @return el numero de estrategia
 	 */
-	public int solicitud(){//te devuelve el numero de algoritmo que has seleccionado
+	public int solicitud(){ //Te devuelve el numero de algoritmo que has seleccionado
 		int juego=0;
-		if(checkBoxProf.isSelected()){
+		if (checkBoxProf.isSelected())
 			juego=1;
-		}else if(checkBoxAnch.isSelected()){
+		else if (checkBoxAnch.isSelected())
 			juego=2;
-		}else if(checkBoxAE.isSelected()){
+		else if (checkBoxAE.isSelected())
 			juego=3;
-		}else if(checkBoxUni.isSelected()){
+		else if (checkBoxUni.isSelected())
 			juego=4;
-		}else if(checkBoxProfIter.isSelected()){
+		else if (checkBoxProfIter.isSelected())
 			juego=5;
-		}else{juego=6;}
+		else
+			juego=6;
 		return juego;
 	}
 	
@@ -362,14 +370,14 @@ public class Visual extends javax.swing.JFrame {
 	/**
 	 * Limpia la consola de la interfaz
 	 */
-	public void limpiar(){//limpiamos la consola
+	public void limpiar(){
 		textoConsola.cut();
 	}
 	
     private void oyenteEjecutar(java.awt.event.MouseEvent evt) {                                      
     	limpiar();
     	int estrategia=0;
-        if(!comprueba()){//comprobamos si no hay error
+        if (!comprueba()){//comprobamos si no hay error
             JOptionPane.showMessageDialog(this,"Seleccione solo una opción","Error",JOptionPane.ERROR_MESSAGE);
             checkBoxProf.setSelected(false);//deseleccionamos todas las opciones para que vuelva elegir
             checkBoxAnch.setSelected(false);
@@ -377,7 +385,7 @@ public class Visual extends javax.swing.JFrame {
             checkBoxUni.setSelected(false);
             checkBoxProfIter.setSelected(false);  
             checkBoxEscalada.setSelected(false); 
-        }else{//miramos que opcion se ha seleccionado
+        } else {//miramos que opcion se ha seleccionado
             estrategia=solicitud();
             if (estrategia==1){
 				mostrar("EMPIEZA EL JUEGO\n");
@@ -434,12 +442,12 @@ public class Visual extends javax.swing.JFrame {
         if (opcion == JFileChooser.APPROVE_OPTION){
         	File archivo = selector.getSelectedFile();
         	String ruta = archivo.getAbsolutePath();
-        	CargarEdificio ce = new CargarEdificio();
         	try  {
         		EdificioCubico edi = new EdificioCubico(controlador);
-        		ce.cargarEdificio(edi, ruta);
+        		CargarEdificio.cargarEdificio(edi, ruta);
         		Visual v = new Visual(edi.getDimension());
         		v.cargado = true;
+        		v.nombreArchivoCargado = archivo.getName();
         		v.controlador = controlador;
         		controlador.asociarVista(v);
         		controlador.cargar(edi);

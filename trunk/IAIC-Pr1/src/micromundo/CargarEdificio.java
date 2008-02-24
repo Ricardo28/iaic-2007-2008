@@ -5,6 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CargarEdificio {
+	
 	/**
      *  Creates a new instance of CargarEdificio
      */
@@ -15,7 +16,7 @@ public class CargarEdificio {
      * Carga la informacion del fichero de entrada
      * @param ruta del fichero
      */
-    public void cargarEdificio(EdificioCubico edi, String ruta){
+    public static void cargarEdificio(EdificioCubico edi, String ruta){
     	FileReader archivo;
         BufferedReader buf;
         String linea;
@@ -25,12 +26,14 @@ public class CargarEdificio {
 	        linea = buf.readLine();
 	        int n = leerDimension(linea);
 	        linea = buf.readLine();
+	        // Posicion inicial y dimension
 	        int[] inicial = leerInicio(linea, n);
 	        edi.setDimension(n);
 	        edi.setIniX(inicial[0]);
 	        edi.setIniY(inicial[1]);
 	        edi.setIniZ(inicial[2]);
 	        edi.vuelveAlInicio();
+	        // Habitaciones
 	        HabitacionCubica[][][] habs = new HabitacionCubica[n][n][n];
 	        HabitacionCubica hab;
 	        // Saltar la cabecera de titulos (Hab Juegos (arriba, abajo, izq, der, del, det)
@@ -53,7 +56,7 @@ public class CargarEdificio {
 	 * @param linea del archivo de entrada
 	 * @return Habitacion con la informacion de la linea
 	 */
-    public HabitacionCubica procesar(String linea, int n){
+    private static HabitacionCubica procesar(String linea, int n){
     	
     	linea = eliminaEspaciosTabs(linea);
 		
@@ -68,7 +71,7 @@ public class CargarEdificio {
 		return new HabitacionCubica(hab[0], hab[1], hab[2], n, juegos);
 	}
     
-    private int leerDimension(String linea){
+    private static int leerDimension(String linea){
     	String n = linea.substring(11);
     	int dim;
     	try {
@@ -80,7 +83,7 @@ public class CargarEdificio {
     	return dim;
     }
     
-    private int[] leerInicio(String linea, int n){
+    private static int[] leerInicio(String linea, int n){
     	String aux = eliminaEspaciosTabs(linea);
     	aux = aux.substring(7);
     	int[] inicio = trataLista(aux);
@@ -94,7 +97,7 @@ public class CargarEdificio {
 	 * @param linea entrada
 	 * @return linea de entrada filtrada
 	 */
-    public String eliminaEspaciosTabs(String linea){
+    private static String eliminaEspaciosTabs(String linea){
 		String nueva = new String();
 		for (int i=0; i<linea.length(); i++)
 			if (linea.charAt(i)!=' ' && linea.charAt(i)!='\t')
@@ -108,7 +111,7 @@ public class CargarEdificio {
 	 * @return array de enteros convertido
 	 * @throws NumberFormatException si cadena contiene caract. distintos de digito o ','
 	 */
-	public int[] trataLista(String cadena) throws NumberFormatException{
+	private static int[] trataLista(String cadena) throws NumberFormatException{
 		int[] puertas = new int[cadena.length()/2+1];
 		int i=0, n=0;
 		while (i<cadena.length()){

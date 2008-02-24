@@ -1,8 +1,5 @@
 package juegos;
 
-import java.util.ArrayList;
-import java.util.Enumeration;
-
 import aima.search.AStarSearch;
 import aima.search.BreadthFirstSearch;
 import aima.search.DepthBoundedSearch;
@@ -13,6 +10,9 @@ import aima.search.SearchNode;
 import aima.search.State;
 import aima.search.Successor;
 import aima.search.UniformCostSearch;
+
+import java.util.ArrayList;
+import java.util.Enumeration;
 
 import programa.Controlador;
 
@@ -79,48 +79,57 @@ public abstract class Juego implements State, Heuristic{
 	 		case 1:
 	 			mensaje+="Primero en profundidad (profunidad máxima 7):\n";
 	 			resuelto = listPath((new DepthBoundedSearch(this,7)).search());
-	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-	 			nodosExpandidos = 0;
-	 			mensaje+="\n";break;
+//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
+//	 			nodosExpandidos = 0;
+//	 			mensaje+="\n";
+	 			break;
 	 	
 	 		case 2:
 	 			mensaje+="Primero en anchura:\n";
 	 			resuelto = listPath((new BreadthFirstSearch(this)).search());
-	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-	 			nodosExpandidos = 0;
-	 			mensaje+="\n";break;
+//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
+//	 			nodosExpandidos = 0;
+//	 			mensaje+="\n";
+	 			break;
 	 	
 	 		case 4:
 	 			mensaje+="Coste Uniforme:\n";
 	 			resuelto = listPath((new UniformCostSearch(this)).search());
-	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-	 			nodosExpandidos = 0;
-	 			mensaje+="\n";break;
+//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
+//	 			nodosExpandidos = 0;
+//	 			mensaje+="\n";
+	 			break;
 	 	
 	 		case 5:
 	 			mensaje+="Profundidad iterativa:\n";
 	 			resuelto = listPath((new IteratedDeepeningSearch(this)).search());
-	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-	 			nodosExpandidos = 0;
-	 			mensaje+="\n";break;
+//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
+//	 			nodosExpandidos = 0;
+//	 			mensaje+="\n";
+	 			break;
 	 	
 	 		case 3:
 	 			mensaje+="Busqueda A*:\n";
 	 			resuelto = listPath((new AStarSearch(this)).search());
-	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-	 			nodosExpandidos = 0;
-	 			mensaje+="\n";break;
+//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
+//	 			nodosExpandidos = 0;
+//	 			mensaje+="\n";
+	 			break;
 	 	
 	 		case 6:
 	 			mensaje+="Escalada:\n";
 	 			resuelto = listPath((new GreedySearch(this)).search());
-	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
-	 			nodosExpandidos = 0;
-	 			mensaje+="\n";break;
+//	 			mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
+//	 			nodosExpandidos = 0;
+//	 			mensaje+="\n";
+	 			break;
 	 		}
- 		if(cont!=null){
+ 		mensaje+="NodosExpandidos: "+nodosExpandidos+"\n";
+		nodosExpandidos = 0;
+		mensaje+="\n";
+ 		if (cont != null){
  			cont.mostrar(mensaje);
- 		}else{
+ 		} else {
  			System.out.println(mensaje);
  		}
  		return resuelto;
@@ -147,12 +156,27 @@ public abstract class Juego implements State, Heuristic{
  		    camino.add("\n"+linea);
  		    node = node.getParent();
  	    }
- 	  
- 	    linea = ( "\nESTADO INICIAL: " + node.getState());  
+ 	    
+ 	    linea = "JUEGO: ";
+ 	    if (this instanceof OchoPuzzle)
+ 	    	linea += "OchoPuzzle";
+ 	    else if (this instanceof MisionerosYCanibales)
+	    	linea += "Misioneros y canibales";
+ 	    else if (this instanceof LoboCabraCol)
+	    	linea += "Lobo, cabra y col";
+ 	    else if (this instanceof Mono)
+	    	linea += "Mono";
+ 	    else if (this instanceof Palillos)
+	    	linea += "Palillos";
+ 	    else if (this instanceof Jarras)
+ 	    	linea += "Jarras";
+ 	    
+        linea += ( "\nESTADO INICIAL: " + node.getState());  
  	    camino.add(linea);
  	    for (int j=camino.size()-1; j>=0;j--){
  	    	mensaje += (String)camino.get(j);
  	    }
+ 	    mensaje += "\n";
  	    if (cont != null){
 			cont.mostrar(mensaje);
 		}

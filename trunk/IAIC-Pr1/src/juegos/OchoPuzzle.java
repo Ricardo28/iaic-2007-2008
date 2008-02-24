@@ -136,12 +136,12 @@ public class OchoPuzzle extends Juego{
 	 * @return String con el mensaje del estado en el que se encuentra
 	 */
 	public String toString(){
-	 	String tabla = "\n(";
+	 	String tabla = "\n\t(";
 	 	for (int i = 0; i<=2; i++){
 	 		for (int j = 0; j<=2; j++){
 	 			tabla += " " + tablero[i][j] + " ";
 	 			if (j==2 && i!=2)
-	 			 	tabla += ")" + "\n" + "(";
+	 			 	tabla += ")" + "\n" + "\t(";
 	 			if (j==2 && i == 2)
 	 				tabla += ")" + "\n";
 	 		}

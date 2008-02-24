@@ -99,7 +99,7 @@ public class MisionerosYCanibales extends Juego {
    	 * @return un String con el mensaje del estado actual
    	 */
    	public String toString() {
-    	return "(M:" + misionerosIzq + ", C:" + canibalesIzq + ", B:" + barcaIzq + ")   ~~~~   (M:" + 
+    	return "\t(M:" + misionerosIzq + ", C:" + canibalesIzq + ", B:" + barcaIzq + ")   ~~~~   (M:" + 
       		   (3-misionerosIzq) + ", C:" + (3-canibalesIzq) + ", B:" + (1-barcaIzq) + ")";
 	}
    	

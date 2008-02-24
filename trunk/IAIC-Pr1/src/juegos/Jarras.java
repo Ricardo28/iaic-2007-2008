@@ -1,6 +1,6 @@
 package juegos;
 
-import aima.search.*;
+import aima.search.Successor;
 
 import java.util.Enumeration;
 import java.util.Vector;
@@ -22,6 +22,7 @@ public class Jarras extends Juego{
 	public Jarras(int j3, int j4, Controlador c){
 		this.j3 = j3;
 		this.j4 = j4;
+		cont = c;
 	}
 
 	/**
@@ -122,7 +123,7 @@ public class Jarras extends Juego{
 	 * devuelve un mensaje representativo del estado en el que se encuentra
 	 */
 	public String toString() {
-		return "( Jarra de 3:" + j3 + "; Jarra de 4:" + j4 +" )";
+		return "\t( Jarra de 3:" + j3 + "; Jarra de 4:" + j4 +" )";
 	}
 	
 	/**

@@ -65,7 +65,7 @@ public class Palillos extends Juego{
 	 * @return un String
 	 */
 	public String toString() {
-	      return "Quedan "+ palillos +" palillos.";
+	      return "\tQuedan "+ palillos +" palillos.";
 	}
 	
 	/**

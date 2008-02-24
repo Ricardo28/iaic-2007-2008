@@ -7,7 +7,12 @@ import aima.search.Successor;
 import java.util.Enumeration;
 import java.util.Vector;
 
-import juegos.*;
+import juegos.OchoPuzzle;
+import juegos.MisionerosYCanibales;
+import juegos.LoboCabraCol;
+import juegos.Mono;
+import juegos.Palillos;
+import juegos.Jarras;
 import programa.Controlador;
 
 /**
@@ -148,27 +153,27 @@ public class EdificioCubico  implements State,Heuristic {
 	public String toString(){
 	    String msg = "\n Habitacion actual: "+actX+","+actY+","+actZ+"\n";
 	    HabitacionCubica hAct = edificio[actX][actY][actZ];
-	    if (hAct.puedeIncX()){
+	    if (hAct.puedeIncX() && hAct.getJuegos()[0]!=0){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[0] + 
 	    		   " subes a la habitacion "+(actX+1)+","+actY+","+actZ+"\n";
 	    }
-	    if (hAct.puedeDecX()){
+	    if (hAct.puedeDecX() && hAct.getJuegos()[1]!=0){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[1] + 
 	    		   " bajas a la habitacion "+(actX-1)+","+actY+","+actZ+"\n";
 	    }
-	    if (hAct.puedeIncY()){
+	    if (hAct.puedeIncY() && hAct.getJuegos()[2]!=0){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[2] +
 	    	       " giras a la habitacion "+actX+","+(actY+1)+","+actZ+"\n";
 	    }
-	    if (hAct.puedeDecY()){
+	    if (hAct.puedeDecY() && hAct.getJuegos()[3]!=0){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[3] +
 	    		   " giras a la habitacion "+actX+","+(actY-1)+","+actZ+"\n";
 	    }
-	    if (hAct.puedeIncZ()){
+	    if (hAct.puedeIncZ() && hAct.getJuegos()[4]!=0){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[4] +
 	    		   " avanzas a la habitacion "+actX+","+actY+","+(actZ+1)+"\n";
 	    }
-	    if (hAct.puedeDecZ()){
+	    if (hAct.puedeDecZ() && hAct.getJuegos()[5]!=0){
 	    	msg += "Si se resuelve el problema " + hAct.getJuegos()[5] +
 	 	   		   " retrocedes a la habitacion "+actX+","+actY+","+(actZ-1)+"\n";;
 	    }
@@ -293,6 +298,11 @@ public class EdificioCubico  implements State,Heuristic {
      */
     public boolean resolverProblema(int numJuego, int estrategia){
  		switch(numJuego){
+ 			// Puerta no se puede abrir, cerrada
+ 			case 0: {
+ 				return false;
+ 			}
+ 			// OchoPuzzle
  			case 1: {
  				int [][] tabla = new int [3][3];
  		 		tabla[0][0] = 1; tabla[0][1] = 3; tabla[0][2] = 4;
@@ -301,23 +311,28 @@ public class EdificioCubico  implements State,Heuristic {
  		 		OchoPuzzle op = new OchoPuzzle(tabla,1,1,cont);
  		 		return op.resolver(estrategia);
 			}
-			case 2: {
+ 			// Misioneros y canibales
+ 			case 2: {
 				MisionerosYCanibales myc = new MisionerosYCanibales(3,3,1,cont);
 				return myc.resolver(estrategia);
 			}
-			case 3: {
+			// Lobo, Cabra y Col
+ 			case 3: {
 				LoboCabraCol lcc = new LoboCabraCol(1,1,1,1,cont);
 				return lcc.resolver(estrategia);
 			}
-			case 4: {
+			// Mono
+ 			case 4: {
 				Mono m = new Mono(0,false,2,false,cont);
 				return m.resolver(estrategia);
 			}
-			case 5: {
+			// Palillos
+ 			case 5: {
 				Palillos p = new Palillos(6,5,cont);
 				return p.resolver(estrategia);
 			}
-			case 6: {
+			// Jarras
+ 			case 6: {
 				Jarras j = new Jarras(0,0,cont);
 				return j.resolver(estrategia);
 			}
