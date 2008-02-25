@@ -74,7 +74,7 @@ public class GeneraMicromundos {
 			// Un edificio cubico aleatorio de 5x5x5
 			FileWriter archivo = new FileWriter(new File("."+File.separator+"pruebas"+File.separator+"edificio.txt"));
 	        BufferedWriter buf = new BufferedWriter(archivo);
-	        int n = 5;
+	        int n = 4;
 	        int centro = n/2 + 1;
 	        buf.write("Dimension:\t"+ n + "\n");
 	        buf.write("Inicio:\t" + centro + "," + centro + "," + centro + "\n");
