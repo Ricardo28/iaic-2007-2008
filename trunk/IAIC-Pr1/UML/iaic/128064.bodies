@@ -1,9 +1,0 @@
-class Principal
-!!!128064.java!!!	Principal()
-		
-!!!128192.java!!!	main(in args : String) : void
-
-		Visual vista = new Visual();
-		Controlador controlador = new Controlador();
-		vista.asociarControlador(controlador);
-		controlador.asociarVista(vista);
