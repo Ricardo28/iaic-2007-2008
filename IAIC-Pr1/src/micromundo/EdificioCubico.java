@@ -51,7 +51,7 @@ public class EdificioCubico  implements State,Heuristic {
 	/**
 	 * Numero de nodos expandidos para resolver el problema con una determinada heuristica
 	 */
-	private static int nodosExpandidos; 
+	private static int nodosExpandidos = 0; 
     
     /**
      * Crea una nueva instancia de EdificioCubico 
@@ -59,7 +59,6 @@ public class EdificioCubico  implements State,Heuristic {
      */
 	public EdificioCubico(Controlador cont){
     	this.cont = cont;
-    	nodosExpandidos = 0;
     }
     
 	/**
@@ -81,7 +80,6 @@ public class EdificioCubico  implements State,Heuristic {
 		this.actX = actX; this.actY = actY; this.actZ = actZ;
 		this.edificio = edificio;
 		this.cont = cont;
-		nodosExpandidos = 0;
 	}
     
     /**
@@ -92,7 +90,6 @@ public class EdificioCubico  implements State,Heuristic {
     public EdificioCubico(String ruta, Controlador cont){
     	this.cont = cont;
     	CargarEdificio.cargarEdificio(this, ruta);
-    	nodosExpandidos = 0;
     }
 	
 	/**

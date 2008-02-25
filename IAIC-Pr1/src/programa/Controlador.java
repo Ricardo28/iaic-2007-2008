@@ -68,48 +68,33 @@ public class Controlador {
 	 */
 	public void jugar(int n){
         
+		edificio.ponNodosExpandidos(0);
+		vista.mostrar("\n");
 		if (n==1){
-			edificio.ponNodosExpandidos(0);
 			vista.mostrar("Primero en profundidad (profundidad máxima: 7):\n");
 			listPath((new DepthBoundedSearch(edificio,7)).search());
-			vista.mostrar("NodosExpandidos: "+edificio.dameNodosExpandidos()+"\n");
 		}
 		else if (n==2){
-			edificio.ponNodosExpandidos(0);
-			vista.mostrar("\n");
 			vista.mostrar("Primero en anchura:\n");
 			listPath((new BreadthFirstSearch(edificio)).search());
-			vista.mostrar("NodosExpandidos: "+edificio.dameNodosExpandidos()+"\n");
 		}
 		else if (n==3){
-			edificio.ponNodosExpandidos(0);
-			vista.mostrar("\n");
 			vista.mostrar("Busqueda A*:\n");
 			listPath((new AStarSearch(edificio)).search());
-			vista.mostrar("NodosExpandidos: "+edificio.dameNodosExpandidos()+"\n");
 		}
 		else if (n==4){
-			edificio.ponNodosExpandidos(0);
-			vista.mostrar("\n");
 			vista.mostrar("Coste uniforme:\n");
 			listPath((new UniformCostSearch(edificio)).search());
-			vista.mostrar("NodosExpandidos: "+edificio.dameNodosExpandidos()+"\n");
 		}
 		else if (n==5){
-			edificio.ponNodosExpandidos(0);
-			vista.mostrar("\n");
 			vista.mostrar("Profundidad Iterativa:\n");
 			listPath((new IteratedDeepeningSearch(edificio)).search());
-			vista.mostrar("NodosExpandidos: "+edificio.dameNodosExpandidos()+"\n");
 		}
 		else if (n==6){
-			edificio.ponNodosExpandidos(0);
-			vista.mostrar("\n");
 			vista.mostrar("Escalada:\n");
 			listPath((new GreedySearch(edificio)).search());
-			vista.mostrar("NodosExpandidos: "+edificio.dameNodosExpandidos()+"\n");
-			vista.mostrar("\n");
 		}
+		vista.mostrar("NodosExpandidos: "+edificio.dameNodosExpandidos()+"\n");
 	}
 	
 	/**

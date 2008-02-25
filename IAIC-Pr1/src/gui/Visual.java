@@ -174,15 +174,15 @@ public class Visual extends javax.swing.JFrame {
 					edificio[salida.get(i)[0]][salida.get(i)[1]]
 							.setBackground(new Color(204, 255, 204));
 			}
-			if (controlador.getEdificio().getIniZ() + 1 == z)
-				edificio[controlador.getEdificio().getIniX()][controlador
-						.getEdificio().getIniY()]
+			if (controlador.getEdificio().getActZ() + 1 == z)
+				edificio[controlador.getEdificio().getActX()][controlador
+						.getEdificio().getActY()]
 						.setBackground(new java.awt.Color(204, 255, 204));
 			if (salida.get(0)[2] + 1 == z)
 				edificio[salida.get(0)[0]][salida.get(0)[1]].setText("X");
 		} else if (controlador.getEdificio() != null
-				&& controlador.getEdificio().getIniZ() + 1 == z)
-			edificio[controlador.getEdificio().getIniX()][controlador.getEdificio().getIniY()].setText("X");
+				&& controlador.getEdificio().getActZ() + 1 == z)
+			edificio[controlador.getEdificio().getActX()][controlador.getEdificio().getActY()].setText("X");
     }
     
     /**
@@ -197,7 +197,7 @@ public class Visual extends javax.swing.JFrame {
 		for (int i = 0; i < 6; i++) {
 			vector[i] = false;
 		}
-		// cogemos los valores de los ckeck
+		// cogemos los valores de los check
 		vector[0] = checkBoxProf.isSelected();
 		vector[1] = checkBoxAnch.isSelected();
 		vector[2] = checkBoxAE.isSelected();
@@ -441,62 +441,64 @@ public class Visual extends javax.swing.JFrame {
      * Responde a la pulsacion sobre el boton Ejecutar 
      * @param evt Evento a capturar
      */
-	private void oyenteEjecutar(java.awt.event.MouseEvent evt) {                                      
-    	limpiar();
-    	int estrategia=0;
-        if (!comprueba()){//comprobamos si no hay error
-            JOptionPane.showMessageDialog(this,"Seleccione solo una opción","Error",JOptionPane.ERROR_MESSAGE);
-            checkBoxProf.setSelected(false);//deseleccionamos todas las opciones para que vuelva elegir
-            checkBoxAnch.setSelected(false);
-            checkBoxAE.setSelected(false);
-            checkBoxUni.setSelected(false);
-            checkBoxProfIter.setSelected(false);  
-            checkBoxEscalada.setSelected(false); 
-        } else {//miramos que opcion se ha seleccionado
-            estrategia=solicitud();
-            if (estrategia==1){
-				mostrar("EMPIEZA EL JUEGO\n");
-				mostrar("Busqueda en profundidad\n");
-				textoAlgoritmo.setText("Busqueda en profundidad");
-				controlador.jugar(1);
+	private void oyenteEjecutar(java.awt.event.MouseEvent evt) {        
+		if (botonEjecutar.isEnabled()){
+	    	limpiar();
+	    	int estrategia=0;
+	        if (!comprueba()){//comprobamos si no hay error
+	            JOptionPane.showMessageDialog(this,"Seleccione solo una opción","Error",JOptionPane.ERROR_MESSAGE);
+	            checkBoxProf.setSelected(false);//deseleccionamos todas las opciones para que vuelva elegir
+	            checkBoxAnch.setSelected(false);
+	            checkBoxAE.setSelected(false);
+	            checkBoxUni.setSelected(false);
+	            checkBoxProfIter.setSelected(false);  
+	            checkBoxEscalada.setSelected(false); 
+	        } else {//miramos que opcion se ha seleccionado
+	            estrategia=solicitud();
+	            if (estrategia==1){
+					mostrar("EMPIEZA EL JUEGO\n");
+					mostrar("Busqueda en profundidad\n");
+					textoAlgoritmo.setText("Busqueda en profundidad");
+					controlador.jugar(1);
+					
+				//aplicacion ejecutar con busqueda 2
+				} else if(estrategia==2){
+					mostrar("EMPIEZA EL JUEGO\n");
+					mostrar("Busqueda en anchura\n");
+					textoAlgoritmo.setText("Busqueda en Anchura");
+					controlador.jugar(2);
 				
-			//aplicacion ejecutar con busqueda 2
-			} else if(estrategia==2){
-				mostrar("EMPIEZA EL JUEGO\n");
-				mostrar("Busqueda en anchura\n");
-				textoAlgoritmo.setText("Busqueda en Anchura");
-				controlador.jugar(2);
-			
-			//aplicacion ejecutar con busqueda 3
-			} else if(estrategia==3){
-				mostrar("EMPIEZA EL JUEGO\n");
-				mostrar("Busqueda en A*\n");
-				textoAlgoritmo.setText("Busqueda en A*");
-				controlador.jugar(3);
-			
-			//aplicacion ejecutar con busqueda 4
-			} else if(estrategia==4){
-				mostrar("EMPIEZA EL JUEGO\n");
-				mostrar("Busqueda uniforme\n");
-				textoAlgoritmo.setText("Busqueda Uniforme");
-				controlador.jugar(4);
+				//aplicacion ejecutar con busqueda 3
+				} else if(estrategia==3){
+					mostrar("EMPIEZA EL JUEGO\n");
+					mostrar("Busqueda en A*\n");
+					textoAlgoritmo.setText("Busqueda en A*");
+					controlador.jugar(3);
 				
-			//aplicacion ejecutar con busqueda 5
-			} else if(estrategia==5){
-				mostrar("EMPIEZA EL JUEGO\n");
-				mostrar("Busqueda en profundidad iterativa\n");
-				textoAlgoritmo.setText("Busqueda en profunidad iterativa");
-				controlador.jugar(5);
-				
-			//aplicacion ejecutar con busqueda 6
-			} else {
-				mostrar("EMPIEZA EL JUEGO\n");
-				mostrar("Busqueda en escalada\n");
-				textoAlgoritmo.setText("Busqueda en escalada");
-				controlador.jugar(6);
-			}
+				//aplicacion ejecutar con busqueda 4
+				} else if(estrategia==4){
+					mostrar("EMPIEZA EL JUEGO\n");
+					mostrar("Busqueda uniforme\n");
+					textoAlgoritmo.setText("Busqueda Uniforme");
+					controlador.jugar(4);
+					
+				//aplicacion ejecutar con busqueda 5
+				} else if(estrategia==5){
+					mostrar("EMPIEZA EL JUEGO\n");
+					mostrar("Busqueda en profundidad iterativa\n");
+					textoAlgoritmo.setText("Busqueda en profunidad iterativa");
+					controlador.jugar(5);
+					
+				//aplicacion ejecutar con busqueda 6
+				} else {
+					mostrar("EMPIEZA EL JUEGO\n");
+					mostrar("Busqueda en escalada\n");
+					textoAlgoritmo.setText("Busqueda en escalada");
+					controlador.jugar(6);
+				}
+	        }
+	        rellena(null);
         }
-        rellena(null);
     }                                     
 
     /**
@@ -550,32 +552,36 @@ public class Visual extends javax.swing.JFrame {
      * Responde a la pulsacion sobre el boton Zoom+
      * @param evt Evento a capturar
      */
-	private void oyenteZoomMas(java.awt.event.MouseEvent evt) {                                      
-        z=z+1;
-        if(z>n){
-            z=n;
-        }
-        if (z==n)
-        	botonZoomMas.setEnabled(false);
-        botonZoomMenos.setEnabled(true);
-        textoProfAct.setText(""+z);
-        rellena(null);//actualizamos las casillas
+	private void oyenteZoomMas(java.awt.event.MouseEvent evt) {
+		if (botonZoomMas.isEnabled()){
+	        z=z+1;
+	        if(z>n){
+	            z=n;
+	        }
+	        if (z==n)
+	        	botonZoomMas.setEnabled(false);
+	        botonZoomMenos.setEnabled(true);
+	        textoProfAct.setText(""+z);
+	        rellena(null);
+		}
     }                                     
 
 	/**
      * Responde a la pulsacion sobre el boton Zoom-
      * @param evt Evento a capturar
      */
-	private void oyenteZoomMenos(java.awt.event.MouseEvent evt) {                                      
-        z=z-1;
-        if(z==0){
-            z=1;
+	private void oyenteZoomMenos(java.awt.event.MouseEvent evt) {
+		if (botonZoomMenos.isEnabled()){
+	        z=z-1;
+	        if(z==0){
+	            z=1;
+	        }
+	        if (z==1)
+	        	botonZoomMenos.setEnabled(false);
+	        botonZoomMas.setEnabled(true);
+	        textoProfAct.setText(""+z);
+	        rellena(null);
         }
-        if (z==1)
-        	botonZoomMenos.setEnabled(false);
-        botonZoomMas.setEnabled(true);
-        textoProfAct.setText(""+z);
-        rellena(null);//actualizamos las casillas
     }                                     
     
     /**
